@@ -1,0 +1,13 @@
+Model 1:
+
+input = 3 x 512 x 512
+down1(input) = 6 x 256 x 256
+down2(down1) = 12 x 128 x 128
+down3(down2) = 32 x 64 x 64
+down4(down3) = 128 x 16 x 16
+mid(down4) = 256 x 16 x 16
+up1(mid) = 128 x 16 x 16
+up2(up1) = 32 x 64 x 64
+up3(up2) = 12 x 128 x 128
+up4(up3) = 6 x 256 x 256
+up5(up4) = 3 x 512 x 512 = output
