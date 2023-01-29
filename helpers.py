@@ -4,8 +4,7 @@ import torch
 # in the range [-1,1]
 # of shape (3,n,n)
 def onehotToImage(tensor):
-    red = tensor[1:5]
-    black = tensor[5]
+    red = tensor[0:5]
     green = tensor[6:]
     print(red.min(), red.max())
     print(green.min(), green.max())
@@ -15,11 +14,12 @@ def onehotToImage(tensor):
     red = torch.sum(red, dim=0)
 
     for d, channel in enumerate(green):
-        green[d] = torch.mul(channel, (d)*51)
+        green[d] = torch.mul(channel, (d+1)*51)
        
     green = torch.sum(green, dim=0)
 
     output = torch.stack([red, green, torch.zeros_like(red)])
+
     print(output.shape)
     print(red.min(), red.max())
     print(green.min(), green.max())
