@@ -1,2 +1,3 @@
-VISCHEMA_PLUS/onehot_tensors
-VISCHEMA_PLUS/data.zip
+data/onehot_tensors
+data/data.zip
+Saved_Weights/*
