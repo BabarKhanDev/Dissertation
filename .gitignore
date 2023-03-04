@@ -1,0 +1,5 @@
+data/onehot_tensors
+data/data.zip
+/Saved_Weights/
+/coco/cocoapi
+/coco/data
