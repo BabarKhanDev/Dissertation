@@ -3,3 +3,5 @@ data.zip
 /coco/cocoapi
 /coco/data
 /coco/data_sample
+coco/val2017.zip
+coco/ann2017.zip
