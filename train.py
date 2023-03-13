@@ -24,7 +24,7 @@ def train_GAN(
     # Loss weight of L1 pixel-wise loss between translated image and real image
     # This value is copied from the PIX2PIX architecture
     lambda_pixel = 100
-    num_epochs = 200
+    num_epochs = 100
     
     #######################
     # Start Training Loop #
