@@ -5,3 +5,10 @@ data.zip
 /coco/data_sample
 coco/val2017.zip
 coco/ann2017.zip
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+/dissertation/dissertation.log
