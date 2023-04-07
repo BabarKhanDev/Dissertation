@@ -1,0 +1,28 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{}%
+\contentsline {subsection}{\numberline {1.1}Background}{3}{}%
+\contentsline {subsubsection}{\numberline {1.1.1}We see a lot of images}{3}{}%
+\contentsline {subsubsection}{\numberline {1.1.2}Cultural vs Individual Memorability}{3}{}%
+\contentsline {subsubsection}{\numberline {1.1.3}How do we measure the memorability of an image}{3}{}%
+\contentsline {subsubsection}{\numberline {1.1.4}Why do we want to create a memorable image}{3}{}%
+\contentsline {subsubsection}{\numberline {1.1.5}How does this research help to create a memorable image}{3}{}%
+\contentsline {subsection}{\numberline {1.2}Motivation}{4}{}%
+\contentsline {subsection}{\numberline {1.3}What are my goals}{4}{}%
+\contentsline {subsection}{\numberline {1.4}Structure}{4}{}%
+\contentsline {section}{\numberline {2}Literature Review}{4}{}%
+\contentsline {subsection}{\numberline {2.1}Memorability}{4}{}%
+\contentsline {subsection}{\numberline {2.2}Using Deep Learning to Predict Memorability}{5}{}%
+\contentsline {section}{\numberline {3}Methodology}{6}{}%
+\contentsline {subsection}{\numberline {3.1}Requirements Capture}{6}{}%
+\contentsline {subsection}{\numberline {3.2}Analysis/Design}{6}{}%
+\contentsline {subsection}{\numberline {3.3}Implementation}{7}{}%
+\contentsline {subsubsection}{\numberline {3.3.1}Network Architectures}{7}{}%
+\contentsline {subsubsection}{\numberline {3.3.2}Loss Functions}{7}{}%
+\contentsline {subsubsection}{\numberline {3.3.3}Training Strategy}{8}{}%
+\contentsline {subsection}{\numberline {3.4}Analysis/Testing}{8}{}%
+\contentsline {section}{\numberline {4}Experimental Results}{10}{}%
+\contentsline {subsection}{\numberline {4.1}Best Hyperparameters}{10}{}%
+\contentsline {subsection}{\numberline {4.2}Results}{10}{}%
+\contentsline {subsection}{\numberline {4.3}Evaluation Metrics}{10}{}%
+\contentsline {subsection}{\numberline {4.4}Analysis}{10}{}%
+\contentsline {section}{\numberline {5}Conclusion}{11}{}%
+\contentsline {section}{\numberline {6}References}{12}{}%
