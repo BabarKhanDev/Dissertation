@@ -248,7 +248,7 @@ I wanted to find which parameter and hyperparameter combinations would perform t
 \item Adam, using the following learning rates (0.0005, 0.001, 0.002), and using the following betas ((0.9, 0.999), (0, 0.999), (0.5, 0.999))
 \item Adadelta, using the following learning rates (0.5, 1, 2)
 \end{itemize}
-Exploring this search space exhaustively is unfortunately not feesible, there are over 5000 different combinations possible, and if I tested each combination once for 20 epochs then it would take approximately 300 days to test.
+Exploring this search space exhaustively is unfortunately not feesible, there are over 5000 different combinations possible, and if I tested each combination once for 100 epochs then it would take approximately 300 days to test.
 % how long does it take to train an epoch?
 Instead I will have to explore a subset of this search space. I estimated some good default parameter and hyperparameter values, by varying these values I can lower the scope of the search space to 
 % maybe I should get an exact value here instead of 100
@@ -270,7 +270,7 @@ approximately 100 combinations, which took \(\sim\)3 days to test. Unfortunately
 \item Optimiser: Adam, betas = (0.9, 0.999)
 \item Learning Rate: 0.001
 \end{itemize}
-I then iterated over each different parameter and hyperparameter and varied each one sequentially. I tested each combination for 20 epochs and used the L1 loss across the validation dataset as the score, if any parameter options performed better than the default then they would be used going forward. This meant that I only had to iterate \(\sim\)100 combinations. This took 3 days to test, and at the end I found that the following combination was the best:
+I then iterated over each different parameter and hyperparameter and varied each one sequentially. I tested each combination for 100 epochs and used the L1 loss across the validation dataset as the score, if any parameter options performed better than the default then they would be used going forward. This meant that I only had to iterate \(\sim\)100 combinations. This took 3 days to test, and at the end I found that the following combination was the best:
 
 \textbf{Best Generator Parameters and Hyperparameters}:
 \begin{itemize}
