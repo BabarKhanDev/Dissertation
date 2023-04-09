@@ -204,10 +204,93 @@ This model was trained on a computer using an RTX 3070 with 8GB of VRAM, testing
 %Number of days/hours?% 
 days.
 
-\subsection{Best Hyperparameters}
-I found that the best hyperparameter options for my network were the following:
+\subsection{Best Training Hyperparameters and Model Parameters}
 
-%Insert graphs here
+I wanted to find which parameter and hyperparameter combinations would perform the best. I decided to automate this process to save time. I wanted to vary the following:
+\begin{enumerate}
+
+\item The normalisation layer for both the generator and the discriminator.
+
+\item The channel layouts for the generator and the discriminator.
+
+\item The optimiser used for the generator and the discriminator.
+
+\item The learning rates used for each optimiser.
+
+\item If the Adam optimiser was found to be ideal for either the generator or discriminator, then to use different beta options.
+
+\end{enumerate}
+
+\textbf{I explored the following options}:
+
+\textbf{Normalisation layers}: 
+\begin{itemize}
+\item Batch Normalisation
+\item Instance Norm
+\end{itemize}
+\textbf{Generator channel layouts}:
+\begin{itemize}
+\item encoder:(3, 64, 128, 256, 512, 1024), decoder:(1024, 512, 256, 128, 64),
+\item encoder:(3, 32, 64, 128, 256, 512), decoder:(512, 256, 128, 64, 32),
+\item encoder:(3, 50, 100, 200, 400, 800), decoder:(800, 400, 200, 100, 50),
+\item encoder:(3, 100, 200, 400, 800, 1600), decoder:(1600, 800, 400, 200, 100)
+\end{itemize}
+\textbf{Discriminator channel layouts}:
+\begin{itemize}
+\item (6, 64, 128, 256, 512, 1024),
+\item (6, 32, 64 , 128, 256, 512),
+\item (6, 50, 100, 200, 400, 800),
+\item (6, 100, 200, 400, 800, 1600)
+\end{itemize}
+\textbf{Optimisers}:
+\begin{itemize}
+\item SGD, using the following learning rates (0.005, 0.01, 0.02)
+\item Adam, using the following learning rates (0.0005, 0.001, 0.002), and using the following betas ((0.9, 0.999), (0, 0.999), (0.5, 0.999))
+\item Adadelta, using the following learning rates (0.5, 1, 2)
+\end{itemize}
+Exploring this search space exhaustively is unfortunately not feesible, there are over 5000 different combinations possible, and if I tested each combination once for 20 epochs then it would take approximately 300 days to test.
+% how long does it take to train an epoch?
+Instead I will have to explore a subset of this search space. I estimated some good default parameter and hyperparameter values, by varying these values I can lower the scope of the search space to 
+% maybe I should get an exact value here instead of 100
+approximately 100 combinations, which took \(\sim\)3 days to test. Unfortunately this did mean that every combination hasn't been tested, however it should give us a good approximation of the best combination.
+
+\emph{Note: I didn't need to specify default values for the normalisation layer as these were the first variables I tested.}
+
+% is combination the best word?
+\textbf{Default Generator Parameters and Hyperparameters}: 
+\begin{itemize}
+\item Encoder Channel Layout: (3,64,128,256,512,1024)
+\item Decoder Channel Layout: (1024,512,256,128,64)
+\item Optimiser: Adam, betas = (0.9, 0.999)
+\item Learning Rate: 0.001
+\end{itemize}
+\textbf{Default Discriminator Parameters and Hyperparameters}:
+\begin{itemize}
+\item Channel Layout: (6,64,128,256,512,1024)
+\item Optimiser: Adam, betas = (0.9, 0.999)
+\item Learning Rate: 0.001
+\end{itemize}
+I then iterated over each different parameter and hyperparameter and varied each one sequentially. I tested each combination for 20 epochs and used the L1 loss across the validation dataset as the score, if any parameter options performed better than the default then they would be used going forward. This meant that I only had to iterate \(\sim\)100 combinations. This took 3 days to test, and at the end I found that the following combination was the best:
+
+\textbf{Best Generator Parameters and Hyperparameters}:
+\begin{itemize}
+\item Normalisation Layer: Batch Normalisation 
+\item Encoder Channel Layout: (3,32,64,128,256,512)
+\item Decoder Channel Layout: (512, 256, 128, 64,32)
+\item Optimiser: SGD
+\item Learning Rate: 0.01
+\end{itemize}
+\textbf{Best Discriminator Parameters and Hyperparameters}:
+\begin{itemize}
+\item Normalisation Layer: Batch Normalisation 
+\item Channel Layout: (6,100,200,400,800,1600)
+\item Optimiser: Adam, betas = (0.9, 0.999)
+\item Learning Rate: 0.001
+\end{itemize}
+
+With this combination we achieved a loss of \(\sim\)1.02 across the validation dataset. I found other good results using similar combinations. Using the Adam optimiser for both the generator and discriminator achieved a loss of \(\sim\)1.04 across the validation dataset. Using the Adatelta optimiser for the generator and the Adam optimiser for the discriminator achieved a loss of \(\sim\)1.03 across the validation dataset.
+
+%Insert graph of the best combinations results here
 
 \textbf{Varying Normalisation}
 

@@ -20,9 +20,9 @@
 \contentsline {subsubsection}{\numberline {3.3.3}Training Strategy}{8}{}%
 \contentsline {subsection}{\numberline {3.4}Analysis/Testing}{8}{}%
 \contentsline {section}{\numberline {4}Experimental Results}{10}{}%
-\contentsline {subsection}{\numberline {4.1}Best Hyperparameters}{10}{}%
-\contentsline {subsection}{\numberline {4.2}Results}{10}{}%
-\contentsline {subsection}{\numberline {4.3}Evaluation Metrics}{10}{}%
-\contentsline {subsection}{\numberline {4.4}Analysis}{10}{}%
-\contentsline {section}{\numberline {5}Conclusion}{11}{}%
-\contentsline {section}{\numberline {6}References}{12}{}%
+\contentsline {subsection}{\numberline {4.1}Best Training Hyperparameters and Model Parameters}{10}{}%
+\contentsline {subsection}{\numberline {4.2}Results}{12}{}%
+\contentsline {subsection}{\numberline {4.3}Evaluation Metrics}{12}{}%
+\contentsline {subsection}{\numberline {4.4}Analysis}{12}{}%
+\contentsline {section}{\numberline {5}Conclusion}{13}{}%
+\contentsline {section}{\numberline {6}References}{14}{}%
