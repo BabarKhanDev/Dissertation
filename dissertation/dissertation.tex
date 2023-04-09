@@ -72,6 +72,18 @@ This is taken further by Akagunduz et al. \cite{VischemaPaper} where, in a simil
 
 \subsection{Memorability}
 
+% some much earlier work on the study of memorability
+
+% L. Standing. Learning 10,000 pictures. In Quarterly Journal of Experimental Psychology, 1973
+% I. Rock and P. Englestein. A study of memory for visual form. The American Journal of Psychology 1959.
+% F. Brady, T. Konkle, G. A. Alvarez, and A. Oliva. Visual long-term memory has a massive storage capacity for object details. In Proceedings of the National Academy of Sciences, 2008
+% D. A. Brown, I. Neath, and N. Chater. A temporal ratio model of memory. Psych. Review, 2007.
+% R. Hunt and J. B. Worthen. Distinctiveness and memory. In NY:Oxford Univeristy Press, 2006
+% Isola, J. Xiao, A. Torralba, and A. Oliva. What makes an image memorable? In IEEE Computer Vision and Pattern Recognition, 2011.
+% Konkle, T. F. Brady, G. A. Alvarez, and A. Oliva. Conceptual distinctiveness supports detailed visual long-term memory for realworld objects. In Journal of Experimental Psychology: General, 2010. 
+% Konkle, T. F. Brady, G. A. Alvarez, and A. Oliva. Scene memory is more detailed than you think: the role of categories in visual longterm memory. In Psychological Science, 2010.
+% R. M. Shiffrin and M. Steyvers. A model for recognition memory: Rem - retrieving effectively from memory. In Psychnomic Bulletin and Review, 1997.
+
 In a study by Isola et al., it was found that some images were intrinsically more memorable than others [1]. In another study by Isola et al. [11] they found that correlations between properties such as mean saturation, and the log number of objects, has less impact on the memorability score than object statistics. Categories such as: person, person sitting, and floor, were most helpful image memorability. The categories: ceilings, buildings, and mountains, were least helpful. 
 
 In both [1, 11] they tested participants' abilities to remember specific images after repeated exposure. Their goal, similar to that of this paper, was to identify a collection of visual attributes that make images memorable, and to use those to predict the memorability of an image. Their approach was limited by the fact that the object statistics were annotated by hand, this would both make automating the process of determining image memorability impossible, and limit them from finding any abstract properties that helped/hindered memorability.
@@ -208,17 +220,11 @@ days.
 
 I wanted to find which parameter and hyperparameter combinations would perform the best. I decided to automate this process to save time. I wanted to vary the following:
 \begin{enumerate}
-
 \item The normalisation layer for both the generator and the discriminator.
-
 \item The channel layouts for the generator and the discriminator.
-
 \item The optimiser used for the generator and the discriminator.
-
 \item The learning rates used for each optimiser.
-
 \item If the Adam optimiser was found to be ideal for either the generator or discriminator, then to use different beta options.
-
 \end{enumerate}
 
 \textbf{I explored the following options}:
