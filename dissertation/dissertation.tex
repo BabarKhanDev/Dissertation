@@ -1,14 +1,21 @@
-\documentclass[11pt]{article}
-
+\documentclass{UoYCSproject}
+% Preamble
 \usepackage{url}     % This is needed for IEEE referencing
-\usepackage{parskip} % This adds a space at the end of paragraphs
-\usepackage[nottoc,numbib]{tocbibind} % adds the bibliography to the contents
+\usepackage{bookmark}
 
-\title{Predicting Memorable Regions Of Images Using Deep Learning and Adversarial Networks}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{references.bib}
+
+% Title Page
 \author{Babar Khan}
+\title{Predicting Memorable Regions Of Images Using Deep Learning and Adversarial Networks}
+\date{Version 1, 2023-April-11}
+\supervisor{Adrian Bors}
+\SWE
 
+% Document
 \begin{document}
-
+\pagenumbering{roman}
 \maketitle
 
 \newpage{}
@@ -21,7 +28,6 @@
 
 % This should be 2 pages
 % need to define well what i am doing
-
 
 \subsection{Background}
 
@@ -76,6 +82,12 @@ This is taken further by Akagunduz et al. \cite{VischemaPaper} where, in a simil
 
 % some much earlier work on the study of memorability
 
+% Roy Brener An experimental investigation of memory span
+% Subjects were presented with units of varying length and were asked to recall them
+% The unit could be a sentence, a digit, a geometric shape, etc
+% It was found that people are not very good at remembering nonsense sylables or sentences but are much better at remembering digits, consonants, and colours. Remembering geometric designs is placed somewhere in the middle.
+% This would seem to indicate that people are not very good at recalling images, however in Nickerson's work we can see that subjects are extremely good at recognising images. 
+
 % R. Nickerson Short-term memory for complex meaningful visual configurations 1965
 % Subjects are shown new and old photos and they have to identify if the photo is new or old
 % P(Ro/So) = ~0.9
@@ -101,35 +113,41 @@ This is taken further by Akagunduz et al. \cite{VischemaPaper} where, in a simil
 % this builds directly onto the world of Standing in 1973
 %------------
 
-R. Nickerson worked on [Short-term memory for complex meaningful visual configurations] where he found that subjects shown a series of images are, with great accuracy, able to recall if the photo is one they have seen before or not. If we consider an old image one that subjects have seen before and a new image one they have not, then it was found that subjects shown one image at a time with a 50\% chance of that image being old or new are able to correctly distinguish them with 95\% of the time.
+In R. Breners work [An experimental investigation of memory span] subject's abilities to remember a series of units was tested, a unit was different depending on the test, 
+\begin{quote}
+    In the digit test, for example, each digit was a unit; in the sentence test each sentence was a unit, etc. ... Each nonsense syllable constituted a unit ... Each consonant constituted a unit ... Each [geometric] design constituded a unit. 
+\end{quote}
+It was found that people are not very good at remembering nonsense sylables or sentences but are much better at remembering digits, consonants, and colours. Remembering geometric designs is placed somewhere in the middle. This is of interest because it's very similar to our investigation into what aspects make images memorable. Brener was interested in consonants, colours, geometric designs, etc but the finding that different units can be significantly harder or easier to remember is useful to us. If we swap out units for image properties such as texture, contrast, saturation etc, or even more abstract features that a CNN may recognise, then it should be possible to find how memorabilty is impacted by these.   
 
-L.Standing built on the work of Nickerson in [Learning 10,000 pictures]. Four experiments were ran which tested memory capacity and retreival speed for pictures and words, I am interested in the performance related to pictures specifically. He found that the capacity for image recognition from memory is almost limitless, when measured under testing conditions. 
+The mean score of 5.31 found for geometric designs seems to indicate that people are not great at recalling images, however in R. Nickerson's work [Short-term memory for complex meaningful visual configurations] we can see the opposite, subjects are found to be extremely good at recognising images. Nickerson found that subjects shown a series of images are, with great accuracy, able to recall if the photo is one they have seen before or not. An item is referred to as "new on its first occurrence and old on its second occurrence"[Short-term memory for complex meaningful visual configurations p.156], it was found that subjects shown one image at a time, each with equal chance of being old or new, are able to correctly distinguish them with 95\% accuracy. 
 
-In Standing's first experiment he tested 'normal' and 'vivid' images. He describes 'normal' images as being "characterized as resembling a highly variegated collection of competent snapshots"[Learning 10,000 pictures, p.208], and 'vivid' images are described as "striking pictures ... with definitely interesting subject matter"[Learning 10,000 pictures, p.208]. This work is important because it directly builds on the work of Nickerson and adds classification to images.
+Like in [Short-term memory for complex meaningful visual configurations],  R. Shephards work [Recognition Memory for Words, Sentences, and Pictures] also found that subjects are able to distinguish with great accuracy new and old images, the mean percentage of images correctly identified was 99.7\% after a delay 2 hours, 92.0\% after a delay of 3 days. 87.0\% after a delay of 7 days, and 57.7\% after a delay of 120 days. The introduction of a delay into Nickerson's experiment allows us to see that regardless of whether the image is in our short-term memory (2 hour delay) or our long-term memory (3-120 days) subjects are able to correctly identify an incredible amount of images. 
 
+L. Standing built on the work of Nickerson, Shepard, and Brener in [Learning 10,000 pictures]. Four experiments were ran which tested memory capacity and retreival speed for pictures and words, I am interested in the performance related to pictures specifically. He found that the capacity for image recognition from memory is almost limitless, when measured under testing conditions. In Standing's first experiment he tested 'normal' and 'vivid' images. He describes 'normal' images as those that "may be characterized as resembling a highly variegated collection of competent snapshots"[Learning 10,000 pictures, p.208], and 'vivid' images are described as "striking pictures ... with definitely interesting subject matter"[Learning 10,000 pictures, p.208]. Much like how in Brener's work [An experimental investigation of memory span] the memorability of an object was variable based on what classification of unit was tested, this work shows that on an even more specific level, the classification of the image into normal or vivid, has an impact on subjects memorabilty, Standing found that the vivid images were more likely to be remembered by subjects.
+
+Lots of work has been done to further build on that of Standing, Nickerson, Brener et al. T. Brady et al. [Visual long-term memory has a massive storage capacity for object details] performed research into how much information is retained in long term memory and found that subjects are able to remember not just the gist of an image, but also fine grain information such as the state of objects within an image, and that they are able to distinguish between variants of objects shown in images. An example shown is an abacus in two different states, 13/14 subjects were able to distinguish which one they had seen before.
 
 % D. A. Brown, I. Neath, and N. Chater. A temporal ratio model of memory. Psych. Review, 2007.
 %An exploration to the extend to which common retrieval princples apply to human memory over short and long timescales
+% Traces of items are represented in memory partyly in terms of how long ago they were observed
+% Similar mechanisms govern retrieval from memory over many different timescales
 
+T. Konkle et al. build further on the work in [Learning 10,000 pictures] and [Visual long-term memory has a massive storage capacity for object details] by studying the impact that categorical distinctness has on memorability. This was tested by creating a dataset of images where composed of categories such as tables, cameras, and bread etc. Each category had between 1 and 16 images, a memory test like those performed in [Learning 10,000 pictures] and [Visual long-term memory has a massive storage capacity for object details] etc was performed and the percentage correctly identified was found to decrease as the number of images within a category increased. From this we can see that categorically distinct images are more likely to be remembered. 
 
-% Konkle, T. F. Brady, G. A. Alvarez, and A. Oliva. Conceptual distinctiveness supports detailed visual long-term memory for realworld objects. In Journal of Experimental Psychology: General, 2010. 
-% Konkle, T. F. Brady, G. A. Alvarez, and A. Oliva. Scene memory is more detailed than you think: the role of categories in visual longterm memory. In Psychological Science, 2010.
-% R. M. Shiffrin and M. Steyvers. A model for recognition memory: Rem - retrieving effectively from memory. In Psychnomic Bulletin and Review, 1997.
-
-
-
-In a study by Isola et al., it was found that some images were intrinsically more memorable than others [1]. In another study by Isola et al. [11] they found that correlations between properties such as mean saturation, and the log number of objects, has less impact on the memorability score than object statistics. Categories such as: person, person sitting, and floor, were most helpful image memorability. The categories: ceilings, buildings, and mountains, were least helpful. 
-
-In both [1, 11] they tested participants' abilities to remember specific images after repeated exposure. Their goal, similar to that of this paper, was to identify a collection of visual attributes that make images memorable, and to use those to predict the memorability of an image. Their approach was limited by the fact that the object statistics were annotated by hand, this would both make automating the process of determining image memorability impossible, and limit them from finding any abstract properties that helped/hindered memorability.
-
-Recently, the use of deep convolutional networks [12,13] has proven exceptionally successful in image classification and object recognition. It stands to reason that a combination of these systems could perform well at this task. It could recognise which objects are within an image, and to use that to help inform how memorable the image is.
+Studies by Isola et al. [1, 11] were performed with the goal of identifying a collection of visual attributes that make images memorable, and to use those to predict the memorability of an image. It was found that properties such as mean saturation, and the log number of objects, has less impact on the memorability score than object statistics. 
+%WTF are object statistics?
+Categories such as: person, person sitting, and floor, were most helpful image memorability. The categories: ceilings, buildings, and mountains, were least helpful. Their approach was limited by the fact that the object statistics were annotated by hand, this would both make automating the process of determining image memorability impossible, and limit them from finding any abstract properties that helped/hindered memorability.
 
 Khosla et al. [4] built on the work in [1, 11] by, instead of determining memorability of an entire image, creating a model that discovers memorability maps of individual images without human annotation. These memorability maps are able to distinguish which areas of an image are remembered, forgotten, or hallucinated. Their approach, similar to Isola et al. in [1, 11], is limited by the arbitrarily picked list of features that define memorability.
 
 \subsection{Using Deep Learning to Predict Memorability}
 
-Khosla et al. have created a dataset, LaMem [5], containing 60,000 annotated image and memorability pairs. They use deep learning to predict these memorability maps, this is similar to the VISCHEMA plus dataset [7], which I will be working with. In [7] the network output utilises fully connected layers which I believe is unnecessary, and may even hurt performance. More modern computer vision network structures, such as the U-Net [8] or a GAN [9], use fully convolutional networks. These maintain spatial locality which makes them less prone to overfitting, and also allows them to generalise better. Previous work in [1,4,11] relied on human annotated features, using deep learning we should be able to automate this process by learning the features from a sufficiently large dataset such as those presented in [5,7].
+Recently, the use of deep convolutional networks [12,13] has proven exceptionally successful in image classification and object recognition. It stands to reason that a combination of these systems could perform well at this task. It could, in the worst case, recognise which objects are within an image, and to use that to help inform how memorable the image is. In the best case, it could learn to extract the features from categories that make them memorable and use this to predict the memorability of categories not yet seen. The weights within a convolutional layer act as filters to recognise patterns within images, through the stacking of these filters we are able to build networks that can recognise complex objects. The main limitation within [1,11,4] is that the features are arbitrarily picked by humans and manually annotated. The use of convolution should make it possible to learn these features automatically.   
 
+% I want to work on this paragraph heavily, maybe even split it into two and discuss more in extensive detail.
+Khosla et al. have created a dataset, LaMem [5], containing 60,000 annotated image and memorability pairs. They use deep learning to predict these memorability maps, this is similar to the VISCHEMA plus dataset [7], which I will be working with. In [7] the network output utilises fully connected layers which I believe is unnecessary, and may even hurt performance. More modern computer vision network structures, such as the U-Net [8] or ResNet [9], use fully convolutional networks. These maintain spatial locality which makes them less prone to overfitting, and also allows them to generalise better. Using deep learning we should be able to automate the process of learning features like those in [1,4,11], by training a fully convolutional network with a sufficiently large dataset such as those presented in [5,7].
+
+% Maybe describe the process of image segmentation
 I propose that predicting memorability maps is an extension of image segmentation, modern machine learning has found many network architectures that would be worth exploring for this problem. Isola et al. created Pix2Pix [10], a deep learning architecture based on Conditional Adversarial Networks. It has found great success but I think that it is too powerful a network for this task, and may cause overfitting, thus a structure akin to this could prove very effective. The U-Net [8] has also found great success in image segmentation, this system however relies on the output being a classification. Something in between these two could work very well.
 
 \newpage{}
@@ -358,11 +376,8 @@ With this combination we achieved a loss of \(\sim\)1.02 across the validation d
 % future work better generator better result
 % applications
 
-
-
 \newpage{}
 
-\bibliographystyle{IEEEtran.bst}
-\bibliography{refs}
+\printbibliography
 
 \end{document}
