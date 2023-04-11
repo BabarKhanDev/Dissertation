@@ -24,22 +24,22 @@
 
 \newpage{}
 
-\section{Introduction}
+\chapter{Introduction}
 
 % This should be 2 pages
 % need to define well what i am doing
 
-\subsection{Background}
+\section{Background}
 
-\subsubsection{We see a lot of images}
+\subsection{We see a lot of images}
 
 We are constantly surrounded by imagery, on the way to work, on the internet, on TV, in stores, etc. Some of them stick out more than others, we see hundreds, if not thousands, of images a day, and yet culturally and individually we all remember the same ones.
 
-\subsubsection{Cultural vs Individual Memorability}
+\subsection{Cultural vs Individual Memorability}
 
 Due to cultural significance an image can become memorable. The 2015 dress \cite{BBCDress2015}, a country's flag, or the 1932 image “lunch atop a skyscraper” \cite{gambino_2012}, come to mind. I would argue that the memorability of these images is tied to the culture surrounding them, not necessarily due to intrinsic properties within. The focus of this research is on the intrinsic properties within an image that make it memorable to an individual, like seeing an advert on a bus and then later recognising the same advert online.
 
-\subsubsection{How do we measure the memorability of an image}
+\subsection{How do we measure the memorability of an image}
 
 % What work has shown independence of memorability from viewer?
 % Isola et al in 2011
@@ -50,35 +50,35 @@ It has been shown that the memorability of an image is an intrinsic property, in
 How often an image was recognised is proportional to its memorability. %Verify%
 This is taken further by Akagunduz et al. \cite{VischemaPaper} where, in a similar experiment, they measure which regions of images are memorable.
 
-\subsubsection{Why do we want to create a memorable image}
+\subsection{Why do we want to create a memorable image}
 
-\subsubsection{How does this research help to create a memorable image}
+\subsection{How does this research help to create a memorable image}
 
 \newpage{}
 
-\subsection{Motivation}
+\section{Motivation}
 
 % Why do we want to do this
 % Who will this be useful for
 % What motivates me
 
-\subsection{What are my goals}
+\section{What are my goals}
 
 % To create an accurate mapping from images to memorable images
 % How do I define accuracy?
 %   This is dataset specific but as I am using the vischema dataset I can measure accuracy as the L1 Loss between the produced memorability map and the ones present in the dataset.
 
-\subsection{Structure}
+\section{Structure}
 
 % How is the dissertation laid out.
 
 \newpage{}
 
-\section{Literature Review}
+\chapter{Literature Review}
 
 % This should be 6-8 pages long
 
-\subsection{Memorability}
+\section{Memorability}
 
 % some much earlier work on the study of memorability
 
@@ -140,7 +140,7 @@ Categories such as: person, person sitting, and floor, were most helpful image m
 
 Khosla et al. [4] built on the work in [1, 11] by, instead of determining memorability of an entire image, creating a model that discovers memorability maps of individual images without human annotation. These memorability maps are able to distinguish which areas of an image are remembered, forgotten, or hallucinated. Their approach, similar to Isola et al. in [1, 11], is limited by the arbitrarily picked list of features that define memorability.
 
-\subsection{Using Deep Learning to Predict Memorability}
+\section{Using Deep Learning to Predict Memorability}
 
 Recently, the use of deep convolutional networks [12,13] has proven exceptionally successful in image classification and object recognition. It stands to reason that a combination of these systems could perform well at this task. It could, in the worst case, recognise which objects are within an image, and to use that to help inform how memorable the image is. In the best case, it could learn to extract the features from categories that make them memorable and use this to predict the memorability of categories not yet seen. The weights within a convolutional layer act as filters to recognise patterns within images, through the stacking of these filters we are able to build networks that can recognise complex objects. The main limitation within [1,11,4] is that the features are arbitrarily picked by humans and manually annotated. The use of convolution should make it possible to learn these features automatically.   
 
@@ -152,7 +152,7 @@ I propose that predicting memorability maps is an extension of image segmentatio
 
 \newpage{}
 
-\section{Methodology}
+\chapter{Methodology}
 
 % I dont think this needs to be long, ~2 pages
 % This should be from a theoretical perspective
@@ -166,11 +166,11 @@ I propose that predicting memorability maps is an extension of image segmentatio
 % Training Strategy
 
 
-\subsection{Requirements Capture}
+\section{Requirements Capture}
 
 We have a dataset of images that we will aim to accurately to map onto their corresponding labels. Through learning to map these images onto their corresponding VMS labels, we hope that our system will gain a general understanding of the data, such that when another image that matches our distribution is presented, the system can accurately create a VMS label for that. Ideally our system should create accurate mappings, we can test this by using a loss function such as L1 Loss and through qualitative analysis. 
 
-\subsection{Analysis/Design}
+\section{Analysis/Design}
 
 % Maybe here say what a GAN vs a conditional GAN is 
 % The goal is to train a conditional GAN to generate the iamges in our output.
@@ -186,11 +186,11 @@ In the pix2pix network the Discriminator produces 2 dimmensional array of boolea
 
 I will also experiment with training the network to output the composition of the image and the label, and then manually subtract the image after. Because the difference between the image and the label is much greater than the difference between the image and the image + label I suspect that this should be easier for the generator to learn the weights for. This may produce better results and is something I will experiment with, I'm not entirely convinced however because GANs have been shown to struggle when one network is much better than the other, I suspect that the discriminator would have a harder time being able to tell the difference and may make learning impossible. 
 
-\subsection{Implementation}
+\section{Implementation}
 
 I will implement this network in Python using the PyTorch machine learning framework. This is because I am familiar with it rather than it having any advantages over other existing frameworks, and the methodology that I describe should produce the same results in any programming language or framework.
 
-\subsubsection{Network Architectures}
+\subsection{Network Architectures}
 
 \textbf{Generator}: I will use a U-Net [U-Net paper] as my image to image network. The U-Net makes use of an Encoder block and a Decoder block, there are residual connections between different sections of the blocks that help to preserve image data in the decoding stage. The network has seen great success in the medical field. [U-net success paper].
 
@@ -204,7 +204,7 @@ Training within a GAN is very sensitive to differences in loss between the two n
 
 By tweaking these I should be able to create equally powerful networks. 
 
-\subsubsection{Loss Functions}
+\subsection{Loss Functions}
 
 The loss for each network is computed differently.
 
@@ -220,7 +220,7 @@ In both networks the loss is computed across an entire batch of images and then 
 
 When tracking the progress of the GAN the L1 loss of the produced label vs the real label can be used, as it is independent of the discriminator, and therefore should improve over time. Every epoch I will track the value of this across the validation dataset and use that to inform me about how well our network is training. It should inform me of whether the network is overfitting, underfitting, or training well. 
 
-\subsubsection{Training Strategy}
+\subsection{Training Strategy}
 
 Typical training (gradient descent steps using the loss of the output vs the label) vs GAN (Training a generator to produce the labels and a discriminator to determine if they are from the dataset or not)
 
@@ -241,7 +241,7 @@ b. Batch Size
 
 Mention the fact that when testing it is not feasible to test every combination of these variables. Instead I will test every variation of normalisation method, pick the best, and then use that when testing for the best optimisation function, then use both of those etc. 
 
-\subsection{Analysis/Testing}
+\section{Analysis/Testing}
 
 Using all of the different combinations of parameters that I have outlined in my methodology, I will train models to map from the image set to the label set, and then I will evaluate these in multiple different ways. The most important will be the L1 loss across the validation set, this will measure the mean absolute difference between each pixel in the output of the network and the corresponding label. The smaller this number the closer the network is to achieving a direct mapping from the image set to the label set. 
 
@@ -251,7 +251,7 @@ I will also examine the images qualitatively, do the images look like they are t
 
 \newpage{}
 
-\section{Experimental Results}
+\chapter{Experimental Results}
 
 % Approx 10-15 pages
 
@@ -268,7 +268,7 @@ This model was trained on a computer using an RTX 3070 with 8GB of VRAM, testing
 %Number of days/hours?% 
 days.
 
-\subsection{Best Training Hyperparameters and Model Parameters}
+\section{Best Training Hyperparameters and Model Parameters}
 
 I wanted to find which parameter and hyperparameter combinations would perform the best. I decided to automate this process to save time. I wanted to vary the following:
 \begin{enumerate}
@@ -360,16 +360,16 @@ With this combination we achieved a loss of \(\sim\)1.02 across the validation d
 
 \textbf{Benefits of Residual Connections}
 
-\subsection{Results}
+\section{Results}
 
-\subsection{Evaluation Metrics}
+\section{Evaluation Metrics}
 
-\subsection{Analysis}
+\section{Analysis}
 
 
 \newpage{}
 
-\section{Conclusion}
+\chapter{Conclusion}
 
 % Approx 1-2 pages
 % how it went
