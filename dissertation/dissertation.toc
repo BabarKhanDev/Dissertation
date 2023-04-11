@@ -10,7 +10,7 @@
 \contentsline {subsection}{\numberline {1.4}Structure}{4}{}%
 \contentsline {section}{\numberline {2}Literature Review}{5}{}%
 \contentsline {subsection}{\numberline {2.1}Memorability}{5}{}%
-\contentsline {subsection}{\numberline {2.2}Using Deep Learning to Predict Memorability}{5}{}%
+\contentsline {subsection}{\numberline {2.2}Using Deep Learning to Predict Memorability}{6}{}%
 \contentsline {section}{\numberline {3}Methodology}{7}{}%
 \contentsline {subsection}{\numberline {3.1}Requirements Capture}{7}{}%
 \contentsline {subsection}{\numberline {3.2}Analysis/Design}{7}{}%
