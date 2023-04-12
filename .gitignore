@@ -14,3 +14,5 @@ losses/
 *.fls
 *.synctex.gz
 /dissertation/dissertation.log
+results/
+models/
