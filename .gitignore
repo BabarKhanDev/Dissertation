@@ -7,3 +7,10 @@ coco/val2017.zip
 coco/ann2017.zip
 weights/
 losses/
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+/dissertation/dissertation.log

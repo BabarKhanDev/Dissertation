@@ -1,0 +1,383 @@
+\documentclass{UoYCSproject}
+% Preamble
+\usepackage{url}     % This is needed for IEEE referencing
+\usepackage{bookmark}
+
+\usepackage[backend=biber]{biblatex}
+\addbibresource{references.bib}
+
+% Title Page
+\author{Babar Khan}
+\title{Predicting Memorable Regions Of Images Using Deep Learning and Adversarial Networks}
+\date{Version 1, 2023-April-11}
+\supervisor{Adrian Bors}
+\SWE
+
+% Document
+\begin{document}
+\pagenumbering{roman}
+\maketitle
+
+\newpage{}
+
+\tableofcontents
+
+\newpage{}
+
+\chapter{Introduction}
+
+% This should be 2 pages
+% need to define well what i am doing
+
+\section{Background}
+
+\subsection{We see a lot of images}
+
+We are constantly surrounded by imagery, on the way to work, on the internet, on TV, in stores, etc. Some of them stick out more than others, we see hundreds, if not thousands, of images a day, and yet culturally and individually we all remember the same ones.
+
+\subsection{Cultural vs Individual Memorability}
+
+Due to cultural significance an image can become memorable. The 2015 dress \cite{BBCDress2015}, a country's flag, or the 1932 image “lunch atop a skyscraper” \cite{gambino_2012}, come to mind. I would argue that the memorability of these images is tied to the culture surrounding them, not necessarily due to intrinsic properties within. The focus of this research is on the intrinsic properties within an image that make it memorable to an individual, like seeing an advert on a bus and then later recognising the same advert online.
+
+\subsection{How do we measure the memorability of an image}
+
+% What work has shown independence of memorability from viewer?
+% Isola et al in 2011
+% Vischema dataset experiments
+
+It has been shown that the memorability of an image is an intrinsic property, independent from the viewer \cite{Isola2011, IsolaParikhTorralbaOliva2011, ICCV15_Khosla, isola2014memorability}. This was achieved by performing a memorability game where participants are presented with a stream of images, and on an interval shown an image that they had already seen. Most participants were able, or unable, to remember the same images.
+%I need to check if this is accurate for each of those sources ^^^^%
+How often an image was recognised is proportional to its memorability. %Verify%
+This is taken further by Akagunduz et al. \cite{VischemaPaper} where, in a similar experiment, they measure which regions of images are memorable.
+
+\subsection{Why do we want to create a memorable image}
+
+\subsection{How does this research help to create a memorable image}
+
+\newpage{}
+
+\section{Motivation}
+
+% Why do we want to do this
+% Who will this be useful for
+% What motivates me
+
+\section{What are my goals}
+
+% To create an accurate mapping from images to memorable images
+% How do I define accuracy?
+%   This is dataset specific but as I am using the vischema dataset I can measure accuracy as the L1 Loss between the produced memorability map and the ones present in the dataset.
+
+\section{Structure}
+
+% How is the dissertation laid out.
+
+\newpage{}
+
+\chapter{Literature Review}
+
+% This should be 6-8 pages long
+
+\section{Memorability}
+
+% some much earlier work on the study of memorability
+
+% Roy Brener An experimental investigation of memory span
+% Subjects were presented with units of varying length and were asked to recall them
+% The unit could be a sentence, a digit, a geometric shape, etc
+% It was found that people are not very good at remembering nonsense sylables or sentences but are much better at remembering digits, consonants, and colours. Remembering geometric designs is placed somewhere in the middle.
+% This would seem to indicate that people are not very good at recalling images, however in Nickerson's work we can see that subjects are extremely good at recognising images. 
+
+% R. Nickerson Short-term memory for complex meaningful visual configurations 1965
+% Subjects are shown new and old photos and they have to identify if the photo is new or old
+% P(Ro/So) = ~0.9
+% 95% of all responses were correct
+% subjects were more likely to correctly identify a photo as new than they were to correctly identify a photo as old
+% Shown 1 image at a time with 50% chance of being old and 50% chance of being new
+% 
+
+% L. Standing. Learning 10,000 pictures. In Quarterly Journal of Experimental Psychology, 1973
+% ## What is the goal of this paper ##
+% Memory capacity and retrieval of pictures and words
+% it shows that the capacity for memory of pictures is almost limitless, when measured under appropriate conditions. 
+% People are able to recall images incredibly well  
+% ## What are its limitations ##
+% The experiments don't have many people involved Experment 2 only has 2 subjects and experiment 4, 4.
+% He tested normal and vivid pictures
+%------------
+
+% F. Brady, T. Konkle, G. A. Alvarez, and A. Oliva. Visual long-term memory has a massive storage capacity for object details. In Proceedings of the National Academy of Sciences, 2008
+% This is about how much detail is required to remember an image, rather than if you can just remember it or not
+% Are you truly only able to store the gist of items in your long term memory, or are we capable of more?
+% It is shown that people are able to store far more information than just the gist in their long term memory, we are able to store fine grained details
+% this builds directly onto the world of Standing in 1973
+%------------
+
+In R. Breners work [An experimental investigation of memory span] subject's abilities to remember a series of units was tested, a unit was different depending on the test, 
+\begin{quote}
+    In the digit test, for example, each digit was a unit; in the sentence test each sentence was a unit, etc. ... Each nonsense syllable constituted a unit ... Each consonant constituted a unit ... Each [geometric] design constituded a unit. 
+\end{quote}
+It was found that people are not very good at remembering nonsense sylables or sentences but are much better at remembering digits, consonants, and colours. Remembering geometric designs is placed somewhere in the middle. This is of interest because it's very similar to our investigation into what aspects make images memorable. Brener was interested in consonants, colours, geometric designs, etc but the finding that different units can be significantly harder or easier to remember is useful to us. If we swap out units for image properties such as texture, contrast, saturation etc, or even more abstract features that a CNN may recognise, then it should be possible to find how memorabilty is impacted by these.   
+
+The mean score of 5.31 found for geometric designs seems to indicate that people are not great at recalling images, however in R. Nickerson's work [Short-term memory for complex meaningful visual configurations] we can see the opposite, subjects are found to be extremely good at recognising images. Nickerson found that subjects shown a series of images are, with great accuracy, able to recall if the photo is one they have seen before or not. An item is referred to as "new on its first occurrence and old on its second occurrence"[Short-term memory for complex meaningful visual configurations p.156], it was found that subjects shown one image at a time, each with equal chance of being old or new, are able to correctly distinguish them with 95\% accuracy. 
+
+Like in [Short-term memory for complex meaningful visual configurations],  R. Shephards work [Recognition Memory for Words, Sentences, and Pictures] also found that subjects are able to distinguish with great accuracy new and old images, the mean percentage of images correctly identified was 99.7\% after a delay 2 hours, 92.0\% after a delay of 3 days. 87.0\% after a delay of 7 days, and 57.7\% after a delay of 120 days. The introduction of a delay into Nickerson's experiment allows us to see that regardless of whether the image is in our short-term memory (2 hour delay) or our long-term memory (3-120 days) subjects are able to correctly identify an incredible amount of images. 
+
+L. Standing built on the work of Nickerson, Shepard, and Brener in [Learning 10,000 pictures]. Four experiments were ran which tested memory capacity and retreival speed for pictures and words, I am interested in the performance related to pictures specifically. He found that the capacity for image recognition from memory is almost limitless, when measured under testing conditions. In Standing's first experiment he tested 'normal' and 'vivid' images. He describes 'normal' images as those that "may be characterized as resembling a highly variegated collection of competent snapshots"[Learning 10,000 pictures, p.208], and 'vivid' images are described as "striking pictures ... with definitely interesting subject matter"[Learning 10,000 pictures, p.208]. Much like how in Brener's work [An experimental investigation of memory span] the memorability of an object was variable based on what classification of unit was tested, this work shows that on an even more specific level, the classification of the image into normal or vivid, has an impact on subjects memorabilty, Standing found that the vivid images were more likely to be remembered by subjects.
+
+Lots of work has been done to further build on that of Standing, Nickerson, Brener et al. T. Brady et al. [Visual long-term memory has a massive storage capacity for object details] performed research into how much information is retained in long term memory and found that subjects are able to remember not just the gist of an image, but also fine grain information such as the state of objects within an image, and that they are able to distinguish between variants of objects shown in images. An example shown is an abacus in two different states, 13/14 subjects were able to distinguish which one they had seen before.
+
+% D. A. Brown, I. Neath, and N. Chater. A temporal ratio model of memory. Psych. Review, 2007.
+%An exploration to the extend to which common retrieval princples apply to human memory over short and long timescales
+% Traces of items are represented in memory partyly in terms of how long ago they were observed
+% Similar mechanisms govern retrieval from memory over many different timescales
+
+T. Konkle et al. build further on the work in [Learning 10,000 pictures] and [Visual long-term memory has a massive storage capacity for object details] by studying the impact that categorical distinctness has on memorability. This was tested by creating a dataset of images where composed of categories such as tables, cameras, and bread etc. Each category had between 1 and 16 images, a memory test like those performed in [Learning 10,000 pictures] and [Visual long-term memory has a massive storage capacity for object details] etc was performed and the percentage correctly identified was found to decrease as the number of images within a category increased. From this we can see that categorically distinct images are more likely to be remembered. 
+
+Studies by Isola et al. [1, 11] were performed with the goal of identifying a collection of visual attributes that make images memorable, and to use those to predict the memorability of an image. It was found that properties such as mean saturation, and the log number of objects, has less impact on the memorability score than object statistics. 
+%WTF are object statistics?
+Categories such as: person, person sitting, and floor, were most helpful image memorability. The categories: ceilings, buildings, and mountains, were least helpful. Their approach was limited by the fact that the object statistics were annotated by hand, this would both make automating the process of determining image memorability impossible, and limit them from finding any abstract properties that helped/hindered memorability.
+
+Khosla et al. [4] built on the work in [1, 11] by, instead of determining memorability of an entire image, creating a model that discovers memorability maps of individual images without human annotation. These memorability maps are able to distinguish which areas of an image are remembered, forgotten, or hallucinated. Their approach, similar to Isola et al. in [1, 11], is limited by the arbitrarily picked list of features that define memorability.
+
+\section{Using Deep Learning to Predict Memorability}
+
+Recently, the use of deep convolutional networks [12,13] has proven exceptionally successful in image classification and object recognition. It stands to reason that a combination of these systems could perform well at this task. It could, in the worst case, recognise which objects are within an image, and to use that to help inform how memorable the image is. In the best case, it could learn to extract the features from categories that make them memorable and use this to predict the memorability of categories not yet seen. The weights within a convolutional layer act as filters to recognise patterns within images, through the stacking of these filters we are able to build networks that can recognise complex objects. The main limitation within [1,11,4] is that the features are arbitrarily picked by humans and manually annotated. The use of convolution should make it possible to learn these features automatically.   
+
+% I want to work on this paragraph heavily, maybe even split it into two and discuss more in extensive detail.
+Khosla et al. have created a dataset, LaMem [5], containing 60,000 annotated image and memorability pairs. They use deep learning to predict these memorability maps, this is similar to the VISCHEMA plus dataset [7], which I will be working with. In [7] the network output utilises fully connected layers which I believe is unnecessary, and may even hurt performance. More modern computer vision network structures, such as the U-Net [8] or ResNet [9], use fully convolutional networks. These maintain spatial locality which makes them less prone to overfitting, and also allows them to generalise better. Using deep learning we should be able to automate the process of learning features like those in [1,4,11], by training a fully convolutional network with a sufficiently large dataset such as those presented in [5,7].
+
+% Maybe describe the process of image segmentation
+I propose that predicting memorability maps is an extension of image segmentation, modern machine learning has found many network architectures that would be worth exploring for this problem. Isola et al. created Pix2Pix [10], a deep learning architecture based on Conditional Adversarial Networks. It has found great success but I think that it is too powerful a network for this task, and may cause overfitting, thus a structure akin to this could prove very effective. The U-Net [8] has also found great success in image segmentation, this system however relies on the output being a classification. Something in between these two could work very well.
+
+\newpage{}
+
+\chapter{Methodology}
+
+% I dont think this needs to be long, ~2 pages
+% This should be from a theoretical perspective
+% No need for specific values, just describe what I plan on doing
+% Use general ranges of the params
+
+% Motivation?
+% Network Architecture
+% Generator and Discriminator
+% Loss Functions
+% Training Strategy
+
+
+\section{Requirements Capture}
+
+We have a dataset of images that we will aim to accurately to map onto their corresponding labels. Through learning to map these images onto their corresponding VMS labels, we hope that our system will gain a general understanding of the data, such that when another image that matches our distribution is presented, the system can accurately create a VMS label for that. Ideally our system should create accurate mappings, we can test this by using a loss function such as L1 Loss and through qualitative analysis. 
+
+\section{Analysis/Design}
+
+% Maybe here say what a GAN vs a conditional GAN is 
+% The goal is to train a conditional GAN to generate the iamges in our output.
+% Compare the difference between L1 and L2 loss?
+
+I will create a deep learning image to image model that will be trained on the training data portion of the VISCHEMA PLUS dataset, it will be evaluated on the validation data portion of the dataset. The network will be trained to directly output the corresponding VMS map.
+
+This model will be trained as a Generative Adversarial Network, this GAN will contain a generator network and a discriminator network. The Generator will be an image to image network which maps the image onto a VMS map. The Discriminator will take an image and say if it belongs to the distribution of VMS maps or not. My training loop will be composed of an image label pair being taken from the dataset, the image will be passed into a generator, and then a fake label will be produced. The Discriminator will be passed the input image and a corresponding VMS, either produced by the generator or the real one, and through backpropagation its weights will be updated depending on if it answers correctly or not. The generator will have its weights updated through backpropagation depending on if it can fool the discriminator or not. 
+
+In the pix2pix network the Discriminator produces 2 dimmensional array of boolean values, rather than a single value, describing whether a region of the image is from the labels of the datset, or if it is generated. I will experiment to see which approach produces better results. 
+
+% Maybe include some references to the papers on GANS? 
+
+I will also experiment with training the network to output the composition of the image and the label, and then manually subtract the image after. Because the difference between the image and the label is much greater than the difference between the image and the image + label I suspect that this should be easier for the generator to learn the weights for. This may produce better results and is something I will experiment with, I'm not entirely convinced however because GANs have been shown to struggle when one network is much better than the other, I suspect that the discriminator would have a harder time being able to tell the difference and may make learning impossible. 
+
+\section{Implementation}
+
+I will implement this network in Python using the PyTorch machine learning framework. This is because I am familiar with it rather than it having any advantages over other existing frameworks, and the methodology that I describe should produce the same results in any programming language or framework.
+
+\subsection{Network Architectures}
+
+\textbf{Generator}: I will use a U-Net [U-Net paper] as my image to image network. The U-Net makes use of an Encoder block and a Decoder block, there are residual connections between different sections of the blocks that help to preserve image data in the decoding stage. The network has seen great success in the medical field. [U-net success paper].
+
+\textbf{Discriminator}: I will compare two different discriminators. One such that the range is {0|1}, either real or fake. An alternative presented in [pix2pix paper] is a PatchGAN, this will produce a 2d array that clsasifies each NxN patch within an image as real or fake.
+
+Training within a GAN is very sensitive to differences in loss between the two networks, if one performs much better than the other it can become impossible for the other to improve, therefore I will experiment with different values of the following variables:
+
+1. The Number of layers in the Generator and Discriminator
+
+2. The number of channels in each layer of the Generator and Discriminator
+
+By tweaking these I should be able to create equally powerful networks. 
+
+\subsection{Loss Functions}
+
+The loss for each network is computed differently.
+
+\textbf{Generator Loss}: When training the Generator the loss is the sum of our loss when tricking the discriminator and the pixelwise difference between our produced label and the real label. Our network will produce a fake label, Lf. 
+
+L = MSE(D(Lf, image), 1) + L1(Lf, Lr) 
+
+\textbf{Discriminator Loss}: When training the Discriminator the loss is calculated as the mean value of how close our prediction was to the correct answer across a fake and real label.
+
+L = 0.5 * ( MSE(D(Lf, image), 0) + MSE(D(Lr, image), 1) ) 
+
+In both networks the loss is computed across an entire batch of images and then the weights are adjusted with backpropagation.
+
+When tracking the progress of the GAN the L1 loss of the produced label vs the real label can be used, as it is independent of the discriminator, and therefore should improve over time. Every epoch I will track the value of this across the validation dataset and use that to inform me about how well our network is training. It should inform me of whether the network is overfitting, underfitting, or training well. 
+
+\subsection{Training Strategy}
+
+Typical training (gradient descent steps using the loss of the output vs the label) vs GAN (Training a generator to produce the labels and a discriminator to determine if they are from the dataset or not)
+
+Variables that I will modify:
+1. Normalisation method:
+a. Batch Norm
+b. Layer Norm
+c. Instance Norm
+4. Dropout
+2. Optimisation function:
+a. Adam
+b. SGD
+c. Adagrad
+d. Adadelta
+3. Other Hyperparameters:
+a. Learning Rate
+b. Batch Size
+
+Mention the fact that when testing it is not feasible to test every combination of these variables. Instead I will test every variation of normalisation method, pick the best, and then use that when testing for the best optimisation function, then use both of those etc. 
+
+\section{Analysis/Testing}
+
+Using all of the different combinations of parameters that I have outlined in my methodology, I will train models to map from the image set to the label set, and then I will evaluate these in multiple different ways. The most important will be the L1 loss across the validation set, this will measure the mean absolute difference between each pixel in the output of the network and the corresponding label. The smaller this number the closer the network is to achieving a direct mapping from the image set to the label set. 
+
+I can also use the L1 loss across the training and validation sets to determine if my model has become overfit to the training data. If the L1 loss has become significantly smaller across the training dataset vs the validation dataset, this will imply that the model has become overfit to the training set, and instead of learning the general pattern of the distribution of images, it is instead memorising the mappings. This will be a useful tool during development, and will allow me to make changes to prevent it. If the L1 loss across my train and validation data is similar then it will imply that my network is able to learn a general mapping of the data. If they both stop improving it may mean that some improvements could be made by making the network more complex (either by adding more layers or adding more channels to my layers). 
+
+I will also examine the images qualitatively, do the images look like they are the same, are there any large issues (for example the large blue blobs or yellow areas)
+
+\newpage{}
+
+\chapter{Experimental Results}
+
+% Approx 10-15 pages
+
+% add plots and tables of results and explain them
+% important facts in text
+% compare loss functions
+% explain dataset limitations
+%    solved with gan
+%    in experiments?
+% Put the specs of my computer here along with the time to train
+
+% My computer specs:
+This model was trained on a computer using an RTX 3070 with 8GB of VRAM, testing all of my hyperparameter options took approximately 3 days and I trained my final model over the course of 
+%Number of days/hours?% 
+days.
+
+\section{Best Training Hyperparameters and Model Parameters}
+
+I wanted to find which parameter and hyperparameter combinations would perform the best. I decided to automate this process to save time. I wanted to vary the following:
+\begin{enumerate}
+\item The normalisation layer for both the generator and the discriminator.
+\item The channel layouts for the generator and the discriminator.
+\item The optimiser used for the generator and the discriminator.
+\item The learning rates used for each optimiser.
+\item If the Adam optimiser was found to be ideal for either the generator or discriminator, then to use different beta options.
+\end{enumerate}
+
+\textbf{I explored the following options}:
+
+\textbf{Normalisation layers}: 
+\begin{itemize}
+\item Batch Normalisation
+\item Instance Norm
+\end{itemize}
+\textbf{Generator channel layouts}:
+\begin{itemize}
+\item encoder:(3, 64, 128, 256, 512, 1024), decoder:(1024, 512, 256, 128, 64),
+\item encoder:(3, 32, 64, 128, 256, 512), decoder:(512, 256, 128, 64, 32),
+\item encoder:(3, 50, 100, 200, 400, 800), decoder:(800, 400, 200, 100, 50),
+\item encoder:(3, 100, 200, 400, 800, 1600), decoder:(1600, 800, 400, 200, 100)
+\end{itemize}
+\textbf{Discriminator channel layouts}:
+\begin{itemize}
+\item (6, 64, 128, 256, 512, 1024),
+\item (6, 32, 64 , 128, 256, 512),
+\item (6, 50, 100, 200, 400, 800),
+\item (6, 100, 200, 400, 800, 1600)
+\end{itemize}
+\textbf{Optimisers}:
+\begin{itemize}
+\item SGD, using the following learning rates (0.005, 0.01, 0.02)
+\item Adam, using the following learning rates (0.0005, 0.001, 0.002), and using the following betas ((0.9, 0.999), (0, 0.999), (0.5, 0.999))
+\item Adadelta, using the following learning rates (0.5, 1, 2)
+\end{itemize}
+Exploring this search space exhaustively is unfortunately not feesible, there are over 5000 different combinations possible, and if I tested each combination once for 100 epochs then it would take approximately 300 days to test.
+% how long does it take to train an epoch?
+Instead I will have to explore a subset of this search space. I estimated some good default parameter and hyperparameter values, by varying these values I can lower the scope of the search space to 
+% maybe I should get an exact value here instead of 100
+approximately 100 combinations, which took \(\sim\)3 days to test. Unfortunately this did mean that every combination hasn't been tested, however it should give us a good approximation of the best combination.
+
+\emph{Note: I didn't need to specify default values for the normalisation layer as these were the first variables I tested.}
+
+% is combination the best word?
+\textbf{Default Generator Parameters and Hyperparameters}: 
+\begin{itemize}
+\item Encoder Channel Layout: (3,64,128,256,512,1024)
+\item Decoder Channel Layout: (1024,512,256,128,64)
+\item Optimiser: Adam, betas = (0.9, 0.999)
+\item Learning Rate: 0.001
+\end{itemize}
+\textbf{Default Discriminator Parameters and Hyperparameters}:
+\begin{itemize}
+\item Channel Layout: (6,64,128,256,512,1024)
+\item Optimiser: Adam, betas = (0.9, 0.999)
+\item Learning Rate: 0.001
+\end{itemize}
+I then iterated over each different parameter and hyperparameter and varied each one sequentially. I tested each combination for 100 epochs and used the L1 loss across the validation dataset as the score, if any parameter options performed better than the default then they would be used going forward. This meant that I only had to iterate \(\sim\)100 combinations. This took 3 days to test, and at the end I found that the following combination was the best:
+
+\textbf{Best Generator Parameters and Hyperparameters}:
+\begin{itemize}
+\item Normalisation Layer: Batch Normalisation 
+\item Encoder Channel Layout: (3,32,64,128,256,512)
+\item Decoder Channel Layout: (512, 256, 128, 64,32)
+\item Optimiser: SGD
+\item Learning Rate: 0.01
+\end{itemize}
+\textbf{Best Discriminator Parameters and Hyperparameters}:
+\begin{itemize}
+\item Normalisation Layer: Batch Normalisation 
+\item Channel Layout: (6,100,200,400,800,1600)
+\item Optimiser: Adam, betas = (0.9, 0.999)
+\item Learning Rate: 0.001
+\end{itemize}
+
+With this combination we achieved a loss of \(\sim\)1.02 across the validation dataset. I found other good results using similar combinations. Using the Adam optimiser for both the generator and discriminator achieved a loss of \(\sim\)1.04 across the validation dataset. Using the Adatelta optimiser for the generator and the Adam optimiser for the discriminator achieved a loss of \(\sim\)1.03 across the validation dataset.
+
+%Insert graph of the best combinations results here
+
+\textbf{Varying Normalisation}
+
+\textbf{Varying Optimiser}
+
+\textbf{Varying Loss Function}
+
+\textbf{PatchGAN vs Boolean Discriminator}
+
+\textbf{Benefits of Residual Connections}
+
+\section{Results}
+
+\section{Evaluation Metrics}
+
+\section{Analysis}
+
+
+\newpage{}
+
+\chapter{Conclusion}
+
+% Approx 1-2 pages
+% how it went
+% future work better generator better result
+% applications
+
+\newpage{}
+
+\printbibliography
+
+\end{document}
