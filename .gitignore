@@ -5,3 +5,5 @@ data.zip
 /coco/data_sample
 coco/val2017.zip
 coco/ann2017.zip
+weights/
+losses/
