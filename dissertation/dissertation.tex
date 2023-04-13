@@ -142,13 +142,51 @@ Khosla et al. [4] built on the work in [1, 11] by, instead of determining memora
 
 \section{Using Deep Learning to Predict Memorability}
 
+% How do I want this to flow?
+%   Deep learning intro? talk about it being an image segmentation problem and something about convolution and learning filters
+%   Possible Datasets
+%   Auto Encoders (UNET)
+%   GANS
+%   Diffusion
+%   Alternatives (resnets etc.)
+
+\subsection{Deep learning has seen great success with image synthesis}
+% THIS IS MOSTLY CRAP AND NEEDS MAJOR REWORKING AND FOCUSING
 Recently, the use of deep convolutional networks [12,13] has proven exceptionally successful in image classification and object recognition. It stands to reason that a combination of these systems could perform well at this task. It could, in the worst case, recognise which objects are within an image, and to use that to help inform how memorable the image is. In the best case, it could learn to extract the features from categories that make them memorable and use this to predict the memorability of categories not yet seen. The weights within a convolutional layer act as filters to recognise patterns within images, through the stacking of these filters we are able to build networks that can recognise complex objects. The main limitation within [1,11,4] is that the features are arbitrarily picked by humans and manually annotated. The use of convolution should make it possible to learn these features automatically.   
 
 % I want to work on this paragraph heavily, maybe even split it into two and discuss more in extensive detail.
 Khosla et al. have created a dataset, LaMem [5], containing 60,000 annotated image and memorability pairs. They use deep learning to predict these memorability maps, this is similar to the VISCHEMA plus dataset [7], which I will be working with. In [7] the network output utilises fully connected layers which I believe is unnecessary, and may even hurt performance. More modern computer vision network structures, such as the U-Net [8] or ResNet [9], use fully convolutional networks. These maintain spatial locality which makes them less prone to overfitting, and also allows them to generalise better. Using deep learning we should be able to automate the process of learning features like those in [1,4,11], by training a fully convolutional network with a sufficiently large dataset such as those presented in [5,7].
 
-% Maybe describe the process of image segmentation
+% image segmentation?
+
+\subsection{Auto-Encoders}
+% in 2015 the UNet was introduced, it is an auto encoder that has seen great success
+
+% introduce auto encoders, their weaknesses and their benefits
+    % https://arxiv.org/abs/2003.05991 - Auto-Encoders
+    % Talk about them mathematically, talk about their success in compression and decompression
+    % https://medium.com/edureka/autoencoders-tutorial-cfdcebdefe37 - Auto encoders
+    % http://proceedings.mlr.press/v27/baldi12a/baldi12a.pdf - Original Autoencoder paper 
+% then talk about the UNet and how historically significant it is and why
+    % it is an auto encoder with skip connections - these allow the later decoding layers to retain some of the initial information
+
+
+\subsection{GANs}
+% in 2018? ns on the date, pix2pix was invented, it is a GAN built around the UNet and has also seen great success
+
+% need to introduce GANs, their weaknesses and their benefits
+
 I propose that predicting memorability maps is an extension of image segmentation, modern machine learning has found many network architectures that would be worth exploring for this problem. Isola et al. created Pix2Pix [10], a deep learning architecture based on Conditional Adversarial Networks. It has found great success but I think that it is too powerful a network for this task, and may cause overfitting, thus a structure akin to this could prove very effective. The U-Net [8] has also found great success in image segmentation, this system however relies on the output being a classification. Something in between these two could work very well.
+
+\subsection{Diffusion}
+
+% talk about significance of diffusion, its benefits and weaknesses
+% how it builds ontop of GANs and why they have seen so much success recently
+
+% in 2020? also ns on the date, pallete was invented, a diffusion based model that is built on the unet and has also seen great success
+
+\subsection{Alternatives}
+% A look at resnets
 
 \newpage{}
 
