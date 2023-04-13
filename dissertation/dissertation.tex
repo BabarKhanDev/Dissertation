@@ -176,12 +176,16 @@ Khosla et al. have created a dataset, LaMem [5], containing 60,000 annotated ima
 
 % need to introduce GANs, their weaknesses and their benefits
 
+% You typically cant track the progress of a GAN by looking at the loss of the generator or the discriminator, however after running an epoch of training I can compute the loss of the generator across the validation dataset, independent of the discriminator, this allows us to track the progress of the generator and compare it to other methods.
+
 I propose that predicting memorability maps is an extension of image segmentation, modern machine learning has found many network architectures that would be worth exploring for this problem. Isola et al. created Pix2Pix [10], a deep learning architecture based on Conditional Adversarial Networks. It has found great success but I think that it is too powerful a network for this task, and may cause overfitting, thus a structure akin to this could prove very effective. The U-Net [8] has also found great success in image segmentation, this system however relies on the output being a classification. Something in between these two could work very well.
 
 \subsection{Diffusion}
 
 % talk about significance of diffusion, its benefits and weaknesses
 % how it builds ontop of GANs and why they have seen so much success recently
+
+Diffusion based image generation is inspired by nonequilibrium thermodynamics, it works through a forward diffusion process of adding Gaussian noise to a sample until it has been transformed such that it is no longer distinguishable to a value taken from X \(\sim \) N(0,1). We then train a model to compute a reverse diffusion process. That is, given a value t, and a sample that has been transformed t times, predict the sample at t-1 transformations.  
 
 % Deep Unsupervised Learning using Nonequilibrium Thermodynamics
 % an approach that simultaneously achieves both flexibility and tractability
@@ -194,9 +198,13 @@ I propose that predicting memorability maps is an extension of image segmentatio
 % what is the monte carlo process?
 % This model has extreme flexibility in model structure and exact sampling, 
 % we want to estimate small pertubations to a diffusion process as this is more tractable than explicitly describing the full distribution with a single, non-analytically-normalizable potential function. 
+% Shown on various functions but also on the CIFAR-10 dataset. 
 
 % Generative Modeling by Estimating Gradients of the Data Distribution
+
 % Denoising Diffusion Probabilistic Models
+% they show that diffusion models are capable of generating high quality samples
+
 % Diffusion Models Beat GANS on Image Synthesis
 % Elucidating the Design Space of Diffusion-Based Generative Models
 % On the importance of noise scheduling for diffusion models
