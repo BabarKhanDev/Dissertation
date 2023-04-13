@@ -14,22 +14,22 @@
 \contentsline {section}{\numberline {2.2}Using Deep Learning to Predict Memorability}{x}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}Deep learning has seen great success with image synthesis}{x}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}Auto-Encoders}{xi}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}GANs}{xi}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}Diffusion}{xi}{subsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.2.5}Alternatives}{xi}{subsection.2.2.5}%
-\contentsline {chapter}{\numberline {3}Methodology}{xii}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Requirements Capture}{xii}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Analysis/Design}{xii}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Implementation}{xiii}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Network Architectures}{xiii}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Loss Functions}{xiv}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Training Strategy}{xiv}{subsection.3.3.3}%
-\contentsline {section}{\numberline {3.4}Analysis/Testing}{xv}{section.3.4}%
-\contentsline {chapter}{\numberline {4}Experimental Results}{xvi}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Best Training Hyperparameters and Model Parameters}{xvi}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Results}{xix}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Evaluation Metrics}{xix}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Analysis}{xix}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Conclusion}{xx}{chapter.5}%
+\contentsline {subsection}{\numberline {2.2.3}Generative Adversarial Networks}{xi}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Diffusion Models}{xii}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.5}Alternatives}{xiii}{subsection.2.2.5}%
+\contentsline {chapter}{\numberline {3}Methodology}{xiv}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Requirements Capture}{xiv}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Analysis/Design}{xiv}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Implementation}{xv}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Network Architectures}{xv}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Loss Functions}{xvi}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Training Strategy}{xvi}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}Analysis/Testing}{xvii}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Experimental Results}{xviii}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Best Training Hyperparameters and Model Parameters}{xviii}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Results}{xxi}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Evaluation Metrics}{xxi}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Analysis}{xxi}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Conclusion}{xxii}{chapter.5}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

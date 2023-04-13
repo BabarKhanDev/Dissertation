@@ -158,6 +158,7 @@ Recently, the use of deep convolutional networks [12,13] has proven exceptionall
 Khosla et al. have created a dataset, LaMem [5], containing 60,000 annotated image and memorability pairs. They use deep learning to predict these memorability maps, this is similar to the VISCHEMA plus dataset [7], which I will be working with. In [7] the network output utilises fully connected layers which I believe is unnecessary, and may even hurt performance. More modern computer vision network structures, such as the U-Net [8] or ResNet [9], use fully convolutional networks. These maintain spatial locality which makes them less prone to overfitting, and also allows them to generalise better. Using deep learning we should be able to automate the process of learning features like those in [1,4,11], by training a fully convolutional network with a sufficiently large dataset such as those presented in [5,7].
 
 % image segmentation?
+I propose that predicting memorability maps is an extension of image segmentation, modern machine learning has found many network architectures that would be worth exploring for this problem
 
 \subsection{Auto-Encoders}
 % in 2015 the UNet was introduced, it is an auto encoder that has seen great success
@@ -170,46 +171,43 @@ Khosla et al. have created a dataset, LaMem [5], containing 60,000 annotated ima
 % then talk about the UNet and how historically significant it is and why
     % it is an auto encoder with skip connections - these allow the later decoding layers to retain some of the initial information
 
+The U-Net [8] has also found great success in image segmentation, this system however relies on the output being a classification. Something in between these two could work very well.
 
-\subsection{GANs}
+
+\subsection{Generative Adversarial Networks}
 % in 2018? ns on the date, pix2pix was invented, it is a GAN built around the UNet and has also seen great success
 
 % need to introduce GANs, their weaknesses and their benefits
 
 % You typically cant track the progress of a GAN by looking at the loss of the generator or the discriminator, however after running an epoch of training I can compute the loss of the generator across the validation dataset, independent of the discriminator, this allows us to track the progress of the generator and compare it to other methods.
 
-I propose that predicting memorability maps is an extension of image segmentation, modern machine learning has found many network architectures that would be worth exploring for this problem. Isola et al. created Pix2Pix [10], a deep learning architecture based on Conditional Adversarial Networks. It has found great success but I think that it is too powerful a network for this task, and may cause overfitting, thus a structure akin to this could prove very effective. The U-Net [8] has also found great success in image segmentation, this system however relies on the output being a classification. Something in between these two could work very well.
+Conditional GAN architectures have seen lots of success and produce high quality images, they work through the use of competitive co-evolutionary algorithms where a Generator and a Discriminator will compete. The Generator is typically given a latent space vector and uses that to produce an image, the Discriminator has to determine if that image belongs to a given distribution. In conditional GANS The weights of the two networks are updated through backpropagation based on if they win or lose. The Generator wins by fooling the Discriminator into predicting that the image is from the distribution. The Discriminator wins if it can accurately predict whether an image is from the distribution or not. These networks have seen great success but typically suffer from instability due to their adversarial nature, and often suffer from mode collapse. Despite this, lots of research has gone into producing GANs that produce high quality work.  
 
-\subsection{Diffusion}
+Pix2Pix by Isola et al. [10], is an image-to-image deep learning architecture based on Conditional Generative Adversarial Networks. It is able to convert images from one style into another. For example, it can convert labels into a street scene or photos of daytime into night time. It makes use of a UNet backbone and has found great success. 
+\subsection{Diffusion Models}
 
 % talk about significance of diffusion, its benefits and weaknesses
 % how it builds ontop of GANs and why they have seen so much success recently
 
-Diffusion based image generation is inspired by nonequilibrium thermodynamics, it works through a forward diffusion process of adding Gaussian noise to a sample until it has been transformed such that it is no longer distinguishable to a value taken from X \(\sim \) N(0,1). We then train a model to compute a reverse diffusion process. That is, given a value t, and a sample that has been transformed t times, predict the sample at t-1 transformations.  
+Diffusion based image generation is inspired by nonequilibrium thermodynamics, it works through a forward diffusion process of adding Gaussian noise to a sample until it has been transformed such that it is no longer distinguishable to Gaussian noise, this should follow a diffusion schedule where noise is applied T times. We then train a model to compute a reverse diffusion process. That is, given a value 1 < t < T, and a sample that has been transformed t times, predict the sample at t-1 transformations. When we want to produce a sample, we create $ x_0 \sim N(0,1) $ and apply reverse diffusion to it T times, following our diffusion schedule. 
 
-% Deep Unsupervised Learning using Nonequilibrium Thermodynamics
-% an approach that simultaneously achieves both flexibility and tractability
-% systematically and slowly destroy structure in a data distribution through an iterative forward diffusion process, then learn a reverse diffusion process that restores structure in data
-% tractable models can be analytically evaluated and easily fit to data (e.g. Gaussian or Laplace)?  
-%   Gaussian models are where the distribution is formed from the sum of guass distributions
-%   Laplace models are the same as gauss but from exponential distributions
-%   These models are unable to aptly describe structure in rich datasets
-% Flexible models can fit to structure in arbitrary data
-% what is the monte carlo process?
-% This model has extreme flexibility in model structure and exact sampling, 
-% we want to estimate small pertubations to a diffusion process as this is more tractable than explicitly describing the full distribution with a single, non-analytically-normalizable potential function. 
-% Shown on various functions but also on the CIFAR-10 dataset. 
+Diffusion models were first introduced by J. Sohl-Dickstein et al. (Deep Unsupervised Learning using Nonequilibrium Thermodynamics) as a flexible and tractable machine learning model. They describe the forward diffusion process of systematically destroying the structure in a data distribution and the learning of a backwards process to restore the structure. The method uses a Markov chain to convert $ x_t $ into $ x_{t-1} $. Starting with $ x_T $, a sample of Gaussian noise, a generative Markov chain converts this into $ x_0 $, which is a sample from the target data distribution. Because the model only estimates small pertubations of noise, $ x_t $ given $ x_{t-1} $ , rather than an entire transformation from $ x_0 $ to $ x_T $, it is tractable to train. 
+% does the backwards process definitely start at random noise?
 
 % Generative Modeling by Estimating Gradients of the Data Distribution
+This was then built on by Y. Song and S. Ermon in (Generative Modeling ny Estmating Gradients of the Data Distribution) by using Langevin dynamics 
+% wtf are these?
+% I think it allows the model to learn faster I think
+% more scalable than the work by J. Sohl-Dickstein
 
-% Denoising Diffusion Probabilistic Models
-% they show that diffusion models are capable of generating high quality samples
+The DDPM a diffusion model based on a UNet, introduced by J. Ho et al. (Denoising Diffusion Probabilistic Models) is capable of producing high quality images, they show that it is capable of achieving state of the art FID scores across the CIFAR10 dataset. Dhariwal and Nichol (Diffusion Models Beat GANs on Image Synthesis) show tweaks that allow for diffusion models to achieve state of the art FID scores across the ImageNet dataset and when used in combination with upsampling diffusion further improve FID scores. They do this by using improvements proposed by Song et al. [Denoising diffusion implicit models], Nichol and Dhariwal [Improved denoising diffusion probabilistic models], Song et al. [Score-based generative modeling through stochastic differential equations], [Large scale gan training for high fidelity natural image synthesis] [A style based generator architecture for generative adversarial networks]. Through these improvements they are able to improve image quality while reducing the number of noise steps from 1000 to (in some cases) 50. Through the decrease in noise steps they are able to reduce the amount of time that it takes to generate an image.  
 
-% Diffusion Models Beat GANS on Image Synthesis
 % Elucidating the Design Space of Diffusion-Based Generative Models
-% On the importance of noise scheduling for diffusion models
 
-% Palette: Image-to-Image Diffusion Models
+% On the importance of noise scheduling for diffusion models
+Chen discusses in [On the importance of noise scheduling] how changing the resolution of an image has an impact on the noise scheduling required, he finds that at a smaller resolution the optimal schedule may cause under training for higher resolution images. Multiple strategies are proposed to adjust noise scheduling. Firstly, changing the noise schedule functions to those based on cosine or sigmoid, with temparature scaling. Secondly, reducing the input scaling factor from 1 increases the noise levels which destroys more information at the same noise level. They then combine these into a compound noise scheduling strategy.
+
+
 \subsection{Alternatives}
 % A look at resnets
 
