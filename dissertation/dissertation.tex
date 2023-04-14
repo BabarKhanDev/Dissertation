@@ -2,7 +2,8 @@
 % Preamble
 \usepackage{url}     % This is needed for IEEE referencing
 \usepackage{bookmark}
-
+\usepackage{algpseudocode} % Pseudocode algorithm
+\usepackage{algorithm}
 \usepackage[backend=biber]{biblatex}
 \addbibresource{references.bib}
 
@@ -225,103 +226,129 @@ Chen discusses in [On the importance of noise scheduling] how changing the resol
 % Use general ranges of the params
 
 % Motivation?
-% Network Architecture
-% Generator and Discriminator
-% Loss Functions
-% Training Strategy
-
 
 \section{Requirements Capture}
 
-We have a dataset of images that we will aim to accurately to map onto their corresponding labels. Through learning to map these images onto their corresponding VMS labels, we hope that our system will gain a general understanding of the data, such that when another image that matches our distribution is presented, the system can accurately create a VMS label for that. Ideally our system should create accurate mappings, we can test this by using a loss function such as L1 Loss and through qualitative analysis. 
+The VISCHEMA dataset[Vischema paper] contains image to vms mappings. I aim to use a deep learning model to learn a mapping of these images to their corresponding labels. Our model should learn a general understanding of the mapping such that when it is provided with an image that matches our distribution, it can accurately create a VMS label for it. Our model will need to learn to create accurate mappings and we can test that through a loss function, such as L1, and through qualitative analysis.
 
-\section{Analysis/Design}
+\section{Motivation}
 
-I will create a deep learning image to image model that will be trained on the training data portion of the VISCHEMA PLUS dataset, it will be evaluated on the validation data portion of the dataset. The network will be trained to directly output the corresponding VMS map.
+As standard backpropagation, GANs, and diffusion all produce images in different ways I think it would be interesting to compare how the 3 of them perform when asked the same task. I will run three experiments: I will train a UNet, a GAN, and a diffusion model to produce a VMS label given an image from the dataset. I hope to be able to find the strengths and weaknesses of each of these systems in this application.
 
-I will implement this network in Python using the PyTorch machine learning framework. This is because I am familiar with it rather than it having any advantages over other existing frameworks, and the methodology that I describe should produce the same results in any programming language or framework.
+For each system I will experiment with network parameters and training hyperparameters to fine tune models that produce the best output. I will experiment with training the models to produce the sum of the images and the VMS labels, and with training the models to produce just the VMS label. In the former the VMS label can be calculated from the output. 
 
-I will also experiment with training the network to output the composition of the image and the label, and then manually subtract the image after. Because the difference between the image and the label is much greater than the difference between the image and the image + label I suspect that this should be easier for the generator to learn the weights for. This may produce better results and is something I will experiment with, I'm not entirely convinced however because GANs have been shown to struggle when one network is much better than the other, I suspect that the discriminator would have a harder time being able to tell the difference and may make learning impossible. 
 
 \section{Experiment 1}
 
 \subsection{Implementation}
 \subsection{Model Architectures}
 \subsection{Training Strategy}
-\subsection{Results Analysis/Testing}
 
 \section{Experiment 2}
 
-\subsection{Model Architectures}
-
-I will train a conditional Generative Adversarial Network to generate images of VMS maps given images from the VISCHEMA dataset. The Generator will implemented using a UNet and the Discriminator will be a fully convolutional PatchGAN classifier as described by Isola et al. [Pix2Pix paper], producing a 4x4 array of boolean values given a label, describing whether a region of the image is from the datset, or if it is generated.
+I will train a conditional generative adversarial network to generate images of VMS maps given images from the VISCHEMA dataset. The Generator will implemented using a UNet and the Discriminator will be a fully convolutional PatchGAN classifier as described by Isola et al. in [Pix2Pix paper], producing a 4x4 array of boolean values, describing whether a region of the input image is from the datset, or if it is generated.
 
 \textbf{Generator}: This network takes as input a 64x64x3 tensor of floating point values in the range [-1,1]
 % double check this input range
 It outputs a 64x64x3 tensor of floating point values in the range [-1,1].
 % double check this output range
-This model can be described as $ Label_{fake} = Generator(Image) $
+This model can be described as $ L_{f} = G(I) $
 
-\textbf{Discriminator}: This network takes as input a 64x64x3 tensor of floating point values in the range [-1,1]
+\textbf{Discriminator}: This network takes as input a 64x64x6 tensor of floating point values in the range [-1,1]. The first 3 channels are an image and the second 3 channels are its corresponding label, either real or fake.
 % double check this
 It outputs a 4x4x1 tensor of boolean values. Each value in this output represents a 16x16x3 region of the input.
+This model can be described as $ \{0|1\}^{16} = D(L) $
 
-Training within a GAN is typically unstable [papers showing instability in GANs], if one performs much better than the other it can become impossible for the other to improve, therefore I will experiment with different values for the number of layers and channels in each network.
+Training within a GAN is typically unstable [papers showing instability in GANs], if one performs much better than the other it can become impossible for the other to improve, therefore I will experiment with different values for the number of layers and channels in each network to try and reduce this instability. I will also automate a system to vary the normalisation method, optimisation function, learning rate, and batch size and indicate the best training environment.
 
-The loss for each network is computed differently.
+It is not be feesible to test every combination of these variables. Instead I employ a training strategy to test every variation of a single parameter/hyperparameter, pick the best, and do this looping through every parameter. I will start with choices that I estimate to be good, as this should only improve on them. This will bring the size our search space down by an order of magnitude.  
 
-\textbf{Generator Loss}: The generator loss is the sum of our loss when tricking the discriminator and the pixelwise difference between our produced label and the real label. Our network will produce a fake label, Lf. 
+The loss for each network is computed as described in [pix2pix paper]. The loss is computed across an entire batch of images and then the weights are adjusted with backpropagation.
 
-L = MSE(D(Lf, image), 1) + L1(Lf, Lr) 
+\textbf{Generator Loss}:
+The generator loss describes how well it can trick the discriminator and how closely its output matches the real label for the given image.
+$ L = MSE( D(L_{f}, I), 1 ) + L1(L_{f}, L_{r}) $
 
 \textbf{Discriminator Loss}: When training the Discriminator the loss is calculated as the mean value of how close our prediction was to the correct answer across a fake and real label.
+$ L = 0.5 \times  ( MSE( D( L_{f}, I ), 0) + MSE( D( L_{r}, I ), 1) ) $
 
-L = 0.5 * ( MSE(D(Lf, image), 0) + MSE(D(Lr, image), 1) ) 
+Because these two loss values are relative to the performance of eachother they can't be used to see if our generator has converged on a solution. Therefore it is necessary at each epoch to also compute the L1 loss of the fake labels against the real labels across the validation dataset, as this value is independent of the discriminator. This will inform me of whether the network is overfitting, underfitting, or training well. 
 
-In both networks the loss is computed across an entire batch of images and then the weights are adjusted with backpropagation.
+\textbf{Training Strategy}: Please see algorithm \ref{ALG:GAN} for the training loop.
 
-When tracking the progress of the GAN the L1 loss of the produced label vs the real label can be used, as it is independent of the discriminator, and therefore should improve over time. Every epoch I will track the value of this across the validation dataset and use that to inform me about how well our network is training. It should inform me of whether the network is overfitting, underfitting, or training well. 
-
-\subsection{Training Strategy}
-
-My training loop will be composed of an image label pair being taken from the dataset, the image will be passed into a generator, and then a fake label will be produced. The Discriminator will be passed the input image and a corresponding VMS, either produced by the generator or the real one, and through backpropagation its weights will be updated depending on if it answers correctly or not. The generator will have its weights updated through backpropagation depending on if it can fool the discriminator or not. 
-
-Typical training (gradient descent steps using the loss of the output vs the label) vs GAN (Training a generator to produce the labels and a discriminator to determine if they are from the dataset or not)
-
-Variables that I will modify:
-1. Normalisation method:
-a. Batch Norm
-b. Layer Norm
-c. Instance Norm
-4. Dropout
-2. Optimisation function:
-a. Adam
-b. SGD
-c. Adagrad
-d. Adadelta
-3. Other Hyperparameters:
-a. Learning Rate
-b. Batch Size
-
-Mention the fact that when testing it is not feasible to test every combination of these variables. Instead I will test every variation of normalisation method, pick the best, and then use that when testing for the best optimisation function, then use both of those etc. 
-
-\subsection{Results Analysis/Testing}
-
-Using all of the different combinations of parameters that I have outlined in my methodology, I will train models to map from the image set to the label set, and then I will evaluate these in multiple different ways. The most important will be the L1 loss across the validation set, this will measure the mean absolute difference between each pixel in the output of the network and the corresponding label. The smaller this number the closer the network is to achieving a direct mapping from the image set to the label set. 
-
-I can also use the L1 loss across the training and validation sets to determine if my model has become overfit to the training data. If the L1 loss has become significantly smaller across the training dataset vs the validation dataset, this will imply that the model has become overfit to the training set, and instead of learning the general pattern of the distribution of images, it is instead memorising the mappings. This will be a useful tool during development, and will allow me to make changes to prevent it. If the L1 loss across my train and validation data is similar then it will imply that my network is able to learn a general mapping of the data. If they both stop improving it may mean that some improvements could be made by making the network more complex (either by adding more layers or adding more channels to my layers). 
-
-I will also examine the images qualitatively, do the images look like they are the same, are there any large issues (for example the large blue blobs or yellow areas)
+\begin{algorithm}
+\caption{GAN Training Strategy}\label{ALG:GAN}
+\begin{algorithmic}[1]
+\For{$I, L_{r} \texttt{in training dataloader}$}
+\State
+\State $L_{f} = G(I)$
+\State
+\State $pred_fake = D(L_{f}, I) $
+\State $loss_G = MSE( pred_fake, 1 ) + L1(L_{f}, L_{r}) $
+\State $\texttt{Update weights of G with backpropagation}$
+\State
+\State $pred_real = D(L_{r}, I)$
+\State $loss_D = 0.5 \times  ( MSE( pred_fake, 0) + MSE( pred_real, 1) ) $
+\State $\texttt{Update weights of D with backpropagation}$
+\State
+\EndFor
+\end{algorithmic}
+\end{algorithm}
 
 \section{Experiment 3}
+
+I will train a conditional generative adversarial network to generate images of VMS maps given images from the VISCHEMA dataset. The Generator will implemented using a UNet and the Discriminator will be a fully convolutional PatchGAN classifier as described by Isola et al. in [Pix2Pix paper], producing a 4x4 array of boolean values, describing whether a region of the input image is from the datset, or if it is generated.
+
+\textbf{Diffusion Model}: This network takes as input a 64x64x3 tensor of floating point values in the range [-1,1]
+% double check this input range
+It outputs a 64x64x3 tensor of floating point values in the range [-1,1].
+% double check this output range
+This model can be described as $ L_{f} = G(I) $
+
+Training within a GAN is typically unstable [papers showing instability in GANs], if one performs much better than the other it can become impossible for the other to improve, therefore I will experiment with different values for the number of layers and channels in each network to try and reduce this instability. I will also automate a system to vary the normalisation method, optimisation function, learning rate, and batch size and indicate the best training environment.
+
+It is not be feesible to test every combination of these variables. Instead I employ a training strategy to test every variation of a single parameter/hyperparameter, pick the best, and do this looping through every parameter. I will start with choices that I estimate to be good, as this should only improve on them. This will bring the size our search space down by an order of magnitude.  
+
+The loss for each network is computed as described in [pix2pix paper]. The loss is computed across an entire batch of images and then the weights are adjusted with backpropagation.
+
+\textbf{Model Loss}:
+The model loss describes how well it can trick the discriminator and how closely its output matches the real label for the given image.
+$ L = MSE( D(L_{f}, I), 1 ) + L1(L_{f}, L_{r}) $
+
+% This but for diffusion
+Because these two loss values are relative to the performance of eachother they can't be used to see if our generator has converged on a solution. Therefore it is necessary at each epoch to also compute the L1 loss of the fake labels against the real labels across the validation dataset, as this value is independent of the discriminator. This will inform me of whether the network is overfitting, underfitting, or training well. 
+
+\textbf{Training Strategy}: Please see algorithm \ref{ALG:Diffusion} for the training loop.
+
+\begin{algorithm}
+\caption{GAN Training Strategy}\label{ALG:Diffusion}
+\begin{algorithmic}[1]
+\For{$I, L_{r} \texttt{in training dataloader}$}
+\State
+\State $L_{f} = G(I)$
+\State
+\State $pred_fake = D(L_{f}, I) $
+\State $loss_G = MSE( pred_fake, 1 ) + L1(L_{f}, L_{r}) $
+\State $\texttt{Update weights of G with backpropagation}$
+\State
+\State $pred_real = D(L_{r}, I)$
+\State $loss_D = 0.5 \times  ( MSE( pred_fake, 0) + MSE( pred_real, 1) ) $
+\State $\texttt{Update weights of D with backpropagation}$
+\State
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
 
 \subsection{Implementation}
 \subsection{Model Architectures}
 \subsection{Training Strategy}
-\subsection{Results Analysis/Testing}
 
-\section{Analysis/Design}
+\section{Results Analysis/Testing}
 
+After performing all 3 experiments I will compare the results across the validation dataset qualitatively and using the L1 loss. The L1 loss will tell me how statistically close the outputs are but through qualitative analysis I can see if the outputs have cheated. 
+% need to explain cheating better but basically the large blobs
+I can also compare the L1 loss across the training and validation sets to see if any models have generalised well, if the loss across the training dataset is much smaller/larger than the validation dataset then it will imply that the model has become overfit/underfit respectively. Ideally they should be similar. 
 
 \newpage{}
 
@@ -335,16 +362,25 @@ I will also examine the images qualitatively, do the images look like they are t
 % explain dataset limitations
 %    solved with gan
 %    in experiments?
-% Put the specs of my computer here along with the time to train
 
-% My computer specs:
-This model was trained on a computer using an RTX 3070 with 8GB of VRAM, testing all of my hyperparameter options took approximately 3 days and I trained my final model over the course of 
-%Number of days/hours?% 
-days.
+\section{Experimental Environment}
 
-\section{Best Training Hyperparameters and Model Parameters}
+I have implement the experiments in Python using the PyTorch machine learning framework, however the methodology that I describe should produce the same results in any programming language or framework.
 
-I wanted to find which parameter and hyperparameter combinations would perform the best. I decided to automate this process to save time. I wanted to vary the following:
+This model was trained on a computer using an RTX 3070 with 8GB of VRAM and an AMD Ryzen 3600 with 32GB of system RAM.
+Testing the hyperparameter options for experiment 1 took approximately X days and I trained the final model over the course of Y hours
+% FILL IN X AND Y
+Testing the hyperparameter options for experiment 2 took approximately 3 days and I trained my final model over the course of 5 hours.
+% Need to double check that  
+Testing the hyperparameter options for experiment 1 took approximately X days and I trained the final model over the course of Y hours
+% FILL IN X AND Y
+
+
+\section{Experiment 1}
+
+\section{Experiment 2}
+
+In order to find which parameter and hyperparameter combinations would perform the best I automated a training process which would vary the following:
 \begin{enumerate}
 \item The normalisation layer for both the generator and the discriminator.
 \item The channel layouts for the generator and the discriminator.
@@ -423,6 +459,11 @@ I then iterated over each different parameter and hyperparameter and varied each
 With this combination we achieved a loss of \(\sim\)1.02 across the validation dataset. I found other good results using similar combinations. Using the Adam optimiser for both the generator and discriminator achieved a loss of \(\sim\)1.04 across the validation dataset. Using the Adatelta optimiser for the generator and the Adam optimiser for the discriminator achieved a loss of \(\sim\)1.03 across the validation dataset.
 
 %Insert graph of the best combinations results here
+
+
+\section{Experiment 3}
+
+\section{Comparisons}
 
 \textbf{Varying Normalisation}
 
