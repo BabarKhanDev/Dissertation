@@ -149,19 +149,30 @@ Khosla et al. [4] built on the work in [1, 11] by, instead of determining memora
 %   Auto Encoders (UNET)
 %   GANS
 %   Diffusion
-%   Alternatives (resnets etc.)
 
-\subsection{Deep learning has seen great success with image synthesis}
+\subsection{Memorability Datasets}
+
+% Understanding and predicing image memorability at a large scale
+%A novel experimental procedure to objectively measure human memory, allowing them to build LaMem, the largest annotated image memorability dataset
+% How is it annotated? Memorability Scores in range [0,1]
+% Heat maps?
+% They show that fine-tuned deep features outperform all other features by a large margin
+% They use Hybrid-CNN to classify the categories of objects and scenes. 
+
+Khosla et al. have created a dataset, LaMem [5], containing 60,000 annotated image and memorability pairs. They use deep learning to predict these memorability maps.
+
+This is similar to the VISCHEMA plus dataset [7], which I will be working with. In [7] the network output utilises fully connected layers which I believe is unnecessary, and may even hurt performance. More modern computer vision network structures, such as those in [8,9], use fully convolutional networks. These maintain spatial locality which allows them to generalise better.
+
+Using deep learning we should be able to automate the process of learning features like those in [1,4,11], by training a fully convolutional network with a sufficiently large dataset such as those presented in [5,7].
+
+\subsection{Image Synthesis Models}
+
+I propose that predicting memorability maps is an extension of image segmentation, modern machine learning has found many network architectures that would be worth exploring for this problem
+
 % THIS IS MOSTLY CRAP AND NEEDS MAJOR REWORKING AND FOCUSING
 Recently, the use of deep convolutional networks [12,13] has proven exceptionally successful in image classification and object recognition. It stands to reason that a combination of these systems could perform well at this task. It could, in the worst case, recognise which objects are within an image, and to use that to help inform how memorable the image is. In the best case, it could learn to extract the features from categories that make them memorable and use this to predict the memorability of categories not yet seen. The weights within a convolutional layer act as filters to recognise patterns within images, through the stacking of these filters we are able to build networks that can recognise complex objects. The main limitation within [1,11,4] is that the features are arbitrarily picked by humans and manually annotated. The use of convolution should make it possible to learn these features automatically.   
 
-% I want to work on this paragraph heavily, maybe even split it into two and discuss more in extensive detail.
-Khosla et al. have created a dataset, LaMem [5], containing 60,000 annotated image and memorability pairs. They use deep learning to predict these memorability maps, this is similar to the VISCHEMA plus dataset [7], which I will be working with. In [7] the network output utilises fully connected layers which I believe is unnecessary, and may even hurt performance. More modern computer vision network structures, such as the U-Net [8] or ResNet [9], use fully convolutional networks. These maintain spatial locality which makes them less prone to overfitting, and also allows them to generalise better. Using deep learning we should be able to automate the process of learning features like those in [1,4,11], by training a fully convolutional network with a sufficiently large dataset such as those presented in [5,7].
-
-% image segmentation?
-I propose that predicting memorability maps is an extension of image segmentation, modern machine learning has found many network architectures that would be worth exploring for this problem
-
-\subsection{Auto-Encoders}
+\subsubsection{Auto-Encoders}
 % in 2015 the UNet was introduced, it is an auto encoder that has seen great success
 
 % introduce auto encoders, their weaknesses and their benefits
@@ -176,7 +187,7 @@ The U-Net [8] has also found great success in image segmentation, this system ho
 
 I will use a U-Net [U-Net paper] as my image to image network. The U-Net makes use of an Encoder block and a Decoder block, there are residual connections between different sections of the blocks that help to preserve image data in the decoding stage. The network has seen great success in the medical field. [U-net success paper].
 
-\subsection{Generative Adversarial Networks}
+\subsubsection{Generative Adversarial Networks}
 % in 2018? ns on the date, pix2pix was invented, it is a GAN built around the UNet and has also seen great success
 
 % need to introduce GANs, their weaknesses and their benefits
@@ -189,7 +200,7 @@ I will use a U-Net [U-Net paper] as my image to image network. The U-Net makes u
 Conditional GAN architectures have seen lots of success and produce high quality images, they work through the use of competitive co-evolutionary algorithms where a Generator and a Discriminator will compete. The Generator is typically given a latent space vector and uses that to produce an image, the Discriminator has to determine if that image belongs to a given distribution. In conditional GANS The weights of the two networks are updated through backpropagation based on if they win or lose. The Generator wins by fooling the Discriminator into predicting that the image is from the distribution. The Discriminator wins if it can accurately predict whether an image is from the distribution or not. These networks have seen great success but typically suffer from instability due to their adversarial nature, and often suffer from mode collapse. Despite this, lots of research has gone into producing GANs that produce high quality work.  
 
 Pix2Pix by Isola et al. [10], is an image-to-image deep learning architecture based on Conditional Generative Adversarial Networks. It is able to convert images from one style into another. For example, it can convert labels into a street scene or photos of daytime into night time. It makes use of a UNet backbone and has found great success. 
-\subsection{Diffusion Models}
+\subsubsection{Diffusion Models}
 
 % talk about significance of diffusion, its benefits and weaknesses
 % how it builds ontop of GANs and why they have seen so much success recently
@@ -212,10 +223,6 @@ The DDPM a diffusion model based on a UNet, introduced by J. Ho et al. (Denoisin
 % On the importance of noise scheduling for diffusion models
 Chen discusses in [On the importance of noise scheduling] how changing the resolution of an image has an impact on the noise scheduling required, he finds that at a smaller resolution the optimal schedule may cause under training for higher resolution images. Multiple strategies are proposed to adjust noise scheduling. Firstly, changing the noise schedule functions to those based on cosine or sigmoid, with temparature scaling. Secondly, reducing the input scaling factor from 1 increases the noise levels which destroys more information at the same noise level. They then combine these into a compound noise scheduling strategy.
 
-
-\subsection{Alternatives}
-% A look at resnets
-
 \newpage{}
 
 \chapter{Methodology}
@@ -237,12 +244,36 @@ As standard backpropagation, GANs, and diffusion all produce images in different
 
 For each system I will experiment with network parameters and training hyperparameters to fine tune models that produce the best output. I will experiment with training the models to produce the sum of the images and the VMS labels, and with training the models to produce just the VMS label. In the former the VMS label can be calculated from the output. 
 
+In each experiment I will automate a system to: test the use of different values for the number of layers and channels in each network, vary the normalisation method, optimisation function, learning rate, and batch size to find the best training environment and model parameters. As it is not be feesible to test every combination of these variables, I will employ a training strategy to test every variation of a single parameter/hyperparameter while keeping the rest constant, pick the best scoring variation of that parameter, and move on to the next. I will start with choices that I estimate to be good, as this should only improve on them. This will bring the size our search space down by an order of magnitude, however we won't be exploring the entire search space and will potentially miss out on good values. This will be especially necessary in experiment 2 as training within a GAN is typically unstable [papers showing instability in GANs]. In experiment 3 I will also vary the noise scheduler and the beta values.
 
 \section{Experiment 1}
+% What is the name for this type of training?
 
-\subsection{Implementation}
-\subsection{Model Architectures}
-\subsection{Training Strategy}
+\textbf{Model}: This network is a UNet autoencoder that takes as input a 64x64x3 tensor of floating point values in the range [-1,1], these are the images in our dataset.
+% double check this input range
+It outputs a 64x64x3 tensor of floating point values in the range [-1,1], these are our label estimates.
+% double check this output range
+This model can be described as: \[ L_{pred} = model(I) \]
+
+\textbf{Model Loss}: This is simply the L1 loss between $L_{pred}$ and $L_{real}$, describing how closely the output of our network matches the corresponding label. At each epoch we will calculate this over the training dataset, use that for backpropagation, and then calculate it across the validaton dataset to test how well we have generalised.
+\[ L = L1( model(I), L_{real} ) \]
+
+\textbf{Training Strategy}: Please see algorithm \ref{ALG:Autoencoder} for the training loop.
+
+\begin{algorithm}
+\caption{UNet Autoencoder Training Strategy}\label{ALG:Autoencoder}
+\begin{algorithmic}[1]
+\For{$\texttt{every epoch}$}
+\For{$I, L_{real} \texttt{ in training dataloader}$}
+\State
+\State $L_{pred} = model(I)$
+\State $loss = L1( L_{pred}, L_{real} ) $
+\State $\texttt{Update weights of model with backpropagation}$
+\State
+\EndFor
+\EndFor
+\end{algorithmic}
+\end{algorithm}
 
 \section{Experiment 2}
 
@@ -252,34 +283,32 @@ I will train a conditional generative adversarial network to generate images of 
 % double check this input range
 It outputs a 64x64x3 tensor of floating point values in the range [-1,1].
 % double check this output range
-This model can be described as $ L_{f} = G(I) $
+This model can be described as: \[ L_{f} = G(I) \]
 
 \textbf{Discriminator}: This network takes as input a 64x64x6 tensor of floating point values in the range [-1,1]. The first 3 channels are an image and the second 3 channels are its corresponding label, either real or fake.
 % double check this
 It outputs a 4x4x1 tensor of boolean values. Each value in this output represents a 16x16x3 region of the input.
-This model can be described as $ \{0|1\}^{16} = D(L) $
-
-Training within a GAN is typically unstable [papers showing instability in GANs], if one performs much better than the other it can become impossible for the other to improve, therefore I will experiment with different values for the number of layers and channels in each network to try and reduce this instability. I will also automate a system to vary the normalisation method, optimisation function, learning rate, and batch size and indicate the best training environment.
-
-It is not be feesible to test every combination of these variables. Instead I employ a training strategy to test every variation of a single parameter/hyperparameter, pick the best, and do this looping through every parameter. I will start with choices that I estimate to be good, as this should only improve on them. This will bring the size our search space down by an order of magnitude.  
+This model can be described as: \[ \{0|1\}^{16} = D(L) \]
+% maybe this needs rewriting?
 
 The loss for each network is computed as described in [pix2pix paper]. The loss is computed across an entire batch of images and then the weights are adjusted with backpropagation.
 
 \textbf{Generator Loss}:
-The generator loss describes how well it can trick the discriminator and how closely its output matches the real label for the given image.
-$ L = MSE( D(L_{f}, I), 1 ) + L1(L_{f}, L_{r}) $
+The generator loss describes how well it can trick the discriminator, and how closely its output matches the real label for the given image.
+\[ L = MSE( D(L_{f}, I), 1 ) + L1(L_{f}, L_{r}) \]
 
 \textbf{Discriminator Loss}: When training the Discriminator the loss is calculated as the mean value of how close our prediction was to the correct answer across a fake and real label.
-$ L = 0.5 \times  ( MSE( D( L_{f}, I ), 0) + MSE( D( L_{r}, I ), 1) ) $
+\[ L = 0.5 \times  ( MSE( D( L_{f}, I ), 0) + MSE( D( L_{r}, I ), 1) ) \]
 
-Because these two loss values are relative to the performance of eachother they can't be used to see if our generator has converged on a solution. Therefore it is necessary at each epoch to also compute the L1 loss of the fake labels against the real labels across the validation dataset, as this value is independent of the discriminator. This will inform me of whether the network is overfitting, underfitting, or training well. 
+Because these two loss values are relative to the performance of eachother they can't be used to see if our generator has converged on a solution. Therefore it is necessary, at each epoch, to also compute the L1 loss of the fake labels and real labels across the validation dataset, as this value is independent of the discriminator. This will inform me of whether the generator is overfitting, underfitting, or training well. 
 
 \textbf{Training Strategy}: Please see algorithm \ref{ALG:GAN} for the training loop.
 
 \begin{algorithm}
 \caption{GAN Training Strategy}\label{ALG:GAN}
 \begin{algorithmic}[1]
-\For{$I, L_{r} \texttt{in training dataloader}$}
+\For{$\texttt{every epoch}$}
+\For{$I, L_{r} \texttt{ in training dataloader}$}
 \State
 \State $L_{f} = G(I)$
 \State
@@ -291,58 +320,45 @@ Because these two loss values are relative to the performance of eachother they 
 \State $loss_D = 0.5 \times  ( MSE( pred_fake, 0) + MSE( pred_real, 1) ) $
 \State $\texttt{Update weights of D with backpropagation}$
 \State
+\EndFor
 \EndFor
 \end{algorithmic}
 \end{algorithm}
 
 \section{Experiment 3}
+%
+\textbf{Model}: I will train a diffusion-based model to generate images of VMS maps given images from the VISCHEMA dataset. It will be implemented using a UNet. This network takes as input a 64x64x6 tensor of floating point values, this is the concatenation of an image and the noise added after $t$ steps.
+It outputs a 64x64x3 tensor of floating point values, this is the models estimate of the noise added at time $t-1$.
+This model can be described as \[ noise_{pred} = model(I, t) \]
 
-I will train a conditional generative adversarial network to generate images of VMS maps given images from the VISCHEMA dataset. The Generator will implemented using a UNet and the Discriminator will be a fully convolutional PatchGAN classifier as described by Isola et al. in [Pix2Pix paper], producing a 4x4 array of boolean values, describing whether a region of the input image is from the datset, or if it is generated.
+\textbf{Model Loss}: The model loss describes how well it can estimate the noise added to an image between time steps $t-1$ and t, it is computed across an entire batch of images and then the model weights are adjusted with backpropagation.
 
-\textbf{Diffusion Model}: This network takes as input a 64x64x3 tensor of floating point values in the range [-1,1]
-% double check this input range
-It outputs a 64x64x3 tensor of floating point values in the range [-1,1].
-% double check this output range
-This model can be described as $ L_{f} = G(I) $
-
-Training within a GAN is typically unstable [papers showing instability in GANs], if one performs much better than the other it can become impossible for the other to improve, therefore I will experiment with different values for the number of layers and channels in each network to try and reduce this instability. I will also automate a system to vary the normalisation method, optimisation function, learning rate, and batch size and indicate the best training environment.
-
-It is not be feesible to test every combination of these variables. Instead I employ a training strategy to test every variation of a single parameter/hyperparameter, pick the best, and do this looping through every parameter. I will start with choices that I estimate to be good, as this should only improve on them. This will bring the size our search space down by an order of magnitude.  
-
-The loss for each network is computed as described in [pix2pix paper]. The loss is computed across an entire batch of images and then the weights are adjusted with backpropagation.
-
-\textbf{Model Loss}:
-The model loss describes how well it can trick the discriminator and how closely its output matches the real label for the given image.
-$ L = MSE( D(L_{f}, I), 1 ) + L1(L_{f}, L_{r}) $
+\[ L = MSE( model(I, t), noise_{real} ) \]
 
 % This but for diffusion
-Because these two loss values are relative to the performance of eachother they can't be used to see if our generator has converged on a solution. Therefore it is necessary at each epoch to also compute the L1 loss of the fake labels against the real labels across the validation dataset, as this value is independent of the discriminator. This will inform me of whether the network is overfitting, underfitting, or training well. 
+The loss calculated for backpropagation is relative to the performance in estimating noise added, not for the performance when calculating VMS labels. Because of this I will also have to calculate the L1 loss of the generated labels against the real labels. This will take a lot of computational time so I will do it at the end of training. I will be able to see if our model has converged by observing the backpropagation loss. 
 
 \textbf{Training Strategy}: Please see algorithm \ref{ALG:Diffusion} for the training loop.
 
+% Maybe theres a better way to write this?
+% Look at the papers and see if its there
 \begin{algorithm}
-\caption{GAN Training Strategy}\label{ALG:Diffusion}
+\caption{Diffusion Model Training Strategy}\label{ALG:Diffusion}
 \begin{algorithmic}[1]
-\For{$I, L_{r} \texttt{in training dataloader}$}
+\For{$\texttt{every epoch}$}
+\For{$I, L \texttt{ in training dataloader}$}
 \State
-\State $L_{f} = G(I)$
+\State $t = random(0, noise_steps)$
+\State $noise_{real}, L_{noisy} = noise\_image(L, t)$ \Comment{Apply t steps of noise and return noise added at step t}
 \State
-\State $pred_fake = D(L_{f}, I) $
-\State $loss_G = MSE( pred_fake, 1 ) + L1(L_{f}, L_{r}) $
-\State $\texttt{Update weights of G with backpropagation}$
-\State
-\State $pred_real = D(L_{r}, I)$
-\State $loss_D = 0.5 \times  ( MSE( pred_fake, 0) + MSE( pred_real, 1) ) $
-\State $\texttt{Update weights of D with backpropagation}$
-\State
+\State $input = concatenation(I, L_{noisy})$
+\State $noise_{pred} = model(I, t)$
+\State $loss = MSE( noise_{pred}, Noise_{real} )$
+\State $\texttt{Update weights of model with backpropagation}$
+\EndFor
 \EndFor
 \end{algorithmic}
 \end{algorithm}
-
-
-\subsection{Implementation}
-\subsection{Model Architectures}
-\subsection{Training Strategy}
 
 \section{Results Analysis/Testing}
 
