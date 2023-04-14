@@ -15,7 +15,7 @@
 \contentsline {subsection}{\numberline {2.2.1}Memorability Datasets}{ix}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}Image Synthesis Models}{x}{subsection.2.2.2}%
 \contentsline {subsubsection}{\nonumberline Auto-Encoders}{x}{subsubsection*.4}%
-\contentsline {subsubsection}{\nonumberline Generative Adversarial Networks}{x}{subsubsection*.6}%
+\contentsline {subsubsection}{\nonumberline Generative Adversarial Networks}{xi}{subsubsection*.6}%
 \contentsline {subsubsection}{\nonumberline Diffusion Models}{xi}{subsubsection*.8}%
 \contentsline {chapter}{\numberline {3}Methodology}{xiii}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Requirements Capture}{xiii}{section.3.1}%

@@ -163,7 +163,12 @@ Khosla et al. have created a dataset, LaMem [5], containing 60,000 annotated ima
 
 This is similar to the VISCHEMA plus dataset [7], which I will be working with. In [7] the network output utilises fully connected layers which I believe is unnecessary, and may even hurt performance. More modern computer vision network structures, such as those in [8,9], use fully convolutional networks. These maintain spatial locality which allows them to generalise better.
 
-Using deep learning we should be able to automate the process of learning features like those in [1,4,11], by training a fully convolutional network with a sufficiently large dataset such as those presented in [5,7].
+In both [5,7] they present models that predict memorability maps of the images in the datasets presented, they do this by training a classifier to predict the memorability score of an image, and then to split the image into multiple sections which they then predict the memorability of producing a lower resolution memorability map. 
+
+%This might not be relevant for this section
+I instead propose to use an Image-to-Image model such as those presented in [UNet paper, Pix2Pix paper, diffusion model paper] to take an image from the dataset and predict the memorability map of it from that.
+
+Using an Image-to-Image model we should be able to predict memorability maps of images by training a fully convolutional network with a sufficiently large dataset such as those presented in [5,7].
 
 \subsection{Image Synthesis Models}
 
