@@ -173,6 +173,7 @@ I propose that predicting memorability maps is an extension of image segmentatio
 
 The U-Net [8] has also found great success in image segmentation, this system however relies on the output being a classification. Something in between these two could work very well.
 
+I will use a U-Net [U-Net paper] as my image to image network. The U-Net makes use of an Encoder block and a Decoder block, there are residual connections between different sections of the blocks that help to preserve image data in the decoding stage. The network has seen great success in the medical field. [U-net success paper].
 
 \subsection{Generative Adversarial Networks}
 % in 2018? ns on the date, pix2pix was invented, it is a GAN built around the UNet and has also seen great success
@@ -180,6 +181,9 @@ The U-Net [8] has also found great success in image segmentation, this system ho
 % need to introduce GANs, their weaknesses and their benefits
 
 % You typically cant track the progress of a GAN by looking at the loss of the generator or the discriminator, however after running an epoch of training I can compute the loss of the generator across the validation dataset, independent of the discriminator, this allows us to track the progress of the generator and compare it to other methods.
+
+
+% Maybe here say what a GAN vs a conditional GAN is 
 
 Conditional GAN architectures have seen lots of success and produce high quality images, they work through the use of competitive co-evolutionary algorithms where a Generator and a Discriminator will compete. The Generator is typically given a latent space vector and uses that to produce an image, the Discriminator has to determine if that image belongs to a given distribution. In conditional GANS The weights of the two networks are updated through backpropagation based on if they win or lose. The Generator wins by fooling the Discriminator into predicting that the image is from the distribution. The Discriminator wins if it can accurately predict whether an image is from the distribution or not. These networks have seen great success but typically suffer from instability due to their adversarial nature, and often suffer from mode collapse. Despite this, lots of research has gone into producing GANs that produce high quality work.  
 
@@ -233,43 +237,40 @@ We have a dataset of images that we will aim to accurately to map onto their cor
 
 \section{Analysis/Design}
 
-% Maybe here say what a GAN vs a conditional GAN is 
-% The goal is to train a conditional GAN to generate the iamges in our output.
-% Compare the difference between L1 and L2 loss?
-
 I will create a deep learning image to image model that will be trained on the training data portion of the VISCHEMA PLUS dataset, it will be evaluated on the validation data portion of the dataset. The network will be trained to directly output the corresponding VMS map.
-
-This model will be trained as a Generative Adversarial Network, this GAN will contain a generator network and a discriminator network. The Generator will be an image to image network which maps the image onto a VMS map. The Discriminator will take an image and say if it belongs to the distribution of VMS maps or not. My training loop will be composed of an image label pair being taken from the dataset, the image will be passed into a generator, and then a fake label will be produced. The Discriminator will be passed the input image and a corresponding VMS, either produced by the generator or the real one, and through backpropagation its weights will be updated depending on if it answers correctly or not. The generator will have its weights updated through backpropagation depending on if it can fool the discriminator or not. 
-
-In the pix2pix network the Discriminator produces 2 dimmensional array of boolean values, rather than a single value, describing whether a region of the image is from the labels of the datset, or if it is generated. I will experiment to see which approach produces better results. 
-
-% Maybe include some references to the papers on GANS? 
-
-I will also experiment with training the network to output the composition of the image and the label, and then manually subtract the image after. Because the difference between the image and the label is much greater than the difference between the image and the image + label I suspect that this should be easier for the generator to learn the weights for. This may produce better results and is something I will experiment with, I'm not entirely convinced however because GANs have been shown to struggle when one network is much better than the other, I suspect that the discriminator would have a harder time being able to tell the difference and may make learning impossible. 
-
-\section{Implementation}
 
 I will implement this network in Python using the PyTorch machine learning framework. This is because I am familiar with it rather than it having any advantages over other existing frameworks, and the methodology that I describe should produce the same results in any programming language or framework.
 
-\subsection{Network Architectures}
+I will also experiment with training the network to output the composition of the image and the label, and then manually subtract the image after. Because the difference between the image and the label is much greater than the difference between the image and the image + label I suspect that this should be easier for the generator to learn the weights for. This may produce better results and is something I will experiment with, I'm not entirely convinced however because GANs have been shown to struggle when one network is much better than the other, I suspect that the discriminator would have a harder time being able to tell the difference and may make learning impossible. 
 
-\textbf{Generator}: I will use a U-Net [U-Net paper] as my image to image network. The U-Net makes use of an Encoder block and a Decoder block, there are residual connections between different sections of the blocks that help to preserve image data in the decoding stage. The network has seen great success in the medical field. [U-net success paper].
+\section{Experiment 1}
 
-\textbf{Discriminator}: I will compare two different discriminators. One such that the range is {0|1}, either real or fake. An alternative presented in [pix2pix paper] is a PatchGAN, this will produce a 2d array that clsasifies each NxN patch within an image as real or fake.
+\subsection{Implementation}
+\subsection{Model Architectures}
+\subsection{Training Strategy}
+\subsection{Results Analysis/Testing}
 
-Training within a GAN is very sensitive to differences in loss between the two networks, if one performs much better than the other it can become impossible for the other to improve, therefore I will experiment with different values of the following variables:
+\section{Experiment 2}
 
-1. The Number of layers in the Generator and Discriminator
+\subsection{Model Architectures}
 
-2. The number of channels in each layer of the Generator and Discriminator
+I will train a conditional Generative Adversarial Network to generate images of VMS maps given images from the VISCHEMA dataset. The Generator will implemented using a UNet and the Discriminator will be a fully convolutional PatchGAN classifier as described by Isola et al. [Pix2Pix paper], producing a 4x4 array of boolean values given a label, describing whether a region of the image is from the datset, or if it is generated.
 
-By tweaking these I should be able to create equally powerful networks. 
+\textbf{Generator}: This network takes as input a 64x64x3 tensor of floating point values in the range [-1,1]
+% double check this input range
+It outputs a 64x64x3 tensor of floating point values in the range [-1,1].
+% double check this output range
+This model can be described as $ Label_{fake} = Generator(Image) $
 
-\subsection{Loss Functions}
+\textbf{Discriminator}: This network takes as input a 64x64x3 tensor of floating point values in the range [-1,1]
+% double check this
+It outputs a 4x4x1 tensor of boolean values. Each value in this output represents a 16x16x3 region of the input.
+
+Training within a GAN is typically unstable [papers showing instability in GANs], if one performs much better than the other it can become impossible for the other to improve, therefore I will experiment with different values for the number of layers and channels in each network.
 
 The loss for each network is computed differently.
 
-\textbf{Generator Loss}: When training the Generator the loss is the sum of our loss when tricking the discriminator and the pixelwise difference between our produced label and the real label. Our network will produce a fake label, Lf. 
+\textbf{Generator Loss}: The generator loss is the sum of our loss when tricking the discriminator and the pixelwise difference between our produced label and the real label. Our network will produce a fake label, Lf. 
 
 L = MSE(D(Lf, image), 1) + L1(Lf, Lr) 
 
@@ -282,6 +283,8 @@ In both networks the loss is computed across an entire batch of images and then 
 When tracking the progress of the GAN the L1 loss of the produced label vs the real label can be used, as it is independent of the discriminator, and therefore should improve over time. Every epoch I will track the value of this across the validation dataset and use that to inform me about how well our network is training. It should inform me of whether the network is overfitting, underfitting, or training well. 
 
 \subsection{Training Strategy}
+
+My training loop will be composed of an image label pair being taken from the dataset, the image will be passed into a generator, and then a fake label will be produced. The Discriminator will be passed the input image and a corresponding VMS, either produced by the generator or the real one, and through backpropagation its weights will be updated depending on if it answers correctly or not. The generator will have its weights updated through backpropagation depending on if it can fool the discriminator or not. 
 
 Typical training (gradient descent steps using the loss of the output vs the label) vs GAN (Training a generator to produce the labels and a discriminator to determine if they are from the dataset or not)
 
@@ -302,13 +305,23 @@ b. Batch Size
 
 Mention the fact that when testing it is not feasible to test every combination of these variables. Instead I will test every variation of normalisation method, pick the best, and then use that when testing for the best optimisation function, then use both of those etc. 
 
-\section{Analysis/Testing}
+\subsection{Results Analysis/Testing}
 
 Using all of the different combinations of parameters that I have outlined in my methodology, I will train models to map from the image set to the label set, and then I will evaluate these in multiple different ways. The most important will be the L1 loss across the validation set, this will measure the mean absolute difference between each pixel in the output of the network and the corresponding label. The smaller this number the closer the network is to achieving a direct mapping from the image set to the label set. 
 
 I can also use the L1 loss across the training and validation sets to determine if my model has become overfit to the training data. If the L1 loss has become significantly smaller across the training dataset vs the validation dataset, this will imply that the model has become overfit to the training set, and instead of learning the general pattern of the distribution of images, it is instead memorising the mappings. This will be a useful tool during development, and will allow me to make changes to prevent it. If the L1 loss across my train and validation data is similar then it will imply that my network is able to learn a general mapping of the data. If they both stop improving it may mean that some improvements could be made by making the network more complex (either by adding more layers or adding more channels to my layers). 
 
 I will also examine the images qualitatively, do the images look like they are the same, are there any large issues (for example the large blue blobs or yellow areas)
+
+\section{Experiment 3}
+
+\subsection{Implementation}
+\subsection{Model Architectures}
+\subsection{Training Strategy}
+\subsection{Results Analysis/Testing}
+
+\section{Analysis/Design}
+
 
 \newpage{}
 
