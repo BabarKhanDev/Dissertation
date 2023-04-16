@@ -81,8 +81,6 @@ This is taken further by Akagunduz et al. \cite{VischemaPaper} where, in a simil
 
 \section{Memorability}
 
-% some much earlier work on the study of memorability
-
 % Roy Brener An experimental investigation of memory span
 % Subjects were presented with units of varying length and were asked to recall them
 % The unit could be a sentence, a digit, a geometric shape, etc
@@ -114,32 +112,36 @@ This is taken further by Akagunduz et al. \cite{VischemaPaper} where, in a simil
 % this builds directly onto the world of Standing in 1973
 %------------
 
-In R. Breners work [An experimental investigation of memory span] subject's abilities to remember a series of units was tested, a unit was different depending on the test, 
+In R. Breners work \cite{BrenerMemorySpan} subject's abilities to remember a series of units was tested, a unit was different depending on the test, 
 \begin{quote}
-    In the digit test, for example, each digit was a unit; in the sentence test each sentence was a unit, etc. ... Each nonsense syllable constituted a unit ... Each consonant constituted a unit ... Each [geometric] design constituded a unit. 
+    In the digit test, for example, each digit was a unit; in the sentence test each sentence was a unit, etc. ... Each nonsense syllable constituted a unit ... Each consonant constituted a unit ... Each [geometric] design constituded a unit. \cite[p.468]{BrenerMemorySpan}
 \end{quote}
+% This needs a citation ^
+
 It was found that people are not very good at remembering nonsense sylables or sentences but are much better at remembering digits, consonants, and colours. Remembering geometric designs is placed somewhere in the middle. This is of interest because it's very similar to our investigation into what aspects make images memorable. Brener was interested in consonants, colours, geometric designs, etc but the finding that different units can be significantly harder or easier to remember is useful to us. If we swap out units for image properties such as texture, contrast, saturation etc, or even more abstract features that a CNN may recognise, then it should be possible to find how memorabilty is impacted by these.   
 
-The mean score of 5.31 found for geometric designs seems to indicate that people are not great at recalling images, however in R. Nickerson's work [Short-term memory for complex meaningful visual configurations] we can see the opposite, subjects are found to be extremely good at recognising images. Nickerson found that subjects shown a series of images are, with great accuracy, able to recall if the photo is one they have seen before or not. An item is referred to as "new on its first occurrence and old on its second occurrence"[Short-term memory for complex meaningful visual configurations p.156], it was found that subjects shown one image at a time, each with equal chance of being old or new, are able to correctly distinguish them with 95\% accuracy. 
+The mean score of 5.31 found for geometric designs seems to indicate that people are not great at recalling images, however in R. Nickerson's work \cite{NickersonShortTermMemory} we can see the opposite, subjects are found to be extremely good at recognising images. Nickerson found that subjects shown a series of images are, with great accuracy, able to recall if the photo is one they have seen before or not. An item is referred to as 'new on its first occurrence and old on its second occurrence'\cite[p.156]{NickersonShortTermMemory}, it was found that subjects shown one image at a time, each with equal chance of being old or new, are able to correctly distinguish them with 95\% accuracy. 
 
-Like in [Short-term memory for complex meaningful visual configurations],  R. Shephards work [Recognition Memory for Words, Sentences, and Pictures] also found that subjects are able to distinguish with great accuracy new and old images, the mean percentage of images correctly identified was 99.7\% after a delay 2 hours, 92.0\% after a delay of 3 days. 87.0\% after a delay of 7 days, and 57.7\% after a delay of 120 days. The introduction of a delay into Nickerson's experiment allows us to see that regardless of whether the image is in our short-term memory (2 hour delay) or our long-term memory (3-120 days) subjects are able to correctly identify an incredible amount of images. 
+Like in \cite{NickersonShortTermMemory},  R. Shephards work \cite{ShepardRecognition} also found that subjects are able to distinguish with great accuracy new and old images, the mean percentage of images correctly identified was 99.7\% after a delay 2 hours, 92.0\% after a delay of 3 days. 87.0\% after a delay of 7 days, and 57.7\% after a delay of 120 days. The introduction of a delay into Nickerson's experiment allows us to see that regardless of whether the image is in our short-term memory (2 hour delay) or our long-term memory (3-120 days) subjects are able to correctly identify an incredible amount of images. 
 
-L. Standing built on the work of Nickerson, Shepard, and Brener in [Learning 10,000 pictures]. Four experiments were ran which tested memory capacity and retreival speed for pictures and words, I am interested in the performance related to pictures specifically. He found that the capacity for image recognition from memory is almost limitless, when measured under testing conditions. In Standing's first experiment he tested 'normal' and 'vivid' images. He describes 'normal' images as those that "may be characterized as resembling a highly variegated collection of competent snapshots"[Learning 10,000 pictures, p.208], and 'vivid' images are described as "striking pictures ... with definitely interesting subject matter"[Learning 10,000 pictures, p.208]. Much like how in Brener's work [An experimental investigation of memory span] the memorability of an object was variable based on what classification of unit was tested, this work shows that on an even more specific level, the classification of the image into normal or vivid, has an impact on subjects memorabilty, Standing found that the vivid images were more likely to be remembered by subjects.
+L. Standing built on the work of Nickerson, Shepard, and Brener in \cite{standing10000pictures}. Four experiments were ran which tested memory capacity and retreival speed for pictures and words, I am interested in the performance related to pictures specifically. He found that the capacity for image recognition from memory is almost limitless, when measured under testing conditions. In Standing's first experiment he tested 'normal' and 'vivid' images. He describes 'normal' images as those that 'may be characterized as resembling a highly variegated collection of competent snapshots'\cite[p.208]{standing10000pictures}, and 'vivid' images are described as 'striking pictures ... with definitely interesting subject matter'\cite[p.208]{standing10000pictures}. Much like how in Brener's work \cite{BrenerMemorySpan} the memorability of an object was variable based on what classification of unit was tested, this work shows that on an even more specific level, the classification of the image into normal or vivid, has an impact on subjects memorabilty, Standing found that the vivid images were more likely to be remembered by subjects.
 
-Lots of work has been done to further build on that of Standing, Nickerson, Brener et al. T. Brady et al. [Visual long-term memory has a massive storage capacity for object details] performed research into how much information is retained in long term memory and found that subjects are able to remember not just the gist of an image, but also fine grain information such as the state of objects within an image, and that they are able to distinguish between variants of objects shown in images. An example shown is an abacus in two different states, 13/14 subjects were able to distinguish which one they had seen before.
+Lots of work has been done to further build on that of Standing, Nickerson, Brener et al. T. Brady et al. \cite{brady2008visual} performed research into how much information is retained in long term memory and found that subjects are able to remember not just the gist of an image, but also fine grain information such as the state of objects within an image, and that they are able to distinguish between variants of objects shown in images. An example shown is an abacus in two different states, 13/14 subjects were able to distinguish which one they had seen before.
 
 % D. A. Brown, I. Neath, and N. Chater. A temporal ratio model of memory. Psych. Review, 2007.
 %An exploration to the extend to which common retrieval princples apply to human memory over short and long timescales
 % Traces of items are represented in memory partyly in terms of how long ago they were observed
 % Similar mechanisms govern retrieval from memory over many different timescales
 
-T. Konkle et al. build further on the work in [Learning 10,000 pictures] and [Visual long-term memory has a massive storage capacity for object details] by studying the impact that categorical distinctness has on memorability. This was tested by creating a dataset of images where composed of categories such as tables, cameras, and bread etc. Each category had between 1 and 16 images, a memory test like those performed in [Learning 10,000 pictures] and [Visual long-term memory has a massive storage capacity for object details] etc was performed and the percentage correctly identified was found to decrease as the number of images within a category increased. From this we can see that categorically distinct images are more likely to be remembered. 
+T. Konkle et al. build further on the work in \cite{standing10000pictures, brady2008visual} by studying the impact that categorical distinctness has on memorability. This was tested by creating a dataset of images where composed of categories such as tables, cameras, and bread etc. Each category had between 1 and 16 images, a memory test like those performed in \cite{standing10000pictures, brady2008visual}
+% check which other memory tests this matches
+was performed and the percentage correctly identified was found to decrease as the number of images within a category increased. From this we can see that categorically distinct images are more likely to be remembered. 
 
-Studies by Isola et al. [1, 11] were performed with the goal of identifying a collection of visual attributes that make images memorable, and to use those to predict the memorability of an image. It was found that properties such as mean saturation, and the log number of objects, has less impact on the memorability score than object statistics. 
+Studies by Isola et al. \cite{Isola2011, IsolaParikhTorralbaOliva2011} were performed with the goal of identifying a collection of visual attributes that make images memorable, and to use those to predict the memorability of an image. It was found that properties such as mean saturation, and the log number of objects, has less impact on the memorability score than object statistics. 
 %WTF are object statistics?
 Categories such as: person, person sitting, and floor, were most helpful image memorability. The categories: ceilings, buildings, and mountains, were least helpful. Their approach was limited by the fact that the object statistics were annotated by hand, this would both make automating the process of determining image memorability impossible, and limit them from finding any abstract properties that helped/hindered memorability.
 
-Khosla et al. [4] built on the work in [1, 11] by, instead of determining memorability of an entire image, creating a model that discovers memorability maps of individual images without human annotation. These memorability maps are able to distinguish which areas of an image are remembered, forgotten, or hallucinated. Their approach, similar to Isola et al. in [1, 11], is limited by the arbitrarily picked list of features that define memorability.
+Khosla et al. \cite{NIPS12_Khosla} built on the work in \cite{Isola2011, IsolaParikhTorralbaOliva2011} by, instead of determining memorability of an entire image, creating a model that discovers memorability maps of individual images without human annotation. These memorability maps are able to distinguish which areas of an image are remembered, forgotten, or hallucinated. Their approach, similar to Isola et al. in \cite{Isola2011, IsolaParikhTorralbaOliva2011}, is limited by the arbitrarily picked list of features that define memorability.
 
 \section{Using Deep Learning to Predict Memorability}
 
@@ -159,38 +161,22 @@ Khosla et al. [4] built on the work in [1, 11] by, instead of determining memora
 % They show that fine-tuned deep features outperform all other features by a large margin
 % They use Hybrid-CNN to classify the categories of objects and scenes. 
 
-Khosla et al. have created a dataset, LaMem [5], containing 60,000 annotated image and memorability pairs. They use deep learning to predict these memorability maps.
+Khosla et al. have created a dataset, LaMem \cite{ICCV15_Khosla}, containing 60,000 annotated image and memorability pairs. They use deep learning to predict these memorability maps.
 
-This is similar to the VISCHEMA plus dataset [7], which I will be working with. In [7] the network output utilises fully connected layers which I believe is unnecessary, and may even hurt performance. More modern computer vision network structures, such as those in [8,9], use fully convolutional networks. These maintain spatial locality which allows them to generalise better.
+This is similar to the VISCHEMA plus dataset \cite{VischemaPaper}, which I will be working with. In \cite{VischemaPaper} the network output utilises fully connected layers which I believe is unnecessary, and may even hurt performance. More modern computer vision network structures, such as those in \cite{ronneberger2015unet, goodfellow2014generative, ho2020denoising, isola2018imagetoimage, saharia2022palette}, use fully convolutional networks. These maintain spatial locality which allows them to generalise better.
 
-In both [5,7] they present models that predict memorability maps of the images in the datasets presented, they do this by training a classifier to predict the memorability score of an image, and then to split the image into multiple sections which they then predict the memorability of producing a lower resolution memorability map. 
+In both \cite{VischemaPaper, ICCV15_Khosla} they present models that predict memorability maps of the images in the datasets presented, they do this by training a classifier to predict the memorability score of an image, and then to split the image into multiple sections which they then predict the memorability of producing a lower resolution memorability map. 
 
 %This might not be relevant for this section
-I instead propose to use an Image-to-Image model such as those presented in [UNet paper, Pix2Pix paper, diffusion model paper] to take an image from the dataset and predict the memorability map of it from that.
+I instead propose to use an Image-to-Image model such as those presented in \cite{ronneberger2015unet, isola2018imagetoimage, ho2020denoising} to take an image from the dataset and predict the memorability map of it from that.
 
-Using an Image-to-Image model we should be able to predict memorability maps of images by training a fully convolutional network with a sufficiently large dataset such as those presented in [5,7].
+Using an Image-to-Image model we should be able to predict memorability maps of images by training a fully convolutional network across a dataset such as those presented in \cite{VischemaPaper, ICCV15_Khosla}.
 
 \subsection{Image Synthesis Models}
 
-I propose that predicting memorability maps is an extension of image segmentation, modern machine learning has found many network architectures that would be worth exploring for this problem
+\subsubsection{Autoencoders}
 
-% THIS IS MOSTLY CRAP AND NEEDS MAJOR REWORKING AND FOCUSING
-Recently, the use of deep convolutional networks [12,13] has proven exceptionally successful in image classification and object recognition. It stands to reason that a combination of these systems could perform well at this task. It could, in the worst case, recognise which objects are within an image, and to use that to help inform how memorable the image is. In the best case, it could learn to extract the features from categories that make them memorable and use this to predict the memorability of categories not yet seen. The weights within a convolutional layer act as filters to recognise patterns within images, through the stacking of these filters we are able to build networks that can recognise complex objects. The main limitation within [1,11,4] is that the features are arbitrarily picked by humans and manually annotated. The use of convolution should make it possible to learn these features automatically.   
-
-\subsubsection{Auto-Encoders}
-% in 2015 the UNet was introduced, it is an auto encoder that has seen great success
-
-% introduce auto encoders, their weaknesses and their benefits
-    % https://arxiv.org/abs/2003.05991 - Auto-Encoders
-    % Talk about them mathematically, talk about their success in compression and decompression
-    % https://medium.com/edureka/autoencoders-tutorial-cfdcebdefe37 - Auto encoders
-    % http://proceedings.mlr.press/v27/baldi12a/baldi12a.pdf - Original Autoencoder paper 
-% then talk about the UNet and how historically significant it is and why
-    % it is an auto encoder with skip connections - these allow the later decoding layers to retain some of the initial information
-
-The U-Net [8] has also found great success in image segmentation, this system however relies on the output being a classification. Something in between these two could work very well.
-
-I will use a U-Net [U-Net paper] as my image to image network. The U-Net makes use of an Encoder block and a Decoder block, there are residual connections between different sections of the blocks that help to preserve image data in the decoding stage. The network has seen great success in the medical field. [U-net success paper].
+The autoencoder model is composed of 3 parts, an encoder, a bottleneck, and a decoder, these are typically used for compression. The U-Net \cite{ronneberger2015unet} is a variation of an autoencoder which has also found great success in image segmentation within the medical field. It makes use of residual connections between corresponding layers in the encoder and decoder blocks, these allow the model to preserve data for use in the decoding stage. This architecture is the backbone of many image to image models \cite{isola2018imagetoimage,saharia2022palette,dhariwal2021diffusion}, and has seen many extensions \cite{zhou2020unet, Qin_2020}
 
 \subsubsection{Generative Adversarial Networks}
 % in 2018? ns on the date, pix2pix was invented, it is a GAN built around the UNet and has also seen great success
@@ -202,9 +188,34 @@ I will use a U-Net [U-Net paper] as my image to image network. The U-Net makes u
 
 % Maybe here say what a GAN vs a conditional GAN is 
 
-Conditional GAN architectures have seen lots of success and produce high quality images, they work through the use of competitive co-evolutionary algorithms where a Generator and a Discriminator will compete. The Generator is typically given a latent space vector and uses that to produce an image, the Discriminator has to determine if that image belongs to a given distribution. In conditional GANS The weights of the two networks are updated through backpropagation based on if they win or lose. The Generator wins by fooling the Discriminator into predicting that the image is from the distribution. The Discriminator wins if it can accurately predict whether an image is from the distribution or not. These networks have seen great success but typically suffer from instability due to their adversarial nature, and often suffer from mode collapse. Despite this, lots of research has gone into producing GANs that produce high quality work.  
+GAN architectures\cite{goodfellow2014generative} use competitive co-evolutionary algorithms where a Generator and a Discriminator will compete. The Generator is typically given a latent space vector and uses that to produce an image, the Discriminator has to determine if that image belongs to a given distribution. These networks have seen great success
+%show some examples
+but are typically unstable, requiring a lot of parameter fine tuning.
+%EXAMPLES
+They can also suffer from: non-convergence, mode collapse, and diminished gradients.
+%EXAMPLES!
 
-Pix2Pix by Isola et al. [10], is an image-to-image deep learning architecture based on Conditional Generative Adversarial Networks. It is able to convert images from one style into another. For example, it can convert labels into a street scene or photos of daytime into night time. It makes use of a UNet backbone and has found great success. 
+Lots of work has gone into making GAN models more stable. In \cite{brock2019large} A. Brock et al. found that 'increasing the batch size by a factor of 8 [improved] the state-of-the-art IS by 46\% ... models reach better final performance in fewer iterations, but become unstable and undergo
+complete training collapse'. They found that early stopping is necessary in order to produce high quality images. In \cite{zhao2020differentiable} Z. Shengyu et al. show how using differentiable augmentation on your images increases the quality of the outputted images, and that with a dataset with as little as 100 images they are able to produce high quality outputs. 
+% https://www.youtube.com/watch?v=J97EM3Clyys
+% https://github.com/mit-han-lab/data-efficient-gans/blob/master/DiffAugment-stylegan2-pytorch/DiffAugment_pytorch.py
+% horizontal flips are a good application on the real images
+% You could augment the real images -> this will cause the generator to learn to generate augments, this is bad for augments such as cutout
+% You could augment the real images and the fake images when the discriminator sees them, the generator will have an easier time fooling the discriminator
+% Solution: Augment real and fake images for the discriminator and the generator
+% Need to be able to differentiate the augmentation so that we can update the generators weights using gradient descent
+% How do we make our augmentations differentiable?
+% We provide a torch tensor that represents the images as input, then we randomly sample parameters related to augmentation. e.g. translation amount or cutout coords. Apply this augmentation to the input tensor
+% since it is all done using torch operations, the computational graph will be computed for these functions
+% Kornia can do this for us.
+% pass the augmentation module, kornia, into the discriminator. Apply augments on the input to the discriminator first but only when training 
+
+
+Pix2Pix by Isola et al.\cite{isola2018imagetoimage}, is an image-to-image conditional generative adversarial model based on the UNet \cite{ronneberger2015unet}. It is able to translate images from one style into another. In \cite{arjovsky2017wasserstein} M. Arjovsky et al. introduce a GAN variant based on the Wasserstein distance between the output distribution and the image distribution, the benefit of this is that the Wasserstein distance is continuous and differentiable almost everywhere, reducing the risk of dimminishing gradients. In \cite{pix2pixwasserstein} N. Makow investigated the use of Wasserstein Distance in the Pix2Pix model but unfortunately found that it does not perform much better, I would still like to experiment with it as this dataset is much different from any proposed in Pix2Pix and as Makow states they were unable to perform a complete hyperparameter search.
+
+
+%https://cs230.stanford.edu/projects_spring_2018/reports/8289943.pdf 
+
 \subsubsection{Diffusion Models}
 
 % talk about significance of diffusion, its benefits and weaknesses
@@ -221,12 +232,12 @@ This was then built on by Y. Song and S. Ermon in (Generative Modeling ny Estmat
 % I think it allows the model to learn faster I think
 % more scalable than the work by J. Sohl-Dickstein
 
-The DDPM a diffusion model based on a UNet, introduced by J. Ho et al. (Denoising Diffusion Probabilistic Models) is capable of producing high quality images, they show that it is capable of achieving state of the art FID scores across the CIFAR10 dataset. Dhariwal and Nichol (Diffusion Models Beat GANs on Image Synthesis) show tweaks that allow for diffusion models to achieve state of the art FID scores across the ImageNet dataset and when used in combination with upsampling diffusion further improve FID scores. They do this by using improvements proposed by Song et al. [Denoising diffusion implicit models], Nichol and Dhariwal [Improved denoising diffusion probabilistic models], Song et al. [Score-based generative modeling through stochastic differential equations], [Large scale gan training for high fidelity natural image synthesis] [A style based generator architecture for generative adversarial networks]. Through these improvements they are able to improve image quality while reducing the number of noise steps from 1000 to (in some cases) 50. Through the decrease in noise steps they are able to reduce the amount of time that it takes to generate an image.  
+The DDPM a diffusion model based on a UNet, introduced by J. Ho et al. \cite{ho2020denoising} is capable of producing high quality images, they show that it is capable of achieving state of the art FID scores across the CIFAR10 dataset. Dhariwal and Nichol \cite{dhariwal2021diffusion} show tweaks that allow for diffusion models to achieve state of the art FID scores across the ImageNet dataset and when used in combination with upsampling diffusion further improve FID scores. They do this by using improvements proposed by Song et al. \cite{song2022denoising}, Nichol and Dhariwal \cite{nichol2021improved}, Song et al. \cite{song2021scorebased}, \cite{brock2019large} \cite{karras2019stylebased}. Through these improvements they are able to improve image quality while reducing the number of noise steps from 1000 to (in some cases) 50. Through the decrease in noise steps they are able to reduce the amount of time that it takes to generate an image.  
 
 % Elucidating the Design Space of Diffusion-Based Generative Models
 
 % On the importance of noise scheduling for diffusion models
-Chen discusses in [On the importance of noise scheduling] how changing the resolution of an image has an impact on the noise scheduling required, he finds that at a smaller resolution the optimal schedule may cause under training for higher resolution images. Multiple strategies are proposed to adjust noise scheduling. Firstly, changing the noise schedule functions to those based on cosine or sigmoid, with temparature scaling. Secondly, reducing the input scaling factor from 1 increases the noise levels which destroys more information at the same noise level. They then combine these into a compound noise scheduling strategy.
+Chen discusses in \cite{chen2023importance} how changing the resolution of an image has an impact on the noise scheduling required, he finds that at a smaller resolution the optimal schedule may cause under training for higher resolution images. Multiple strategies are proposed to adjust noise scheduling. Firstly, changing the noise schedule functions to those based on cosine or sigmoid, with temparature scaling. Secondly, reducing the input scaling factor from 1 increases the noise levels which destroys more information at the same noise level. They then combine these into a compound noise scheduling strategy.
 
 \newpage{}
 
@@ -396,8 +407,27 @@ Testing the hyperparameter options for experiment 2 took approximately 3 days an
 Testing the hyperparameter options for experiment 1 took approximately X days and I trained the final model over the course of Y hours
 % FILL IN X AND Y
 
+\section{Hyperparameter tuning}
+
+For experiments 1 and 2 I automated the process of exploring the parameter and hyperparameter search space. In my search I varied the following parameters: The normalisation layer used, the channel layouts used, the optimiser used, the learning rates for the optimiser, and if the Adam optimiser was used the beta values. Because training a diffusion model is far more computationally expensive than training an Autoencoder or a GAN I was unable to automate the process of tuning the hyperparameters. Training a GAN model on the VISCHEMA dataset would typically take around 100 minutes, but, because they need many more epochs, training a diffusion model would take around 20 hours.
 
 \section{Experiment 1}
+
+In this experiment I trained a UNet to predict the VMS maps of images, I trained the model using backpropagation of the L1 loss of the model output given an image, and the corresponding label. 
+
+The best parameters and hyperparameters that I found for my model were the following:
+% Input best hyperparameters
+
+My training graphs:
+% Input training graphs
+
+After X training epochs I was able to achieve an L1 loss across my validation dataset of Y.
+% Input X and Y
+I was also able to achieve a FID score of Z
+% Input Z
+
+A sample of output images:
+% Output images
 
 \section{Experiment 2}
 
