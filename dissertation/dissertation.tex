@@ -407,9 +407,30 @@ Testing the hyperparameter options for experiment 2 took approximately 3 days an
 Testing the hyperparameter options for experiment 1 took approximately X days and I trained the final model over the course of Y hours
 % FILL IN X AND Y
 
+All experiments were performed with differentiable augmentation as described in \cite{zhao2020differentiable}. I performed translation and cutout, each with a 90\% chance.
+% THAT PERCENT MAY CHANGE
+
 \section{Hyperparameter tuning}
 
-For experiments 1 and 2 I automated the process of exploring the parameter and hyperparameter search space. In my search I varied the following parameters: The normalisation layer used, the channel layouts used, the optimiser used, the learning rates for the optimiser, and if the Adam optimiser was used the beta values. Because training a diffusion model is far more computationally expensive than training an Autoencoder or a GAN I was unable to automate the process of tuning the hyperparameters. Training a GAN model on the VISCHEMA dataset would typically take around 100 minutes, but, because they need many more epochs, training a diffusion model would take around 20 hours.
+For experiments 1 and 2 I automated the process of exploring the parameter and hyperparameter search space. In my search I varied the following parameters: The normalisation layer used, the channel layouts used, the optimiser used, the learning rates for the optimiser, and, if the Adam optimiser was used, the beta values. Because training a diffusion model is far more computationally expensive than training an Autoencoder or a GAN I was unable to automate the process of tuning the hyperparameters in experiment 3. Training a GAN model on the VISCHEMA dataset would typically take around 100 minutes, but training a diffusion model would take around 20 hours due to the greater number of epochs required.
+
+
+In experiment 2 I allowed for the generator and discriminator models to use different normalisation functions, optimisers, and learning rates. 
+
+
+Exploring this search space exhaustively is unfortunately not feesible, there are over 5000 different combinations possible, and if I tested each combination once for 100 epochs then it would take approximately 300 days to test per experiment.
+% double check these numbers
+% should I describe this in my methodology or above?
+% how long does it take to train an epoch?
+Instead I will have to explore a subset of this search space. For each experiment I estimated some good default parameter and hyperparameter values, by varying these values I can lower the scope of the search space to 
+% maybe I should get an exact value here instead of 100
+approximately 100 combinations, which took \(\sim\)3 days per experiment to test. Unfortunately this does mean that not every combination has been tested, however we should achieve a good approximation of the best parameters and hyperparameters.
+
+
+% Should this go at the end?
+In experiment 3 I was only able to explore a small range of possible hyperaparameters and as such my results do not emulate the recent success found in diffusion based image generation.
+% papers on the success of diffusion.
+However, with a greater number of computing resources it may be possible to do so.
 
 \section{Experiment 1}
 
@@ -429,108 +450,98 @@ I was also able to achieve a FID score of Z
 A sample of output images:
 % Output images
 
+When performed without differentiable augmentation the results looked like this:
+% Images.
+
+FID score of Z, L1 Loss of Y.
+% Input Z, Y
+
 \section{Experiment 2}
 
-In order to find which parameter and hyperparameter combinations would perform the best I automated a training process which would vary the following:
-\begin{enumerate}
-\item The normalisation layer for both the generator and the discriminator.
-\item The channel layouts for the generator and the discriminator.
-\item The optimiser used for the generator and the discriminator.
-\item The learning rates used for each optimiser.
-\item If the Adam optimiser was found to be ideal for either the generator or discriminator, then to use different beta options.
-\end{enumerate}
+I explored the following parameter and hyperparameter options:
 
-\textbf{I explored the following options}:
+\textbf{Normalisation layers}: Batch Normalisation, Instance Norm
 
-\textbf{Normalisation layers}: 
+\textbf{Channel layouts}:
+I iterated over generator encoder and decoder, and discriminator channel layouts of following form, with values of $c$ from \{32,64,50,100\}:
 \begin{itemize}
-\item Batch Normalisation
-\item Instance Norm
+\item Encoder: (3, $c$, 2$c$, 4$c$, 8$c$, 16$c$), 
+\item Decoder: (16$c$, 8$c$, 4$c$, 2$c$, $c$),
+\item Discriminator: (6, $c$, 2$c$, 4$c$, 8$c$, 16$c$).
 \end{itemize}
-\textbf{Generator channel layouts}:
-\begin{itemize}
-\item encoder:(3, 64, 128, 256, 512, 1024), decoder:(1024, 512, 256, 128, 64),
-\item encoder:(3, 32, 64, 128, 256, 512), decoder:(512, 256, 128, 64, 32),
-\item encoder:(3, 50, 100, 200, 400, 800), decoder:(800, 400, 200, 100, 50),
-\item encoder:(3, 100, 200, 400, 800, 1600), decoder:(1600, 800, 400, 200, 100)
-\end{itemize}
-\textbf{Discriminator channel layouts}:
-\begin{itemize}
-\item (6, 64, 128, 256, 512, 1024),
-\item (6, 32, 64 , 128, 256, 512),
-\item (6, 50, 100, 200, 400, 800),
-\item (6, 100, 200, 400, 800, 1600)
-\end{itemize}
+
 \textbf{Optimisers}:
 \begin{itemize}
-\item SGD, using the following learning rates (0.005, 0.01, 0.02)
-\item Adam, using the following learning rates (0.0005, 0.001, 0.002), and using the following betas ((0.9, 0.999), (0, 0.999), (0.5, 0.999))
-\item Adadelta, using the following learning rates (0.5, 1, 2)
+\item SGD, using the following learning rates: 0.005, 0.01, 0.02,
+\item Adam, using the following learning rates: 0.0005, 0.001, 0.002, and using the following betas values: (0.9, 0.999), (0, 0.999), (0.5, 0.999),
+\item Adadelta, using the following learning rates: 0.5, 1, 2.
 \end{itemize}
-Exploring this search space exhaustively is unfortunately not feesible, there are over 5000 different combinations possible, and if I tested each combination once for 100 epochs then it would take approximately 300 days to test.
-% how long does it take to train an epoch?
-Instead I will have to explore a subset of this search space. I estimated some good default parameter and hyperparameter values, by varying these values I can lower the scope of the search space to 
-% maybe I should get an exact value here instead of 100
-approximately 100 combinations, which took \(\sim\)3 days to test. Unfortunately this did mean that every combination hasn't been tested, however it should give us a good approximation of the best combination.
 
 \emph{Note: I didn't need to specify default values for the normalisation layer as these were the first variables I tested.}
 
-% is combination the best word?
 \textbf{Default Generator Parameters and Hyperparameters}: 
 \begin{itemize}
-\item Encoder Channel Layout: (3,64,128,256,512,1024)
-\item Decoder Channel Layout: (1024,512,256,128,64)
+\item $C$ = 64
 \item Optimiser: Adam, betas = (0.9, 0.999)
 \item Learning Rate: 0.001
 \end{itemize}
 \textbf{Default Discriminator Parameters and Hyperparameters}:
 \begin{itemize}
-\item Channel Layout: (6,64,128,256,512,1024)
+\item $C$ = 64
 \item Optimiser: Adam, betas = (0.9, 0.999)
 \item Learning Rate: 0.001
 \end{itemize}
-I then iterated over each different parameter and hyperparameter and varied each one sequentially. I tested each combination for 100 epochs and used the L1 loss across the validation dataset as the score, if any parameter options performed better than the default then they would be used going forward. This meant that I only had to iterate \(\sim\)100 combinations. This took 3 days to test, and at the end I found that the following combination was the best:
+I iterated over each different parameter and hyperparameter and varied each one sequentially. I tested each combination for 100 epochs and used the L1 loss across the validation dataset as the score, if any new parameter options gave a better L1 score the it would become the default used going forward. This meant that I only had to iterate \(\sim\)100 combinations. I found the following best options.
 
-\textbf{Best Generator Parameters and Hyperparameters}:
-\begin{itemize}
-\item Normalisation Layer: Batch Normalisation 
-\item Encoder Channel Layout: (3,32,64,128,256,512)
-\item Decoder Channel Layout: (512, 256, 128, 64,32)
-\item Optimiser: SGD
-\item Learning Rate: 0.01
-\end{itemize}
-\textbf{Best Discriminator Parameters and Hyperparameters}:
-\begin{itemize}
-\item Normalisation Layer: Batch Normalisation 
-\item Channel Layout: (6,100,200,400,800,1600)
-\item Optimiser: Adam, betas = (0.9, 0.999)
-\item Learning Rate: 0.001
-\end{itemize}
+\textbf{Best Generator}: Batch Normalisation, $C$ = 32, SGD Optimiser with a learning rate of 0.01.
 
-With this combination we achieved a loss of \(\sim\)1.02 across the validation dataset. I found other good results using similar combinations. Using the Adam optimiser for both the generator and discriminator achieved a loss of \(\sim\)1.04 across the validation dataset. Using the Adatelta optimiser for the generator and the Adam optimiser for the discriminator achieved a loss of \(\sim\)1.03 across the validation dataset.
+\textbf{Best Discriminator}: Batch Normalisation, $c$ = 100, Adam optimiser with betas = (0.9, 0.999) and a learning rate of 0.001.
 
-%Insert graph of the best combinations results here
+With this combination we achieved a loss of \(\sim\)1.02 across the validation dataset. I found other good results using similar combinations. Using the Adatelta optimiser for the generator and the Adam optimiser for the discriminator achieved a loss of \(\sim\)1.03 across the validation dataset. Using the Adam optimiser for both the generator and discriminator achieved a loss of \(\sim\)1.04 across the validation dataset.
 
+% Insert graph of the best combinations results here
+% Insert images
+
+FID score of Z, L1 Score of Y
+% Input Z, Y
+
+Here are the images generated when I dont use differentiable augmentation
+% Insert images
+% Insert training graphs
+
+FID score of Z, L1 Score of Y
+% Input Z, Y
+
+\textbf{Wasserstein GAN}: Using a Wasserstein image-to-image GAN as described in \cite{pix2pixwasserstein} I was able to achieve a best score of
+% Insert score here.
+% Insert images.
+
+FID score of Z, L1 Score of Y
+% Input Z, Y
+
+Here are the images generated when I dont use differentiable augmentation
+% Insert images
+% Insert training graphs
+
+FID score of Z, L1 Score of Y
+% Input Z, Y
 
 \section{Experiment 3}
 
-\section{Comparisons}
 
-\textbf{Varying Normalisation}
 
-\textbf{Varying Optimiser}
+\section{Results, Evaluation Metrics, and Analysis}
 
-\textbf{Varying Loss Function}
+a graph of the train/val loss over time across the different experiments
 
-\textbf{PatchGAN vs Boolean Discriminator}
 
-\textbf{Benefits of Residual Connections}
+a graph of the FID score at the end of the different experiments
 
-\section{Results}
 
-\section{Evaluation Metrics}
+a selection of the images with the different training methods
 
-\section{Analysis}
+
+Some discussion about them.
 
 
 \newpage{}

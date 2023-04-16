@@ -2430,6 +2430,8 @@
     <bcf:citekey order="44" intorder="1">brock2019large</bcf:citekey>
     <bcf:citekey order="45" intorder="1">karras2019stylebased</bcf:citekey>
     <bcf:citekey order="46" intorder="1">chen2023importance</bcf:citekey>
+    <bcf:citekey order="47" intorder="1">zhao2020differentiable</bcf:citekey>
+    <bcf:citekey order="48" intorder="1">pix2pixwasserstein</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">
