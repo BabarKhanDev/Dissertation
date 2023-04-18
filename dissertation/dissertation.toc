@@ -16,14 +16,14 @@
 \contentsline {subsection}{\numberline {2.2.2}Image Synthesis Models}{x}{subsection.2.2.2}%
 \contentsline {subsubsection}{\nonumberline Autoencoders}{x}{subsubsection*.4}%
 \contentsline {subsubsection}{\nonumberline Generative Adversarial Networks}{x}{subsubsection*.6}%
-\contentsline {subsubsection}{\nonumberline Diffusion Models}{xi}{subsubsection*.8}%
-\contentsline {chapter}{\numberline {3}Methodology}{xiii}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Requirements Capture}{xiii}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Motivation}{xiii}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Experiment 1}{xiv}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Experiment 2}{xiv}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Experiment 3}{xvi}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Results Analysis/Testing}{xvii}{section.3.6}%
+\contentsline {subsubsection}{\nonumberline Diffusion Models}{x}{subsubsection*.8}%
+\contentsline {chapter}{\numberline {3}Methodology}{xii}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Requirements Capture}{xii}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Motivation}{xii}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Experiment 1}{xiii}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Experiment 2}{xiii}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Experiment 3}{xv}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Results Analysis/Testing}{xvi}{section.3.6}%
 \contentsline {chapter}{\numberline {4}Experimental Results}{xviii}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Experimental Environment}{xviii}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Hyperparameter tuning}{xviii}{section.4.2}%
