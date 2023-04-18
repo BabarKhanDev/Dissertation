@@ -188,33 +188,12 @@ The autoencoder model is composed of 3 parts, an encoder, a bottleneck, and a de
 
 % Maybe here say what a GAN vs a conditional GAN is 
 
-GAN architectures\cite{goodfellow2014generative} use competitive co-evolutionary algorithms where a Generator and a Discriminator will compete. The Generator is typically given a latent space vector and uses that to produce an image, the Discriminator has to determine if that image belongs to a given distribution. These networks have seen great success
+GAN architectures\cite{goodfellow2014generative} use competitive co-evolutionary algorithms where a Generator and a Discriminator compete. The Generator is typically given a latent space vector and uses that to produce an image, the Discriminator has to determine if that image belongs to a given distribution. These networks have seen great success
 %show some examples
 but are typically unstable, requiring a lot of parameter fine tuning.
 %EXAMPLES
 They can also suffer from: non-convergence, mode collapse, and diminished gradients.
 %EXAMPLES!
-
-Lots of work has gone into making GAN models more stable. In \cite{brock2019large} A. Brock et al. found that 'increasing the batch size by a factor of 8 [improved] the state-of-the-art IS by 46\% ... models reach better final performance in fewer iterations, but become unstable and undergo
-complete training collapse'. They found that early stopping is necessary in order to produce high quality images. In \cite{zhao2020differentiable} Z. Shengyu et al. show how using differentiable augmentation on your images increases the quality of the outputted images, and that with a dataset with as little as 100 images they are able to produce high quality outputs. 
-% https://www.youtube.com/watch?v=J97EM3Clyys
-% https://github.com/mit-han-lab/data-efficient-gans/blob/master/DiffAugment-stylegan2-pytorch/DiffAugment_pytorch.py
-% horizontal flips are a good application on the real images
-% You could augment the real images -> this will cause the generator to learn to generate augments, this is bad for augments such as cutout
-% You could augment the real images and the fake images when the discriminator sees them, the generator will have an easier time fooling the discriminator
-% Solution: Augment real and fake images for the discriminator and the generator
-% Need to be able to differentiate the augmentation so that we can update the generators weights using gradient descent
-% How do we make our augmentations differentiable?
-% We provide a torch tensor that represents the images as input, then we randomly sample parameters related to augmentation. e.g. translation amount or cutout coords. Apply this augmentation to the input tensor
-% since it is all done using torch operations, the computational graph will be computed for these functions
-% Kornia can do this for us.
-% pass the augmentation module, kornia, into the discriminator. Apply augments on the input to the discriminator first but only when training 
-
-
-Pix2Pix by Isola et al.\cite{isola2018imagetoimage}, is an image-to-image conditional generative adversarial model based on the UNet \cite{ronneberger2015unet}. It is able to translate images from one style into another. In \cite{arjovsky2017wasserstein} M. Arjovsky et al. introduce a GAN variant based on the Wasserstein distance between the output distribution and the image distribution, the benefit of this is that the Wasserstein distance is continuous and differentiable almost everywhere, reducing the risk of dimminishing gradients. In \cite{pix2pixwasserstein} N. Makow investigated the use of Wasserstein Distance in the Pix2Pix model but unfortunately found that it does not perform much better, I would still like to experiment with it as this dataset is much different from any proposed in Pix2Pix and as Makow states they were unable to perform a complete hyperparameter search.
-
-
-%https://cs230.stanford.edu/projects_spring_2018/reports/8289943.pdf 
 
 \subsubsection{Diffusion Models}
 
@@ -293,30 +272,42 @@ This model can be described as: \[ L_{pred} = model(I) \]
 
 \section{Experiment 2}
 
-I will train a conditional generative adversarial network to generate images of VMS maps given images from the VISCHEMA dataset. The Generator will implemented using a UNet and the Discriminator will be a fully convolutional PatchGAN classifier as described by Isola et al. in [Pix2Pix paper], producing a 4x4 array of boolean values, describing whether a region of the input image is from the datset, or if it is generated.
+I will train a conditional generative adversarial network to generate images of VMS maps given images from the VISCHEMA dataset. I will use an adapted Pix2Pix network \cite{isola2018imagetoimage}, making tweaks that I think will increase performance.
 
-\textbf{Generator}: This network takes as input a 64x64x3 tensor of floating point values in the range [-1,1]
-% double check this input range
-It outputs a 64x64x3 tensor of floating point values in the range [-1,1].
-% double check this output range
-This model can be described as: \[ L_{f} = G(I) \]
+Lots of work has gone into making GAN models more stable and I will use these findings in my own models. In \cite{brock2019large} A. Brock et al. found that when 'increasing the batch size by a factor of 8 ... models reach better final performance in fewer iterations, but become unstable and undergo complete training collapse'. Because of this I will use either early stopping or a low batch size. 
 
-\textbf{Discriminator}: This network takes as input a 64x64x6 tensor of floating point values in the range [-1,1]. The first 3 channels are an image and the second 3 channels are its corresponding label, either real or fake.
-% double check this
-It outputs a 4x4x1 tensor of boolean values. Each value in this output represents a 16x16x3 region of the input.
-This model can be described as: \[ \{0|1\}^{16} = D(L) \]
-% maybe this needs rewriting?
+In \cite{zhao2020differentiable} Z. Shengyu et al. show how using differentiable augmentation on your images increases the quality of the outputted images. With a dataset with as few as 100 images they are able to produce high quality outputs, this is great because the VISCHEMA plus dataset only has 1600 imagesd.
+% Double check this number
 
-The loss for each network is computed as described in [pix2pix paper]. The loss is computed across an entire batch of images and then the weights are adjusted with backpropagation.
+% https://www.youtube.com/watch?v=J97EM3Clyys
+% https://github.com/mit-han-lab/data-efficient-gans/blob/master/DiffAugment-stylegan2-pytorch/DiffAugment_pytorch.py
+% horizontal flips are a good application on the real images
+% You could augment the real images -> this will cause the generator to learn to generate augments, this is bad for augments such as cutout
+% You could augment the real images and the fake images when the discriminator sees them, the generator will have an easier time fooling the discriminator
+% Solution: Augment real and fake images for the discriminator and the generator
+% Need to be able to differentiate the augmentation so that we can update the generators weights using gradient descent
+% How do we make our augmentations differentiable?
+% We provide a torch tensor that represents the images as input, then we randomly sample parameters related to augmentation. e.g. translation amount or cutout coords. Apply this augmentation to the input tensor
+% since it is all done using torch operations, the computational graph will be computed for these functions
+% Kornia can do this for us.
+% pass the augmentation module, kornia, into the discriminator. Apply augments on the input to the discriminator first but only when training 
 
-\textbf{Generator Loss}:
-The generator loss describes how well it can trick the discriminator, and how closely its output matches the real label for the given image.
+%https://cs230.stanford.edu/projects_spring_2018/reports/8289943.pdf 
+Pix2Pix by Isola et al.\cite{isola2018imagetoimage}, is an image-to-image conditional generative adversarial model based on the UNet \cite{ronneberger2015unet}. Designed to translate images from one style into another. In \cite{arjovsky2017wasserstein} M. Arjovsky et al. introduce a GAN variant based on the Wasserstein distance between the output distribution and the image distribution, the benefit of this is that the Wasserstein distance is continuous and differentiable almost everywhere, reducing the risk of dimminishing gradients. In \cite{pix2pixwasserstein} N. Makow investigated the use of Wasserstein Distance in the Pix2Pix model but unfortunately found that it does not perform much better, I would still like to experiment with it as VISCHEMA plus is different from any dataset used in \cite{isola2018imagetoimage} and as Makow states they were unable to perform a complete hyperparameter search, meaning that its possible we could achieve greater results.
+
+\textbf{Generator}: This network takes as input a 64x64x3 tensor of floating point values and outputs a 64x64x3 tensor of floating point values in the range [-1,1]. This model can be described as: \[ L_{f} = G(I) \]
+
+\textbf{Discriminator}: This network takes as input a 64x64x6 tensor of floating point values. Channels 1,2, and 3 are an image and channels 4,5, and 6 are its corresponding label, either real or generated. It outputs a 4x4x1 tensor of boolean values. Each value in this output represents a 16x16x6 region of the input.
+
+The loss for each network is computed as described in [pix2pix paper], across an entire batch of images and then the weights are adjusted with backpropagation. The optimiser used is one of the hyperparameters that we will search for.
+
+\textbf{Generator Loss}: The generator loss describes how well it can trick the discriminator, and how closely its output matches the real label for the given image.
 \[ L = MSE( D(L_{f}, I), 1 ) + L1(L_{f}, L_{r}) \]
 
-\textbf{Discriminator Loss}: When training the Discriminator the loss is calculated as the mean value of how close our prediction was to the correct answer across a fake and real label.
+\textbf{Discriminator Loss}: The discriminator loss describes how accurately it is able to predict, given a label and an image, if the label is real or not.
 \[ L = 0.5 \times  ( MSE( D( L_{f}, I ), 0) + MSE( D( L_{r}, I ), 1) ) \]
 
-Because these two loss values are relative to the performance of eachother they can't be used to see if our generator has converged on a solution. Therefore it is necessary, at each epoch, to also compute the L1 loss of the fake labels and real labels across the validation dataset, as this value is independent of the discriminator. This will inform me of whether the generator is overfitting, underfitting, or training well. 
+Because these two loss values are relative to the performance of eachother they can't be used to see if our generator has converged on a solution. Therefore it is necessary, at each epoch, to also compute the L1 loss of the fake labels and real labels across the training and the validation dataset, as these values are independent of the discriminator. This will inform allow us to see if the generator is overfitting, underfitting, or training well. 
 
 \textbf{Training Strategy}: Please see algorithm \ref{ALG:GAN} for the training loop.
 
