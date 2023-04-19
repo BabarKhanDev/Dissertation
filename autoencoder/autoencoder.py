@@ -15,7 +15,7 @@ import pandas as pd
 
 # Create datasets and dataloaders
 class VISCHEMA_PLUS(Dataset):
-    def __init__(self, dataset_dir = '../VISCHEMA_PLUS/', image_dir = 'images/', label_dir = 'vms/', train = True, transform = None):
+    def __init__(self, dataset_dir = 'VISCHEMA_PLUS/', image_dir = 'images/', label_dir = 'vms/', train = True, transform = None):
         
         if train:
             train_csv = pd.read_csv(f"{dataset_dir}viscplus_train.csv", header = None)
@@ -182,7 +182,7 @@ print('Starting Training')
 for epoch in range(1,num_epochs):
     
     if epoch % 10 == 0:
-        torch.save(model.state_dict(), f'checkpoints/{epoch}.pkl')
+        torch.save(model.state_dict(), f'autoencoder/checkpoints/{epoch}.pkl')
         
     
     # Go into training mode
@@ -235,4 +235,4 @@ plt.xlabel("Epoch")
 plt.ylabel("Loss")
 plt.show()
 
-torch.save(model.state_dict(), '/autoencoder/checkpoints/final_weights.pkl')
+torch.save(model.state_dict(), 'autoencoder/checkpoints/final_weights.pkl')
