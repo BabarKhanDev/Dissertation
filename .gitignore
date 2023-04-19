@@ -16,4 +16,5 @@ losses/
 /dissertation/dissertation.log
 /models
 /results
-/split_dataset
+/pix2pix/split_dataset
+/pix2pix/results
