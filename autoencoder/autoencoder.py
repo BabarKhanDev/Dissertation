@@ -229,9 +229,6 @@ for epoch in range(1,num_epochs):
     print(f'Epoch [{epoch + 1}],Train Loss: {total_train_loss}, Val Loss: {total_val_loss}')
 
 plt.title("Training curve")
-
-print(training_losses)
-print(val_losses)
 plt.plot(range(len(training_losses)),training_losses,'r')
 plt.plot(range(len(val_losses)),val_losses,'g')
 plt.xlabel("Epoch")
@@ -239,24 +236,3 @@ plt.ylabel("Loss")
 plt.show()
 
 torch.save(model.state_dict(), '/autoencoder/checkpoints/final_weights.pkl')
-
-import matplotlib.pyplot as plt
-
-images, labels = next(iter(val_loader))
-images, labels = images.to(device), labels.to(device)
-figure = plt.figure(figsize=(15,15))
-output = model(images)
-cols, rows = 1, 4
-for i in range(cols * rows):
-    figure.add_subplot(rows,cols*3, 3*i+1)
-    plt.axis("off")
-    plt.imshow((images[i,:].cpu().detach().squeeze().permute(1, 2, 0) +1 )/2 )
-    figure.add_subplot(rows,cols*3, 3*i+2)
-    plt.axis("off")
-    plt.imshow((labels[i,:].cpu().detach().squeeze().permute(1, 2, 0) +1 )/2 )
-    figure.add_subplot(rows,cols*3, 3*i+3)
-    plt.axis("off")
-    plt.imshow((output[i,:].cpu().detach().squeeze().permute(1, 2, 0) +1 )/2 )
-    
-plt.tight_layout()
-plt.show()
