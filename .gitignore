@@ -17,3 +17,5 @@ losses/
 /models
 /results
 /saved_images
+/pix2pix/split_dataset
+/pix2pix/results
