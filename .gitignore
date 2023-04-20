@@ -24,3 +24,12 @@ autoencoder/checkpoints/run1/10.pkl
 autoencoder/checkpoints/run1/20.pkl
 autoencoder/checkpoints/run1/30.pkl
 autoencoder/checkpoints/run1/40.pkl
+autoencoder/checkpoints/run2/10.pkl
+autoencoder/checkpoints/run2/20.pkl
+autoencoder/checkpoints/run2/30.pkl
+autoencoder/checkpoints/run2/40.pkl
+autoencoder/checkpoints/run2/50.pkl
+autoencoder/checkpoints/run2/60.pkl
+autoencoder/checkpoints/run2/70.pkl
+autoencoder/checkpoints/run2/80.pkl
+autoencoder/checkpoints/run2/best_weights.pkl
