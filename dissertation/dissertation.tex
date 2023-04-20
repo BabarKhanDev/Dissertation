@@ -188,35 +188,31 @@ The autoencoder model is composed of 3 parts, an encoder, a bottleneck, and a de
 
 % Maybe here say what a GAN vs a conditional GAN is 
 
-GAN architectures\cite{goodfellow2014generative} use competitive co-evolutionary algorithms where a Generator and a Discriminator compete. The Generator is typically given a latent space vector and uses that to produce an image, the Discriminator has to determine if that image belongs to a given distribution. These networks have seen great success
-%show some examples
-but are typically unstable, requiring a lot of parameter fine tuning.
-%EXAMPLES
-They can also suffer from: non-convergence, mode collapse, and diminished gradients.
-%EXAMPLES!
+GAN architectures\cite{goodfellow2014generative} use competitive co-evolutionary algorithms where a Generator and a Discriminator compete. The Generator is typically given a latent space vector and uses that to produce an image, the Discriminator has to determine if that image belongs to a given distribution. These networks have seen great success \cite{zhu2020unpaired, karras2019stylebased, isola2018imagetoimage} but are typically unstable and require a lot of parameter fine tuning. They can also suffer from: non-convergence, mode collapse, and diminished gradients \cite{goodfellow2017nips}.
 
 \subsubsection{Diffusion Models}
 
 % talk about significance of diffusion, its benefits and weaknesses
 % how it builds ontop of GANs and why they have seen so much success recently
 
+Diffusion based generative models work by learning to iteratively remove Gaussian noise from a sample T times until it produces an image from the training domain. The model was first proposed by Sohl-Dickstein et al. \cite{sohldickstein2015deep}, and has been further developed by Y. Song and S. Ermon \cite{song2020generative}, Ho et al. \cite{ho2020denoising},  Dhariwal and Nichol \cite{dhariwal2021diffusion}, and Saharia et al. \cite{saharia2022palette}. 
+
+\begin{center}
+    \rule[1ex]{.5\textwidth}{.5pt}
+\end{center}
+
 Diffusion based image generation is inspired by nonequilibrium thermodynamics, it works through a forward diffusion process of adding Gaussian noise to a sample until it has been transformed such that it is no longer distinguishable to Gaussian noise, this should follow a diffusion schedule where noise is applied T times. We then train a model to compute a reverse diffusion process. That is, given a value 1 < t < T, and a sample that has been transformed t times, predict the sample at t-1 transformations. When we want to produce a sample, we create $ x_0 \sim N(0,1) $ and apply reverse diffusion to it T times, following our diffusion schedule. 
 
-Diffusion models were first introduced by J. Sohl-Dickstein et al. (Deep Unsupervised Learning using Nonequilibrium Thermodynamics) as a flexible and tractable machine learning model. They describe the forward diffusion process of systematically destroying the structure in a data distribution and the learning of a backwards process to restore the structure. The method uses a Markov chain to convert $ x_t $ into $ x_{t-1} $. Starting with $ x_T $, a sample of Gaussian noise, a generative Markov chain converts this into $ x_0 $, which is a sample from the target data distribution. Because the model only estimates small pertubations of noise, $ x_t $ given $ x_{t-1} $ , rather than an entire transformation from $ x_0 $ to $ x_T $, it is tractable to train. 
-% does the backwards process definitely start at random noise?
-
-% Generative Modeling by Estimating Gradients of the Data Distribution
-This was then built on by Y. Song and S. Ermon in (Generative Modeling ny Estmating Gradients of the Data Distribution) by using Langevin dynamics 
+Diffusion models were first introduced by J. Sohl-Dickstein et al. \cite{sohldickstein2015deep} as a flexible and tractable machine learning model. They describe the forward diffusion process of systematically destroying the structure in a data distribution and the learning of a backwards process to restore the structure. The method uses a Markov chain to convert $ x_t $ into $ x_{t-1} $. Starting with $ x_T $, a sample of Gaussian noise, a generative Markov chain converts this into $ x_0 $, which is a sample from the target data distribution. Because the model only estimates small pertubations of noise, $ x_t $ given $ x_{t-1} $ , rather than an entire transformation from $ x_0 $ to $ x_T $, it is tractable to train. This was then built on by Y. Song and S. Ermon in \cite{song2020generative} by using Langevin dynamics.
 % wtf are these?
 % I think it allows the model to learn faster I think
 % more scalable than the work by J. Sohl-Dickstein
-
-The DDPM a diffusion model based on a UNet, introduced by J. Ho et al. \cite{ho2020denoising} is capable of producing high quality images, they show that it is capable of achieving state of the art FID scores across the CIFAR10 dataset. Dhariwal and Nichol \cite{dhariwal2021diffusion} show tweaks that allow for diffusion models to achieve state of the art FID scores across the ImageNet dataset and when used in combination with upsampling diffusion further improve FID scores. They do this by using improvements proposed by Song et al. \cite{song2022denoising}, Nichol and Dhariwal \cite{nichol2021improved}, Song et al. \cite{song2021scorebased}, \cite{brock2019large} \cite{karras2019stylebased}. Through these improvements they are able to improve image quality while reducing the number of noise steps from 1000 to (in some cases) 50. Through the decrease in noise steps they are able to reduce the amount of time that it takes to generate an image.  
+The DDPM, a diffusion model based on a UNet, introduced by J. Ho et al. \cite{ho2020denoising} is capable of producing high quality images, they show that it is capable of achieving state of the art FID scores across the CIFAR10 dataset. Dhariwal and Nichol \cite{dhariwal2021diffusion} show tweaks that allow for diffusion models to achieve state of the art FID scores across the ImageNet dataset and when used in combination with upsampling diffusion further improve FID scores. They do this by using improvements proposed in \cite{song2022denoising, nichol2021improved, song2021scorebased, brock2019large, karras2019stylebased}. Through these improvements they are able to improve image quality while reducing the number of noise steps from 1000 to (in some cases) 50. Through the decrease in noise steps they are able to reduce the amount of time that it takes to generate an image.  
 
 % Elucidating the Design Space of Diffusion-Based Generative Models
 
 % On the importance of noise scheduling for diffusion models
-Chen discusses in \cite{chen2023importance} how changing the resolution of an image has an impact on the noise scheduling required, he finds that at a smaller resolution the optimal schedule may cause under training for higher resolution images. Multiple strategies are proposed to adjust noise scheduling. Firstly, changing the noise schedule functions to those based on cosine or sigmoid, with temparature scaling. Secondly, reducing the input scaling factor from 1 increases the noise levels which destroys more information at the same noise level. They then combine these into a compound noise scheduling strategy.
+Chen discusses in \cite{chen2023importance} how changing the resolution of an image has an impact on the noise scheduling required, he finds that the optimal scheduler at a smaller resolution may cause under training for higher resolution images. Multiple strategies are proposed to adjust noise scheduling. Firstly, changing the noise schedule functions to those based on cosine or sigmoid, with temparature scaling. Secondly, reducing the input scaling factor from 1 increases the noise levels which destroys more information at the same noise level. They then combine these into a compound noise scheduling strategy. Palette is an image to image diffusion model proposed by Saharia et al. \cite{saharia2022palette}, inspired by \cite{isola2018imagetoimage} a conditional denoising diffusion model is used to uncrop, inpaint, colorize, and remove JPEG artifacts from images.
 
 \newpage{}
 
