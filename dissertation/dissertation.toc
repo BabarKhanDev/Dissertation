@@ -1,36 +1,38 @@
 \babel@toc {british}{}\relax 
-\contentsline {chapter}{\numberline {1}Introduction}{iv}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Background}{iv}{section.1.1}%
-\contentsline {subsection}{\numberline {1.1.1}We see a lot of images}{iv}{subsection.1.1.1}%
-\contentsline {subsection}{\numberline {1.1.2}Cultural vs Individual Memorability}{iv}{subsection.1.1.2}%
-\contentsline {subsection}{\numberline {1.1.3}How do we measure the memorability of an image}{iv}{subsection.1.1.3}%
-\contentsline {subsection}{\numberline {1.1.4}Why do we want to create a memorable image}{v}{subsection.1.1.4}%
-\contentsline {subsection}{\numberline {1.1.5}How does this research help to create a memorable image}{v}{subsection.1.1.5}%
-\contentsline {section}{\numberline {1.2}Motivation}{vi}{section.1.2}%
-\contentsline {section}{\numberline {1.3}What are my goals}{vi}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Structure}{vi}{section.1.4}%
-\contentsline {chapter}{\numberline {2}Literature Review}{vii}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Memorability}{vii}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Using Deep Learning to Predict Memorability}{ix}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Memorability Datasets}{ix}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Image Synthesis Models}{x}{subsection.2.2.2}%
-\contentsline {subsubsection}{\nonumberline Autoencoders}{x}{subsubsection*.4}%
-\contentsline {subsubsection}{\nonumberline Generative Adversarial Networks}{x}{subsubsection*.6}%
-\contentsline {subsubsection}{\nonumberline Diffusion Models}{x}{subsubsection*.8}%
-\contentsline {chapter}{\numberline {3}Methodology}{xii}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Requirements Capture}{xii}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Motivation}{xii}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Experiment 1}{xiii}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Experiment 2}{xiii}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Experiment 3}{xv}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Results Analysis/Testing}{xvi}{section.3.6}%
-\contentsline {chapter}{\numberline {4}Experimental Results}{xviii}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Experimental Environment}{xviii}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Hyperparameter tuning}{xviii}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Experiment 1}{xix}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Experiment 2}{xix}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Experiment 3}{xxi}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Results, Evaluation Metrics, and Analysis}{xxi}{section.4.6}%
-\contentsline {chapter}{\numberline {5}Conclusion}{xxii}{chapter.5}%
+\contentsline {chapter}{\numberline {1}Abstract}{v}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Executive Summary}{vi}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Introduction}{vii}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Background}{vii}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}We see a lot of images}{vii}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Cultural vs Individual Memorability}{vii}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}How do we measure the memorability of an image}{vii}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}Why do we want to create a memorable image}{viii}{subsection.3.1.4}%
+\contentsline {subsection}{\numberline {3.1.5}How does this research help to create a memorable image}{viii}{subsection.3.1.5}%
+\contentsline {section}{\numberline {3.2}Motivation}{ix}{section.3.2}%
+\contentsline {section}{\numberline {3.3}What are my goals}{ix}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Structure}{ix}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Literature Review}{x}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Memorability}{x}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Using Deep Learning to Predict Memorability}{xii}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Memorability Datasets}{xii}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Image Synthesis Models}{xiii}{subsection.4.2.2}%
+\contentsline {subsubsection}{\nonumberline Autoencoders}{xiii}{subsubsection*.4}%
+\contentsline {subsubsection}{\nonumberline Generative Adversarial Networks}{xiii}{subsubsection*.6}%
+\contentsline {subsubsection}{\nonumberline Diffusion Models}{xiii}{subsubsection*.8}%
+\contentsline {chapter}{\numberline {5}Methodology}{xv}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Requirements Capture}{xv}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Motivation}{xv}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Experiment 1}{xvi}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Experiment 2}{xvi}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Experiment 3}{xviii}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Results Analysis/Testing}{xix}{section.5.6}%
+\contentsline {chapter}{\numberline {6}Experimental Results}{xxi}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Experimental Environment}{xxi}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Hyperparameter tuning}{xxi}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Experiment 1}{xxii}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Experiment 2}{xxii}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Experiment 3}{xxiv}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Results, Evaluation Metrics, and Analysis}{xxiv}{section.6.6}%
+\contentsline {chapter}{\numberline {7}Conclusion}{xxv}{chapter.7}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
