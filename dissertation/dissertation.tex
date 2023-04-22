@@ -6,6 +6,8 @@
 \usepackage{algorithm}
 \usepackage[backend=biber]{biblatex}
 \addbibresource{references.bib}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
 
 % Title Page
 \author{Babar Khan}
@@ -382,7 +384,7 @@ I can also compare the L1 loss across the training and validation sets to see if
 I have implement the experiments in Python using the PyTorch machine learning framework, however the methodology that I describe should produce the same results in any programming language or framework.
 
 This model was trained on a computer using an RTX 3070 with 8GB of VRAM and an AMD Ryzen 3600 with 32GB of system RAM.
-Testing the hyperparameter options for experiment 1 took approximately X days and I trained the final model over the course of Y hours
+Testing the hyperparameter options for experiment 1 took approximately X days and I trained the final model over the course of 40 minutes.
 % FILL IN X AND Y
 Testing the hyperparameter options for experiment 2 took approximately 3 days and I trained my final model over the course of 5 hours.
 % Need to double check that  
@@ -421,16 +423,33 @@ In this experiment I trained a UNet to predict the VMS maps of images, I trained
 The best parameters and hyperparameters that I found for my model were the following:
 % Input best hyperparameters
 
-My training graphs:
-% Input training graphs
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{Autoencoder Training Curve}
+    \caption{Autoencoder training graph. The red plot describes the training loss per epoch and the green plot the validation loss. The validation loss closely matches the training loss and the model does not become overfit.}
+    \label{fig:autoencoderTraining}
+\end{figure}
 
-After X training epochs I was able to achieve an L1 loss across my validation dataset of Y.
-% Input X and Y
-I was also able to achieve a FID score of Z
-% Input Z
 
-A sample of output images:
-% Output images
+After 80 training epochs I was able to achieve an L1 loss across my validation dataset of ~0.132.
+
+A sample of best output images:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{Best autoencoder Outputs}
+    \caption{Best Autoencoder Outputs}
+    \label{fig:autoencoderBestOutput}
+\end{figure}
+
+A sample of the worst output images:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{Worst autoencoder Outputs}
+    \caption{Worst Autoencoder Outputs}
+    \label{fig:autoencoderWorstOutput}
+\end{figure}
 
 When performed without differentiable augmentation the results looked like this:
 % Images.
@@ -481,18 +500,45 @@ I iterated over each different parameter and hyperparameter and varied each one 
 
 With this combination we achieved a loss of \(\sim\)1.02 across the validation dataset. I found other good results using similar combinations. Using the Adatelta optimiser for the generator and the Adam optimiser for the discriminator achieved a loss of \(\sim\)1.03 across the validation dataset. Using the Adam optimiser for both the generator and discriminator achieved a loss of \(\sim\)1.04 across the validation dataset.
 
+% THE ABOVE IS BS AND NEEDS CHANGING
+
+Best results:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{Best GAN Outputs}
+    \caption{Best GAN Outputs}
+    \label{fig:GANBestOutput}
+\end{figure}
+
+Favourite Results:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{Good GAN Outputs}
+    \caption{Favourite GAN Outputs}
+    \label{fig:GANGoodOutput}
+\end{figure}
+
+Worst results:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{Worst GAN Outputs}
+    \caption{Worst GAN Outputs}
+    \label{fig:GANWorstOutput}
+\end{figure}
+
+
 % Insert graph of the best combinations results here
 % Insert images
 
-FID score of Z, L1 Score of Y
-% Input Z, Y
+After 200 epochs, L1 Score of ~0.0740
+% Insert X,Y
 
 Here are the images generated when I dont use differentiable augmentation
 % Insert images
 % Insert training graphs
 
-FID score of Z, L1 Score of Y
-% Input Z, Y
+After X epochs L1 Score of Y
+% Input X, Y
 
 \textbf{Wasserstein GAN}: Using a Wasserstein image-to-image GAN as described in \cite{pix2pixwasserstein} I was able to achieve a best score of
 % Insert score here.
