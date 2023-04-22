@@ -28,12 +28,13 @@
 %The purpose of the research (what's it about and why's that important)
 I investigate a range of conditional image to image generative models to learn which regions of a given image are memorable.
 %The methodology (how you carried out the research)
-This was conducted by training a variety of models across the VISCHEMA dataset, learning to generate memorability maps from input images.
+This was conducted by training a variety of models to predict memorability maps given the respective image from the VISCHEMA dataset.
 %The key research findings (what answers you found)
-I have found that Autoencoders learn a very general model and seem to smooth out the blocky VMS shape into circular shapes that fade towards the edges.
-GAN models can be difficult to work with, require lots of hyperparameter tuning, and if you use a traditional loss such as L1 or MSE, it can be impossible to see if they have converged. Lots of research has gone into creating versitile and robust GAN architectures, picking one of those and adapting it to your needs can reduce your development time considerably. That being said GAN models are able to far more accurately generate the VMS models across our validation distribution than autoencoders, they maintain the blocky shape of the regions and achieve higher L1 losses.
-% MAKE SURE THIS IS STILL TRUE AT THE END. 
-Diffusion models take longer to train than GAN and autoencoder models, while they can produce high quality images [Maybe cite Dalle-2, imagen, others], the training loop requires a much larger amount of computational resources than an autoencoder or GAN does, making it quite infeesible for most people to train diffusion models for their own distributions. 
+I have found that Autoencoders, even with similar network structures to GANs and Diffusion models, are unable to learn a very accurate model and seem to smooth out the blocky VMS shape into circular shapes that fade towards the edges. My autoencoder model was able to achieve a mean L1 loss of X.
+% INSERT L1 Loss
+GAN models can be difficult to work with, require lots of hyperparameter tuning, and if you use a traditional training loss, such as L1 or MSE, it can be impossible to see if they have converged. Lots of research has gone into creating versitile and robust GAN architectures, picking one of those and adapting it to your needs can reduce your development time considerably. Using a modified pix2pix gan models I was able to generate VMS maps far more accurately than with an autoencoder model, they maintain the blocky shape of the regions and achieve a higher mean L1 loss of ~0.074.
+% This is subject to change
+Diffusion models take longer to train than GAN and autoencoder models, while they can produce high quality images [Maybe cite Dalle-2, imagen, others], the training loop requires a much larger amount of computational resources than an autoencoder or GAN does, making it quite infeesible for most people to train diffusion models for their own image distributions. 
 %The implications of these findings (what these answers mean)
 
 \chapter{Executive Summary}
@@ -49,7 +50,7 @@ Diffusion models take longer to train than GAN and autoencoder models, while the
 
 %We see a lot of images
 
-We are constantly surrounded by imagery, on the way to work, on the internet, on TV, in stores, etc. Some images stick out more than others, we see hundreds, if not thousands, of images a day, and yet culturally and individually we all remember the same ones.
+We are constantly surrounded by imagery, on the way to work, on the internet, on TV, in stores, etc. Some images stick out more than others, we see hundreds, if not thousands, of images a day, and yet culturally and individually we all remember similar ones.
 
 %Cultural vs Individual Memorability
 
