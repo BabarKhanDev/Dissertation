@@ -420,6 +420,9 @@ However, with a greater number of computing resources it may be possible to do s
 
 In this experiment I trained a UNet to predict the VMS maps of images, I trained the model using backpropagation of the L1 loss of the model output given an image, and the corresponding label. 
 
+
+Diagram of my model:
+
 The best parameters and hyperparameters that I found for my model were the following:
 % Input best hyperparameters
 
@@ -502,33 +505,14 @@ With this combination we achieved a loss of \(\sim\)1.02 across the validation d
 
 % THE ABOVE IS BS AND NEEDS CHANGING
 
-Best results:
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\linewidth]{Best GAN Outputs}
-    \caption{Best GAN Outputs}
-    \label{fig:GANBestOutput}
-\end{figure}
+After 200 epochs of training our model is able to achieve an L1 score of ~0.0740 across our validation dataset and Z across our training dataset.
+% INPUT X, Y, Z
+This is significantly better than our autoencoder model. 
 
-Favourite Results:
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\linewidth]{Good GAN Outputs}
-    \caption{Favourite GAN Outputs}
-    \label{fig:GANGoodOutput}
-\end{figure}
-
-Worst results:
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\linewidth]{Worst GAN Outputs}
-    \caption{Worst GAN Outputs}
-    \label{fig:GANWorstOutput}
-\end{figure}
-
-
-% Insert graph of the best combinations results here
-% Insert images
+Figure \ref{fig:GANBestOutput} shows the outputs across the validation portion of our dataset with the lowest L1 Loss. They're accurately labelled with the correct regions as memorable. 
+but frankly are quite boring, the low L1 loss across these is because the labels simply have lots of black data, the loss across these is 0 if the model also outputs black. 
+Figure \ref{fig:GANGoodOutput} shows what I think are far more impressive results, even if they have a higher loss than those present in figure \ref{fig:GANBestOutput}. For these images the model is able to accurately predict large regions of the image that are memorable.
+The worst results are shown in \ref{fig:GANWorstOutput}, it appears that like our autoencoder model from experiment 1 that this model finds it difficult to predict regions that are detrimental to memorability. 
 
 After 200 epochs, L1 Score of ~0.0740
 % Insert X,Y
@@ -580,5 +564,31 @@ Some discussion about them.
 % applications
 
 \printbibliography
+
+\chapter{Appendix}
+
+Best results:
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{Best GAN Outputs}
+    \caption{Best GAN Outputs}
+    \label{fig:GANBestOutput}
+\end{figure}
+
+Favourite Results:
+\begin{figure}[ht]
+    \centering
+    \includegraphics[]{Good GAN Outputs}
+    \caption{Favourite GAN Outputs}
+    \label{fig:GANGoodOutput}
+\end{figure}
+
+Worst results:
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{Worst GAN Outputs}
+    \caption{Worst GAN Outputs}
+    \label{fig:GANWorstOutput}
+\end{figure}
 
 \end{document}
