@@ -28,19 +28,34 @@
 % This needs majorly tidying up once I have the final results.
 
 %The purpose of the research (what's it about and why's that important)
-I investigate a range of conditional image to image generative models to learn which regions of a given image are memorable.
+I investigate a range of deep conditional image to image generative models to learn which regions of a given image are memorable. These models could hopefully be used by marketers, educators, or others to determine which parts of their images are memorable, and thus help to create better images.
 %The methodology (how you carried out the research)
-This was conducted by training a variety of models to predict memorability maps given the respective image from the VISCHEMA dataset.
+This was done by conducting supervised training using image, VMS pairs in the VISCHEMA dataset. I compare these models using the L1 loss of their predicted memorability maps across the validation portion of the VISCHEMA dataset.
 %The key research findings (what answers you found)
-I have found that Autoencoders, even with similar network structures to GANs and Diffusion models, are unable to learn a very accurate model and seem to smooth out the blocky VMS shape into circular shapes that fade towards the edges. My autoencoder model was able to achieve a mean L1 loss of ~0.132.
-GAN models can be difficult to work with, require lots of hyperparameter tuning, and if you use a traditional training loss, such as L1 or MSE, it can be impossible to see if they have converged. Lots of research has gone into creating versitile and robust GAN architectures, picking one of those and adapting it to your needs can reduce your development time considerably. Using a modified pix2pix gan models I was able to generate VMS maps far more accurately than with an autoencoder model, they maintain the blocky shape of the regions and achieve a higher mean L1 loss of ~0.0740.
+I have found that Autoencoders, even with similar network structures to GANs and Diffusion models, are unable to learn a very accurate model, they smooth out the blocky VMS shape into circular shapes that fade towards the edges. My best autoencoder model was able to achieve a mean L1 loss of ~0.132 across the validation distribution. This model took the least time to train. 
+GAN models can be difficult to work with, lots of research has gone into creating versitile and robust GAN architectures, picking one of those and adapting it to your needs can reduce your development time considerably. Using a modified pix2pix GAN model I was able to generate VMS maps far more accurately than with an autoencoder model, they maintain the blocky shape of the regions and achieve a lower mean L1 loss of ~0.0740. This model took significantly longer to train than the autoencoder.
 % This is subject to change
-Diffusion models take longer to train than GAN and autoencoder models, while they can produce high quality images [Maybe cite Dalle-2, imagen, others], the training loop requires a much larger amount of computational resources than an autoencoder or GAN does, making it quite infeesible for most people to train diffusion models for their own image distributions. 
+Diffusion models take longer to train than GAN and autoencoder models, while they can produce high quality images [Maybe cite Dalle-2, imagen, others], the training loop requires a much larger amount of computational resources than an autoencoder or GAN does, making it quite infeesible for most people to train diffusion models for their own image distributions. My best model was able to achieve an L1 loss of (Final Diffusion Loss). Unfortunately I was unable to complete a full hyperparameter search due to the computational requirements of a Diffusion model. Diffusion models lend themselves well to multiple GPU architectures which unfortunately I didn't have access to. 
+% FILL IN FINAL DIFFUSION LOSS
 %The implications of these findings (what these answers mean)
+Current image to image models are able to accurately predict which regions of images are memorable and can be used in the process of creating images that are memorable. While diffusion models have seen lots of mainstream attention recently, until home computing power is significantly greater, it is infeesible for most to train their own from home in any reasonable amount of time.
 
 \chapter{Executive Summary}
 
-%my own experience 1/2 pages separate count? Not sure really
+%my own experience 1/2 pages separate count?
+
+%How difficult (or easy) the project was for you
+%  learning to use Latex
+LaTeX, bar a few small hiccups, was very easy to learn to use as there are lots of online resources to help learn how to use it. I typically write my notes in markdown files which are very similar to TeX files and made the transition easy.
+
+%  working in the library vs training my models
+I find difficulty working at home and prefer to work in the University Library or other various study spaces. Unfortunately, my laptop is not very computationally powerful, and is unable to train any of the In order to get anything done I would write my code at the library and come home to run it on my computer. This work structure did take a while to get used to but it didn't pose much of a hassle in the end. I could have theoretically set up a jupyter remote server to run on my computer at home, and connected to that from my laptop, but I was concerned about whether I would do it insecurely and leave a vunlerability in my computer.
+
+%How difficult was to find resources for the project (data, computation)
+There is a lot of research into machine learning and computer vision, AlexNet sparked a machine learning renaissance in 2012 and in the decade since we have seen countless incredible papers release. The industry as a whole is very open, not only do academics produce research but large companies with hugh research funding freely post their research online for anyone to read. This abundance of research makes getting up to speed on the state of the art very easy. Not only is there a lot of free research available, but there are also countless articles and videos produced with the aim of making learning concepts easier.
+
+I also have quite a large interest in machine learning and computer vision, I've taken 3 courses at the university on inteligent systems and generally try to keep up to date with the latest research. 
+%Other personal experiences
 
 \chapter{Introduction}
 
@@ -74,10 +89,14 @@ This is taken further by Akagunduz et al. \cite{VischemaPaper} where, in a simil
 \section{Motivation}
 
 % Why do we want to do this
-% Who will this be useful for
+
+If we can accurately predict which regions of images are memorable then the process of creating memorable images becomes much easier. This would be useful to people in many fields, marketing and education being the most prominent. Businesses want to create memorable images so that when you see their products you have a sense of familiarity, that familiarity causes customers to be more likely to purchase your products.
+% soure?
+In education, creating memorable images could help with creating memorable diagrams, tools, or resources that make learning easier for students. 
+
 % What motivates me
 
-%What are my goals}
+%What are my goals
 
 %   To create an accurate mapping from images to memorable images
 %   How do I define accuracy?
@@ -86,6 +105,14 @@ This is taken further by Akagunduz et al. \cite{VischemaPaper} where, in a simil
 \section{Structure}
 
 % How is the dissertation laid out.
+
+The next chapter is my literature review, I cover research into memorable images and do a brief overview of image to image models.
+
+The following chapter is the methodology, I describe three experiments where I test the ability of different models to predict the memorable regions of images
+
+After that is the experimental results, where I discuss in detail my findings
+
+Then the conclusion, where I discuss the implications of my findings
 
 \chapter{Literature Review}
 
