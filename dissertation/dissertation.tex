@@ -283,7 +283,9 @@ This training strategy will be especially necessary in experiment 2 as training 
 
 \section{Experiment 1}
 
-\textbf{Model}: This network is a UNet autoencoder that takes as input a 64x64x3 tensor of floating point values in the range [-1,1], these are the images in our dataset.
+The UNet is an autoencoder model presented in \cite{ronneberger2015unet}. While its original creation was for the purpose of image classification, I think it should perform well in the task of generating VMS maps, in fact I would even consider generating VMS maps a continuous version of image segmentation.
+
+\textbf{Model}: I will use a UNet autoencoder that takes as input a 64x64x3 tensor of floating point values in the range [-1,1], these are the images in our dataset.
 % double check this input range
 It outputs a 64x64x3 tensor of floating point values in the range [-1,1], these are our label estimates.
 % double check this output range
