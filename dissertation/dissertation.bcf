@@ -2365,50 +2365,48 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">references.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1" intorder="1">BBCDress2015</bcf:citekey>
-    <bcf:citekey order="2" intorder="1">gambino_2012</bcf:citekey>
-    <bcf:citekey order="3" intorder="1">Isola2011</bcf:citekey>
-    <bcf:citekey order="3" intorder="2">IsolaParikhTorralbaOliva2011</bcf:citekey>
-    <bcf:citekey order="3" intorder="3">ICCV15_Khosla</bcf:citekey>
-    <bcf:citekey order="3" intorder="4">isola2014memorability</bcf:citekey>
-    <bcf:citekey order="4" intorder="1">VischemaPaper</bcf:citekey>
-    <bcf:citekey order="5" intorder="1">BrenerMemorySpan</bcf:citekey>
-    <bcf:citekey order="6" intorder="1">BrenerMemorySpan</bcf:citekey>
-    <bcf:citekey order="7" intorder="1">NickersonShortTermMemory</bcf:citekey>
-    <bcf:citekey order="8" intorder="1">NickersonShortTermMemory</bcf:citekey>
-    <bcf:citekey order="9" intorder="1">NickersonShortTermMemory</bcf:citekey>
-    <bcf:citekey order="10" intorder="1">ShepardRecognition</bcf:citekey>
-    <bcf:citekey order="11" intorder="1">standing10000pictures</bcf:citekey>
-    <bcf:citekey order="12" intorder="1">standing10000pictures</bcf:citekey>
-    <bcf:citekey order="13" intorder="1">standing10000pictures</bcf:citekey>
-    <bcf:citekey order="14" intorder="1">BrenerMemorySpan</bcf:citekey>
-    <bcf:citekey order="15" intorder="1">brady2008visual</bcf:citekey>
+    <bcf:citekey order="1" intorder="1">ronneberger2015unet</bcf:citekey>
+    <bcf:citekey order="2" intorder="1">isola2018imagetoimage</bcf:citekey>
+    <bcf:citekey order="3" intorder="1">ramesh2022hierarchical</bcf:citekey>
+    <bcf:citekey order="3" intorder="2">saharia2022photorealistic</bcf:citekey>
+    <bcf:citekey order="4" intorder="1">BBCDress2015</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">gambino_2012</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">Isola2011</bcf:citekey>
+    <bcf:citekey order="6" intorder="2">IsolaParikhTorralbaOliva2011</bcf:citekey>
+    <bcf:citekey order="6" intorder="3">ICCV15_Khosla</bcf:citekey>
+    <bcf:citekey order="6" intorder="4">isola2014memorability</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">VischemaPaper</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">BrenerMemorySpan</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">BrenerMemorySpan</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">NickersonShortTermMemory</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">NickersonShortTermMemory</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">NickersonShortTermMemory</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">ShepardRecognition</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">standing10000pictures</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">standing10000pictures</bcf:citekey>
     <bcf:citekey order="16" intorder="1">standing10000pictures</bcf:citekey>
-    <bcf:citekey order="16" intorder="2">brady2008visual</bcf:citekey>
-    <bcf:citekey order="17" intorder="1">standing10000pictures</bcf:citekey>
-    <bcf:citekey order="17" intorder="2">brady2008visual</bcf:citekey>
-    <bcf:citekey order="18" intorder="1">Isola2011</bcf:citekey>
-    <bcf:citekey order="18" intorder="2">IsolaParikhTorralbaOliva2011</bcf:citekey>
-    <bcf:citekey order="19" intorder="1">NIPS12_Khosla</bcf:citekey>
-    <bcf:citekey order="20" intorder="1">Isola2011</bcf:citekey>
-    <bcf:citekey order="20" intorder="2">IsolaParikhTorralbaOliva2011</bcf:citekey>
+    <bcf:citekey order="17" intorder="1">BrenerMemorySpan</bcf:citekey>
+    <bcf:citekey order="18" intorder="1">brady2008visual</bcf:citekey>
+    <bcf:citekey order="19" intorder="1">standing10000pictures</bcf:citekey>
+    <bcf:citekey order="19" intorder="2">brady2008visual</bcf:citekey>
+    <bcf:citekey order="20" intorder="1">standing10000pictures</bcf:citekey>
+    <bcf:citekey order="20" intorder="2">brady2008visual</bcf:citekey>
     <bcf:citekey order="21" intorder="1">Isola2011</bcf:citekey>
     <bcf:citekey order="21" intorder="2">IsolaParikhTorralbaOliva2011</bcf:citekey>
-    <bcf:citekey order="22" intorder="1">ICCV15_Khosla</bcf:citekey>
-    <bcf:citekey order="23" intorder="1">VischemaPaper</bcf:citekey>
-    <bcf:citekey order="24" intorder="1">VischemaPaper</bcf:citekey>
-    <bcf:citekey order="25" intorder="1">ronneberger2015unet</bcf:citekey>
-    <bcf:citekey order="25" intorder="2">goodfellow2014generative</bcf:citekey>
-    <bcf:citekey order="25" intorder="3">ho2020denoising</bcf:citekey>
-    <bcf:citekey order="25" intorder="4">isola2018imagetoimage</bcf:citekey>
-    <bcf:citekey order="25" intorder="5">saharia2022palette</bcf:citekey>
-    <bcf:citekey order="26" intorder="1">VischemaPaper</bcf:citekey>
-    <bcf:citekey order="26" intorder="2">ICCV15_Khosla</bcf:citekey>
-    <bcf:citekey order="27" intorder="1">ronneberger2015unet</bcf:citekey>
-    <bcf:citekey order="27" intorder="2">isola2018imagetoimage</bcf:citekey>
-    <bcf:citekey order="27" intorder="3">ho2020denoising</bcf:citekey>
-    <bcf:citekey order="28" intorder="1">VischemaPaper</bcf:citekey>
-    <bcf:citekey order="28" intorder="2">ICCV15_Khosla</bcf:citekey>
+    <bcf:citekey order="22" intorder="1">NIPS12_Khosla</bcf:citekey>
+    <bcf:citekey order="23" intorder="1">Isola2011</bcf:citekey>
+    <bcf:citekey order="23" intorder="2">IsolaParikhTorralbaOliva2011</bcf:citekey>
+    <bcf:citekey order="24" intorder="1">Isola2011</bcf:citekey>
+    <bcf:citekey order="24" intorder="2">IsolaParikhTorralbaOliva2011</bcf:citekey>
+    <bcf:citekey order="25" intorder="1">dastin_2018</bcf:citekey>
+    <bcf:citekey order="25" intorder="2">najibi_2020</bcf:citekey>
+    <bcf:citekey order="26" intorder="1">ICCV15_Khosla</bcf:citekey>
+    <bcf:citekey order="27" intorder="1">VischemaPaper</bcf:citekey>
+    <bcf:citekey order="28" intorder="1">ronneberger2015unet</bcf:citekey>
+    <bcf:citekey order="28" intorder="2">goodfellow2014generative</bcf:citekey>
+    <bcf:citekey order="28" intorder="3">ho2020denoising</bcf:citekey>
+    <bcf:citekey order="28" intorder="4">isola2018imagetoimage</bcf:citekey>
+    <bcf:citekey order="28" intorder="5">saharia2022palette</bcf:citekey>
     <bcf:citekey order="29" intorder="1">ronneberger2015unet</bcf:citekey>
     <bcf:citekey order="30" intorder="1">isola2018imagetoimage</bcf:citekey>
     <bcf:citekey order="30" intorder="2">saharia2022palette</bcf:citekey>
@@ -2433,19 +2431,22 @@
     <bcf:citekey order="42" intorder="4">brock2019large</bcf:citekey>
     <bcf:citekey order="42" intorder="5">karras2019stylebased</bcf:citekey>
     <bcf:citekey order="43" intorder="1">chen2023importance</bcf:citekey>
-    <bcf:citekey order="44" intorder="1">isola2018imagetoimage</bcf:citekey>
-    <bcf:citekey order="45" intorder="1">isola2018imagetoimage</bcf:citekey>
-    <bcf:citekey order="46" intorder="1">ronneberger2015unet</bcf:citekey>
-    <bcf:citekey order="47" intorder="1">arjovsky2017wasserstein</bcf:citekey>
-    <bcf:citekey order="48" intorder="1">pix2pixwasserstein</bcf:citekey>
-    <bcf:citekey order="49" intorder="1">isola2018imagetoimage</bcf:citekey>
-    <bcf:citekey order="50" intorder="1">PytorchPix2Pix</bcf:citekey>
-    <bcf:citekey order="51" intorder="1">brock2019large</bcf:citekey>
-    <bcf:citekey order="52" intorder="1">zhao2020differentiable</bcf:citekey>
-    <bcf:citekey order="53" intorder="1">JanspiryPalette</bcf:citekey>
-    <bcf:citekey order="54" intorder="1">saharia2022palette</bcf:citekey>
+    <bcf:citekey order="44" intorder="1">ICCV15_Khosla</bcf:citekey>
+    <bcf:citekey order="45" intorder="1">VischemaPaper</bcf:citekey>
+    <bcf:citekey order="46" intorder="1">VischemaPaper</bcf:citekey>
+    <bcf:citekey order="47" intorder="1">isola2018imagetoimage</bcf:citekey>
+    <bcf:citekey order="48" intorder="1">isola2018imagetoimage</bcf:citekey>
+    <bcf:citekey order="49" intorder="1">ronneberger2015unet</bcf:citekey>
+    <bcf:citekey order="50" intorder="1">arjovsky2017wasserstein</bcf:citekey>
+    <bcf:citekey order="51" intorder="1">pix2pixwasserstein</bcf:citekey>
+    <bcf:citekey order="52" intorder="1">isola2018imagetoimage</bcf:citekey>
+    <bcf:citekey order="53" intorder="1">PytorchPix2Pix</bcf:citekey>
+    <bcf:citekey order="54" intorder="1">brock2019large</bcf:citekey>
     <bcf:citekey order="55" intorder="1">zhao2020differentiable</bcf:citekey>
-    <bcf:citekey order="56" intorder="1">pix2pixwasserstein</bcf:citekey>
+    <bcf:citekey order="56" intorder="1">JanspiryPalette</bcf:citekey>
+    <bcf:citekey order="57" intorder="1">saharia2022palette</bcf:citekey>
+    <bcf:citekey order="58" intorder="1">zhao2020differentiable</bcf:citekey>
+    <bcf:citekey order="59" intorder="1">pix2pixwasserstein</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">
