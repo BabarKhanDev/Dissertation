@@ -270,12 +270,18 @@ The VISCHEMA Plus dataset contains 1600 image to VMS mappings, 1280 of these com
 
 \section{Motivation}
 
-As autoencoders, GANs, and diffusion all produce images in different ways I think it would be interesting to compare how the 3 of them perform when asked the same task. I will run three experiments: I will train a UNet autoencoder, a GAN, and a diffusion model to produce a VMS label given an image from the dataset. I hope to be able to find the strengths and weaknesses of each of these systems in this application. For each model I will experiment with network parameters and training hyperparameters to fine tune models that produce the best output.
+As autoencoders, GANs, and diffusion all produce images in different ways I think it would be interesting to compare how the 3 of them perform when asked the same task. I will run three experiments where I train a UNet autoencoder, a GAN, and a diffusion model to produce a VMS label given an image from the dataset. I hope to be able to find the strengths and weaknesses of each of these systems in this application. For each model I will experiment with network parameters and training hyperparameters to fine tune models that produce the best output.
 
-In each experiment I will automate a system to: test the use of different values for the number of layers and channels in each network, vary the normalisation method, optimisation function, learning rate, and batch size to find the best training environment and model parameters. As it is not be feesible to test every combination of these variables, I will employ a training strategy to test every variation of a single parameter/hyperparameter while keeping the rest constant, pick the best scoring variation of that parameter, and move on to the next. I will start with choices that I estimate to be good, as this should only improve on them. This will bring the size our search space down by an order of magnitude, however we won't be exploring the entire search space and will potentially miss out on good values. This will be especially necessary in experiment 2 as training within a GAN is typically unstable. In experiment 3 I will also vary the noise scheduler and the beta values.
+
+In each experiment I will automate a system that: tests the effectiveness of different numbers of layers and channels in each network, varies the normalisation method, optimisation function, learning rate, and batch size to find the best training environment and model parameters. It is not be feesible to test every combination of these variables, thus I will employ a training strategy to test every variation of a single parameter/hyperparameter while keeping the rest constant.
+
+
+I will start each model with an estimation of good parameters, then iterate through each individual parameter, varying only that one and measuring the impact on performance. After testing all variations of a single parameter, I will pick the one that gave the highest score and move onto the next parameter. This will bring the size our search space down by an order of magnitude, however we won't be exploring the entire search space and will potentially miss out on good options. 
+
+
+This training strategy will be especially necessary in experiment 2 as training within a GAN is typically unstable and good parameter choices are necessary. In experiment 3 I will also vary the noise scheduler and the beta values.
 
 \section{Experiment 1}
-% What is the name for this type of training?
 
 \textbf{Model}: This network is a UNet autoencoder that takes as input a 64x64x3 tensor of floating point values in the range [-1,1], these are the images in our dataset.
 % double check this input range
