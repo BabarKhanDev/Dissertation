@@ -23,7 +23,7 @@
 
 \tableofcontents
 
-\chapter{Abstract}
+\chapter{Executive Summary}
 
 %The purpose of the research (what's it about and why's that important)
 I investigate a range of deep conditional image to image generative models and their success in learning mappings of images to memorable regions across three different experiments. If successful these models could be used by marketers, educators, or any creators to determine which parts of their images are memorable, and thus help to more easily create memorable images.
@@ -40,24 +40,51 @@ Diffusion models took the longest to train, and while they can generally produce
 
 I show that using a GAN model we are able to predict memorable image regions with great accuracy.. I believe this has many useful applications across many different industries, allowing creators to have a more informed opinion on which sections of their images are memorable, using this tool to iteratively improve their image memorability. Hopefully in future work good parameters can be found that allow diffusion models to work with lower noise steps and to produce higher accuracy results.
 
-\chapter{Executive Summary}
+\chapter{Reflections}
 
 %my own experience 1/2 pages separate count?
 
-%How difficult (or easy) the project was for you
-% General difficulty/ease?
-I found a great interest working on this project on as I'd never created an image to image model, considered the memorability of images, or even read a research paper before starting. Luckily my project supervisor, Adrian Bors, suggested a range of great research papers on image memorability, and that allowed me to start with a good footing.
 
 %  learning to use Latex
-My dissertation is written using LaTeX, and bar a few small hiccups, it was very easy to learn to use as there are lots of online resources available. I typically write notes in markdown, which are very similar to TeX files making the transition easier than going from a traditiomal WYSIWYG editor.
+
 
 %  working in the library vs training my models
-I find it difficult to work at home, and prefer to work in the University Library or any of the other various study spaces available. Unfortunately, my laptop is not computationally powerful enough to train most deep networks, my workflow became a cycle of writing code at the library and running it on my computer overnight. This work structure did take a while to get used to but it didn't pose much of a hassle in the end. I could have theoretically set up a Jupyter remote server to run on my computer at home, and connected to that from my laptop, but I was concerned about SSH vulnerabilities.
+
 
 %How difficult was to find resources for the project (data, computation)
-There is a lot of openly available research into machine learning and computer vision, AlexNet \cite{alexnet} sparked somewhat of a machine learning renaissance in 2012, and in the decade since we have seen countless incredible papers released. The industry as a whole is incredibly open, not only do academics produce research but large companies with huge funding typically post their research online for anyone to read. This abundance of research makes getting up to speed on the state of the art very easy. Not only is there a lot of free research available, but there are also countless articles and videos produced with the aim of making learning concepts easier. I've also taken 3 courses at the University of York on inteligent systems, and in one of them implement my own unconditional GANs, because of that the transition to creating my own conditional image to image networks wasn't that hard. 
 
-Unfortunately diffusion models take a long time to train, and even longer to evaluate over the approximately 300 images in the VISCHEMA validation set, to evaluate one of my diffusion models with 2000 noise steps over the entire validation dataset would take roughly 4 hours, compared to the seconds for an autoencoder or GAN, this has meant that my third experiment has taken significantly longer to run than 1 or 2, and has been the cause of many headaches.
+
+% Identifies experienes that have had significance
+% Can identify specific incidents and activities of significance to their learning
+I found a great interest working on this project on as I'd never created an image to image model, considered the memorability of images, or even read a research paper before starting. Luckily my project supervisor, Adrian Bors, suggested a range of great research papers on image memorability, and that allowed me to start with a good footing.
+
+There is a lot of openly available research into machine learning and computer vision, AlexNet \cite{alexnet} sparked somewhat of a machine learning renaissance in 2012, and in the decade since we have seen countless incredible papers released. The industry as a whole is very open, not only do academics produce research but large companies with huge funding typically post their research online for anyone to read. This abundance of research makes getting up to speed on the state of the art very easy. Not only is there a lot of free research available, but there are also countless articles and videos produced with the aim of making learning concepts easier. 
+
+A big challenge for me was reading and understanding lots of these maths heavy research papers, I would often have to read a paper multiple times until I truly got what was happening, this was difficult and required perseverence but now I'm more comfortable with having to spend a long time figuring out what a paper is showing.
+
+My dissertation is written using LaTeX, and bar a few small hiccups, it was very easy to learn to use as there are lots of online resources available. I typically write notes in markdown, which are very similar to TeX files and I imagine made the transition easier than going from a traditiomal WYSIWYG editor to LaTeX. I had never used LaTeX before but I have grown very fond of it. 
+
+I find it difficult to work at home, and prefer to work in the University Library or any of the other various study spaces available. Unfortunately, my laptop is not computationally powerful enough to train most deep networks, my workflow became a cycle of writing code at the library and running it on my computer overnight. This work structure did take a while to get used to but it didn't pose much of a hassle in the end. I could have theoretically set up a Jupyter remote server to run on my computer at home, and connected to that from my laptop, but I was concerned about SSH vulnerabilities. If I were to do this proejct again I would spend the time learning how to set up a Jupyter server as I could have been far more productive. I considered training on Google Colab but unfortunately I hit the free GPU usage limit very quickly and decided that it is unreliable. 
+
+% Makes a clear case for learning from an experience
+% Identifies learning from an experience in a logical and credible fashion. Demonstrates links between the experience and the learning considering: elements of personal challenge: tangible evidence that the learning has taken place, ranges of learning from 'hard skills' through to personal insights
+
+% Demonstrates the personal significance of the learning, including potential future value
+% Understands and articulates the importance of the learning acquired. Potentially presents the role the learning might have in future activities; academic or professional
+
+I would like to persue a career in computer vision and what I have learned working on this project will be immensely useful. My goal was to learn to predict memorability maps from images but while trying to achieve that I have learned so much in the surrounding areas of computer vision and deepened my knowledge of deep learning.
+
+% Ability to honestly evaluate and critique personal performance in the context of the project
+% Offers credible evaluations of personal performance relate to appropriate criteria. Evidence of mature consideratons of personal strengths and weaknesses. Consideration of the future implications of these insights
+
+
+
+I've taken 3 courses at the University of York on inteligent systems, and in one of them implement my own unconditional GANs, because of that the transition to creating my own conditional image to image networks wasn't too foreign. One of my strengths is that I'm really able to stick to a problem for a long time, if something wasn't working I would happily spend hours fixing it without needing a break.  
+
+Unfortunately diffusion models take a long time to train, and even longer to evaluate over the approximately 300 images in the VISCHEMA validation set, to evaluate one of my diffusion models with 2000 noise steps over the entire validation dataset would take roughly 4 hours, compared to the seconds for an autoencoder or GAN. This has meant that my third experiment took significantly longer to run than the first two, and has been the cause of many headaches. I regret that I was unable to achieve great results using a diffusion model and wish I had spent more time getting them to work, I spent too much time perfecting my Autoencoder and GAN results and should have spent more time on the diffusion, I naively assumed that it would take a similar amount of time to get good results with all three.
+
+% Writes clearly and appropriately for the context of the report
+% Writing is clear, concise, and clearly foxused around the evaluation of personal learning and performance on the project. Considers personal development alongisde technical skills aquired.
 
 \chapter{Introduction}
 
@@ -261,7 +288,7 @@ I have adapted and used code available in the following repositories \cite{Pytor
 
 \section{Motivation}
 
-As autoencoders, GANs, and diffusion models all produce images in different ways, I think it would be interesting to compare how the 3 of them perform when asked the same task. I will run three experiments where I train a UNet autoencoder, a GAN, and a diffusion model to produce a VMS label given an image from the dataset. I hope to be able to find the strengths and weaknesses of each of these systems in this application. For each model I will experiment with network parameters and training hyperparameters to fine tune models that produce the best output.
+As autoencoders, GANs, and diffusion models all produce images in different ways. Autoencoders learn to produce output images directly through the backpropagation of the loss between its output and the ideal output. GAN generators learn to produce images by tricking a discriminator. Diffusion models learn to produce images by removing noise from latent space iteratively. I think it would be interesting to compare how the 3 of them perform when asked the same task. I will run three experiments where I train a UNet autoencoder, a GAN, and a diffusion model to produce a VMS label given an image from the dataset. I hope to be able to find the strengths and weaknesses of each of these systems in this application. For each model I will experiment with network parameters and training hyperparameters to fine tune models that produce the best output.
 
 
 In each experiment I will automate a system that: tests the effectiveness of different numbers of layers and channels in each network, varies the normalisation method, optimisation function, learning rate, and batch size to find the best training environment and model parameters. It is not be feesible to test every combination of these variables, thus I will employ a training strategy to test every variation of a single parameter/hyperparameter while keeping the rest constant.
@@ -282,7 +309,7 @@ It outputs a 64x64x3 tensor of floating point values in the range [-1,1], these 
 % double check this output range
 This model can be described as: \[ L_{pred} = model(I) \]
 
-\textbf{Model Loss}: This is simply the L1 loss between $L_{pred}$ and $L_{real}$, describing how closely the output of our network matches the corresponding label. At each epoch we will calculate this over the training dataset, use that for backpropagation, and then calculate it across the validaton dataset to test how well we have generalised.
+\textbf{Model Loss}: This is simply the L1 loss between $L_{pred}$ and $L_{real}$, describing how closely the output of our network matches the corresponding label. At each epoch we will calculate this over the training dataset, update the model weights using the backpropagation of that loss, and then calculate the loss across the validaton dataset to test how well we have generalised.
 \[ L = L1( model(I), L_{real} ) \]
 
 \textbf{Training Strategy}: Please see algorithm \ref{ALG:Autoencoder} for the training loop.
@@ -304,11 +331,11 @@ This model can be described as: \[ L_{pred} = model(I) \]
 
 \section{Experiment 2}
 
-I will train a conditional generative adversarial network to generate images of VMS maps given images from the VISCHEMA dataset. I will use an adapted Pix2Pix network \cite{isola2018imagetoimage}, making tweaks that I think will increase performance. 
-Pix2Pix by Isola et al.\cite{isola2018imagetoimage}, is an image-to-image conditional generative adversarial model based on the UNet \cite{ronneberger2015unet}. Designed to translate images from one style into another. In \cite{arjovsky2017wasserstein} M. Arjovsky et al. introduce a GAN variant based on the Wasserstein distance between the output distribution and the image distribution, the benefit of this is that the Wasserstein distance is continuous and differentiable almost everywhere, reducing the risk of dimminishing gradients. In \cite{pix2pixwasserstein} N. Makow investigated the use of Wasserstein Distance in the Pix2Pix model but unfortunately found that it does not perform much better, I would still like to experiment with it as VISCHEMA plus is different from any dataset used in \cite{isola2018imagetoimage} and as Makow states they were unable to perform a complete hyperparameter search, meaning that its possible we could achieve greater results than vanilla Pix2Pix.
-I will be adapting the following Pytorch implementation \cite{PytorchPix2Pix}. 
+I will train a conditional generative adversarial network to generate images of VMS maps given images from the VISCHEMA dataset. I will use an adapted pix2pix network \cite{isola2018imagetoimage}, making tweaks that I think will increase performance. 
+pix2pix by Isola et al.\cite{isola2018imagetoimage}, is an image-to-image conditional generative adversarial model based on the UNet \cite{ronneberger2015unet}. Designed to translate images from one style into another. In \cite{arjovsky2017wasserstein} Arjovsky et al. introduce a GAN variant based on the Wasserstein distance between the output distribution and the image distribution, the benefit of this is that the Wasserstein distance is continuous and differentiable almost everywhere, reducing the risk of dimminishing gradients. In \cite{pix2pixwasserstein} Makow investigated the use of Wasserstein Distance in the pix2pix model but unfortunately found that it does not perform much better, I would still like to experiment with it as VISCHEMA plus is different from any dataset used in \cite{isola2018imagetoimage} and as Makow states they were unable to perform a complete hyperparameter search, meaning that its possible we could achieve greater results than vanilla pix2pix.
+I will be adapting the following Pytorch implementation \cite{PytorchPix2Pix} for my experiment. 
 
-Lots of work has gone into making GAN models more stable and I will use these findings in my own models. In \cite{brock2019large} A. Brock et al. found that when 'increasing the batch size by a factor of 8 ... models reach better final performance in fewer iterations, but become unstable and undergo complete training collapse'. Because of this I will experiment with early stopping and low batch sizes.  In \cite{zhao2020differentiable} Z. Shengyu et al. show how using differentiable augmentation on your images increases the quality of the outputted images. With a dataset with as few as 100 images they are able to produce high quality outputs, this is useful to us because the VISCHEMA plus dataset only has 1280 training images, which typically wouldn't train very well on a GAN.
+Lots of work has gone into making GAN models more stable and I will use these findings in my own models. In \cite{brock2019large} Brock et al. found that when 'increasing the batch size by a factor of 8 ... models reach better final performance in fewer iterations, but become unstable and undergo complete training collapse'. Because of this I will experiment with early stopping and low batch sizes.  In \cite{zhao2020differentiable} Shengyu et al. show how using differentiable augmentation on your images increases the quality of the outputted images. With a dataset with as few as 100 images they are able to produce high quality outputs, this is useful to us because the VISCHEMA plus dataset only has 1280 training images, which typically wouldn't train very well on a GAN.
 
 % https://www.youtube.com/watch?v=J97EM3Clyys
 % https://github.com/mit-han-lab/data-efficient-gans/blob/master/DiffAugment-stylegan2-pytorch/DiffAugment_pytorch.py
@@ -326,11 +353,11 @@ Lots of work has gone into making GAN models more stable and I will use these fi
 %https://cs230.stanford.edu/projects_spring_2018/reports/8289943.pdf 
 
 
-\textbf{Generator}: This network takes as input a 64x64x3 tensor of floating point values and outputs a 64x64x3 tensor of floating point values in the range [-1,1]. This model can be described as: \[ L_{f} = G(I) \]
+\textbf{Generator}: This network takes as input a an image from out dataet and outputs its prediction of the corresponding label, it can be described as: \[ L_{f} = G(I) \]
 
-\textbf{Discriminator}: This network takes as input a 64x64x6 tensor of floating point values. Channels 1,2, and 3 store the image and channels 4,5, and 6 are its corresponding label, either real or generated. It outputs a 4x4x1 tensor of boolean values. Each value in this output represents a 16x16x6 region of the input.
+\textbf{Discriminator}: This network takes as input the concatenation of an image from our dataset and either its corresponding label or a generated label. It outputs a 4x4x1 tensor of boolean values, where each value in this output represents whether it predicts if a 16x16x6 region of the input is real or generated.
 
-The loss for each network is computed as described in [pix2pix paper], across an entire batch of images and then the weights are adjusted with backpropagation. The optimiser used is one of the hyperparameters that we will search for.
+The loss for each network is computed as described in \cite{isola2018imagetoimage}, across an entire batch of images and then the weights are adjusted with backpropagation. The optimiser used is one of the hyperparameters that we will search for.
 
 \textbf{Generator Loss}: The generator loss describes how well it can trick the discriminator, and how closely its output matches the real label for the given image.
 \[ L = MSE( D(L_{f}, I), 1 ) + L1(L_{f}, L_{r}) \]
@@ -338,7 +365,7 @@ The loss for each network is computed as described in [pix2pix paper], across an
 \textbf{Discriminator Loss}: The discriminator loss describes how accurately it is able to predict, given a label and an image, if the label is real or not.
 \[ L = 0.5 \times  ( MSE( D( L_{f}, I ), 0) + MSE( D( L_{r}, I ), 1) ) \]
 
-Because these two loss values are relative to the performance of eachother they can't be used to see if our generator has converged on a solution. Therefore it is necessary, at each epoch, to also compute the L1 loss of the fake labels and real labels across the training and the validation dataset, as these values are independent of the discriminator. This will inform allow us to see if the generator is overfitting, underfitting, or training well. 
+Because these two loss values are relative to the performance of eachother they can't be used to see if our generator has converged on a solution. Therefore it is necessary, at each epoch, to also compute the L1 loss of the fake labels and real labels across the training and the validation dataset, as these values are calculated independently of the discriminator. This will inform allow us to see if the generator is overfitting, underfitting, or training well. 
 
 \textbf{Training Strategy}: Please see algorithm \ref{ALG:GAN} for the training loop.
 
@@ -350,12 +377,12 @@ Because these two loss values are relative to the performance of eachother they 
 \State
 \State $L_{f} = G(I)$
 \State
-\State $pred_fake = D(L_{f}, I) $
-\State $loss_G = MSE( pred_fake, 1 ) + L1(L_{f}, L_{r}) $
+\State $pred_{fake} = D(L_{f}, I) $
+\State $loss_G = MSE( pred_{fake}, 1 ) + L1(L_{f}, L_{r}) $
 \State $\texttt{Update weights of G with backpropagation}$
 \State
-\State $pred_real = D(L_{r}, I)$
-\State $loss_D = 0.5 \times  ( MSE( pred_fake, 0) + MSE( pred_real, 1) ) $
+\State $pred_{real} = D(L_{r}, I)$
+\State $loss_D = 0.5 \times  ( MSE( pred_{fake}, 0) + MSE( pred_{real}, 1) ) $
 \State $\texttt{Update weights of D with backpropagation}$
 \State
 \EndFor
@@ -365,14 +392,13 @@ Because these two loss values are relative to the performance of eachother they 
 
 \section{Experiment 3}
 
-I will adapt a PyTorch implementation of Palette \cite{JanspiryPalette} and train it to predict labels from the VISCHEMA dataset. Palette is a versitile conditional image to image diffusion model proposed by Saharia et al. \cite{saharia2022palette} that is able to uncrop, inpaint, colorize, and remove JPEG artifacts from images. Because of this versitility I think it could learn to predict VMS maps from images. The conditional image passed to the model will be the image from the dataset, the ground truth will be the label. This network takes as input a 128x128x6 tensor of floating point values, this is the concatenation of an image and the noise added to the ground truth after $t$ steps. It outputs a 128x128x3 tensor of floating point values, this is the models estimate of the noise added at time $t-1$.
+I will adapt a PyTorch implementation of Palette \cite{JanspiryPalette} and train it to predict labels from the VISCHEMA dataset. Palette is a versitile conditional image to image diffusion model proposed by Saharia et al. \cite{saharia2022palette} that is able to uncrop, inpaint, colorize, and remove JPEG artifacts from images. Because of this versitility I think it could learn to predict VMS maps from images. The conditional image passed to the model will be the image from the dataset and the ground truth will be the label. This network takes as input the concatenation of an image and the noise added to the ground truth label after $t$ steps. It outputs an estimate of the noise added to the ground truth label at time $t-1$.
 This model can be described as \[ noise_{pred} = model(I, t) \]
 
-\textbf{Model Loss}: The model loss describes how well it can estimate the noise added to an image between time steps $t-1$ and t, it is computed across an entire batch of images and then the model weights are adjusted with backpropagation.
+\textbf{Model Loss}: This describes how well the model can estimate the noise added to an image between time steps $t-1$ and $t$, it is computed across an entire batch of images and then the model weights are adjusted with backpropagation.
 
 \[ L = MSE( model(I, t), noise_{real} ) \]
 
-% This but for diffusion
 The loss calculated for backpropagation is relative to the performance in estimating noise added, not for the performance when calculating VMS labels. Because of this I will also have to calculate the L1 loss of the generated labels against the real labels. This will take a lot of computational time so I will do it at the end of training. I will be able to see if our model has converged by observing the backpropagation loss. 
 
 \textbf{Training Strategy}: Please see algorithm \ref{ALG:Diffusion} for the training loop.
@@ -385,11 +411,11 @@ The loss calculated for backpropagation is relative to the performance in estima
 \For{$\texttt{every epoch}$}
 \For{$I, L \texttt{ in training dataloader}$}
 \State
-\State $t = random(0, noise_steps)$
-\State $noise_{real}, L_{noisy} = noise\_image(L, t)$ \Comment{Apply t steps of noise and return noise added at step t}
+\State $t = random(0, noise\_steps)$
+\State $noise_{real}, L_{noisy} = noise\_image(L, t)$ \Comment{Apply t steps of noise}
 \State
 \State $input = concatenation(I, L_{noisy})$
-\State $noise_{pred} = model(I, t)$
+\State $noise_{pred} = model(input, t)$
 \State $loss = MSE( noise_{pred}, Noise_{real} )$
 \State $\texttt{Update weights of model with backpropagation}$
 \EndFor
@@ -399,9 +425,10 @@ The loss calculated for backpropagation is relative to the performance in estima
 
 \section{Results Analysis/Testing}
 
-After performing all 3 experiments I will compare the results across the validation dataset qualitatively and using the L1 loss. The L1 loss will tell me how statistically close the outputs are but through qualitative analysis I can see if the outputs have cheated. 
-% need to explain cheating better but basically the large blobs
-I can also compare the L1 loss across the training and validation sets to see if any models have generalised well, if the loss across the training dataset is much smaller/larger than the validation dataset then it will imply that the model has become overfit/underfit respectively. Ideally they should be similar. 
+After performing all 3 experiments I will compare the results across the validation dataset qualitatively and using the L1 loss. The L1 loss will tell me how statistically close the outputs are but through qualitative analysis I can see if the outputs actually resemble the true labels, or if the models have achieved a low L1 loss through some exploit. 
+
+
+I can also compare the L1 loss across the training and validation sets to see if a model has generalised well, if the loss across the training dataset is much smaller/larger than the validation dataset then it will imply that the model has become overfit/underfit respectively. Ideally they should be similar. 
 
 
 \chapter{Experimental Results}
