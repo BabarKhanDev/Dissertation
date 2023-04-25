@@ -476,24 +476,24 @@ A Diagram of the model with the best parameters can be seen in figure \ref{fig:a
 \begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{Experiment 1 Diagram}
-    \caption{This is the best autoencoder model that was found in my hyperparameter search}
+    \caption{Most accurate autoencoder model found in my hyperparameter search}
     \label{fig:autoencoderDiagram}
 \end{figure}
 
 
-Training Curve:
+A diagram of the training curve for the autoencoder can be seen in figure \ref{fig:autoencoderTraining}
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{Autoencoder Training Curve}
-    \caption{Autoencoder training graph. The red plot describes the training loss per epoch and the green plot the validation loss. The validation loss closely matches the training loss and the model does not become overfit.}
+    \caption{Autoencoder training graph. The red plot describes the training loss per epoch and the green plot the validation loss. The validation loss closely matches the training loss as the model does not become overfit.}
     \label{fig:autoencoderTraining}
 \end{figure}
 
 
 After 80 training epochs I was able to achieve an L1 loss across my validation dataset of ~0.132.
 
-A sample of best output images:
+A sample of best output images can be seen in figure \ref{fig:autoencoderBestOutput} and a sample of the lowest accurary output images can be seen in figure \ref{fig:autoencoderWorstOutput}. As you can see the autoencoder tends to turn the blocky VMS shape into a rounded circle. It also fails to accurately predict the red regions, this is likely due to there being far more green data than red data. The VISCHEMA dataset is split into 12 distinct classes, in the table below I show the models accuracy across each different class.
 
 \begin{figure}[h]
     \centering
@@ -502,8 +502,6 @@ A sample of best output images:
     \label{fig:autoencoderBestOutput}
 \end{figure}
 
-A sample of the worst output images:
-
 \begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{Worst autoencoder Outputs}
@@ -511,11 +509,7 @@ A sample of the worst output images:
     \label{fig:autoencoderWorstOutput}
 \end{figure}
 
-When performed without differentiable augmentation the results looked like this:
-% Images.
-
-FID score of Z, L1 Loss of Y.
-% Input Z, Y
+Conclusions
 
 \section{Experiment 2}
 This experiment was performed with differentiable augmentation as described in \cite{zhao2020differentiable}. I performed translation and cutout, each with a 90\% chance. I explored the following parameter and hyperparameter options:
@@ -602,6 +596,29 @@ Some discussion about them.
 
 In this experiment I was only able to explore a small range of possible hyperparameters and as such my results do not emulate the recent success found in diffusion based image generation. \cite{ramesh2022hierarchical, saharia2022photorealistic} However, with a greater number of computing resources, specifically parallel GPUs, it should be possible to explore a greater search space and achieve better results.
 
+\subsection{Examination Across VISCHEMA Categories}
+
+The VISCHEMA dataset is split into 12 different categories, below we can see the accuracy that each model achieves within a category.
+
+\begin{table}[]
+    \begin{tabular}{|l|lll}
+    \hline
+                 & \multicolumn{3}{c|}{Model}                                                                         \\ \hline
+    Category     & \multicolumn{1}{l|}{AutoEncoder} & \multicolumn{1}{l|}{GAN} & \multicolumn{1}{l|}{Diffusion Model} \\ \hline
+    Kitchen      &                                  &                          &                                      \\ \cline{1-1}
+    Living Room  &                                  &                          &                                      \\ \cline{1-1}
+    Conf. Room   &                                  &                          &                                      \\ \cline{1-1}
+    Airport Ter. &                                  &                          &                                      \\ \cline{1-1}
+    House        &                                  &                          &                                      \\ \cline{1-1}
+    Skyscraper   &                                  &                          &                                      \\ \cline{1-1}
+    Amus. park   &                                  &                          &                                      \\ \cline{1-1}
+    Playground   &                                  &                          &                                      \\ \cline{1-1}
+    Pasture      &                                  &                          &                                      \\ \cline{1-1}
+    Golf Course  &                                  &                          &                                      \\ \cline{1-1}
+    Mountain     &                                  &                          &                                      \\ \cline{1-1}
+    Badland      &                                  &                          &                                      \\ \cline{1-1}
+    \end{tabular}
+    \end{table}
 \chapter{Conclusion}
 
 

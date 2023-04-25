@@ -12,7 +12,7 @@
 \contentsline {subsection}{\numberline {4.2.2}Image Synthesis Models}{xii}{subsection.4.2.2}%
 \contentsline {subsubsection}{\nonumberline Autoencoders}{xii}{subsubsection*.4}%
 \contentsline {subsubsection}{\nonumberline Generative Adversarial Networks}{xii}{subsubsection*.6}%
-\contentsline {subsubsection}{\nonumberline Diffusion Models}{xii}{subsubsection*.8}%
+\contentsline {subsubsection}{\nonumberline Diffusion Models}{xiii}{subsubsection*.8}%
 \contentsline {chapter}{\numberline {5}Methodology}{xiv}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Requirements Capture}{xiv}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Ethical Concerns}{xiv}{section.5.2}%
@@ -26,9 +26,10 @@
 \contentsline {section}{\numberline {6.2}Hyperparameter tuning}{xx}{section.6.2}%
 \contentsline {section}{\numberline {6.3}Experiment 1}{xxi}{section.6.3}%
 \contentsline {section}{\numberline {6.4}Experiment 2}{xxii}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Experiment 3}{xxv}{section.6.5}%
+\contentsline {section}{\numberline {6.5}Experiment 3}{xxvi}{section.6.5}%
 \contentsline {section}{\numberline {6.6}Results, Evaluation Metrics, and Analysis}{xxvi}{section.6.6}%
-\contentsline {chapter}{\numberline {7}Conclusion}{xxvii}{chapter.7}%
-\contentsline {chapter}{\numberline {8}Appendix}{xxxii}{chapter.8}%
+\contentsline {subsection}{\numberline {6.6.1}Examination Across VISCHEMA Categories}{xxvi}{subsection.6.6.1}%
+\contentsline {chapter}{\numberline {7}Conclusion}{xxviii}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Appendix}{xxix}{chapter.8}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
