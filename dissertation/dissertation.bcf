@@ -2453,8 +2453,11 @@
     <bcf:citekey order="59" intorder="1">isola2018imagetoimage</bcf:citekey>
     <bcf:citekey order="60" intorder="1">JanspiryPalette</bcf:citekey>
     <bcf:citekey order="61" intorder="1">saharia2022palette</bcf:citekey>
-    <bcf:citekey order="62" intorder="1">zhao2020differentiable</bcf:citekey>
-    <bcf:citekey order="63" intorder="1">pix2pixwasserstein</bcf:citekey>
+    <bcf:citekey order="62" intorder="1">JanspiryPalette</bcf:citekey>
+    <bcf:citekey order="63" intorder="1">zhao2020differentiable</bcf:citekey>
+    <bcf:citekey order="64" intorder="1">pix2pixwasserstein</bcf:citekey>
+    <bcf:citekey order="65" intorder="1">ramesh2022hierarchical</bcf:citekey>
+    <bcf:citekey order="65" intorder="2">saharia2022photorealistic</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

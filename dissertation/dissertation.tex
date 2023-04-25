@@ -446,50 +446,42 @@ I can also compare the L1 loss across the training and validation sets to see if
 
 \section{Experimental Environment}
 
-I have implement the experiments in Python using the PyTorch machine learning framework, however the methodology that I describe should produce the same results in any programming language or framework.
+I have implement the experiments in Python using the PyTorch machine learning framework, however the methodology that I describe should produce similar results in any programming language or framework.
 
 This model was trained on a computer using an RTX 3070 with 8GB of VRAM and an AMD Ryzen 3600 with 32GB of system RAM.
-Testing the hyperparameter options for experiment 1 took approximately X days and I trained the final model over the course of 40 minutes.
+Testing the hyperparameter options for experiment 1 took approximately 2 days and I trained the final model over the course of 40 minutes.
+Testing the hyperparameter options for experiment 2 took approximately 3 days and I trained my final model over the course of 2 hours.  
+Testing the hyperparameter options for experiment 1 took approximately 2 weeks and I trained the final model over the course of Y hours (Not trained final model yet)
 % FILL IN X AND Y
-Testing the hyperparameter options for experiment 2 took approximately 3 days and I trained my final model over the course of 5 hours.
-% Need to double check that  
-Testing the hyperparameter options for experiment 1 took approximately X days and I trained the final model over the course of Y hours
-% FILL IN X AND Y
-
-All experiments were performed with differentiable augmentation as described in \cite{zhao2020differentiable}. I performed translation and cutout, each with a 90\% chance.
-% THAT PERCENT MAY CHANGE
 
 \section{Hyperparameter tuning}
 
-For experiments 1 and 2 I automated the process of exploring the parameter and hyperparameter search space. In my search I varied the following parameters: The normalisation layer used, the channel layouts used, the optimiser used, the learning rates for the optimiser, and, if the Adam optimiser was used, the beta values. Because training a diffusion model is far more computationally expensive than training an Autoencoder or a GAN I was unable to automate the process of tuning the hyperparameters in experiment 3. Training a GAN model on the VISCHEMA dataset would typically take around 100 minutes, but training a diffusion model would take around 20 hours due to the greater number of epochs required.
+For experiments 1 and 2 I automated the process of exploring the parameter and hyperparameter search space. In my search I varied the following parameters: The normalisation layer used, the channel layouts used, the optimiser used, the learning rates for the optimiser, and, if the Adam optimiser was used, the beta values. In experiment 2 I allowed for the generator and discriminator models to use different normalisation functions, optimisers, and learning rates. 
 
 
-In experiment 2 I allowed for the generator and discriminator models to use different normalisation functions, optimisers, and learning rates. 
+Training a diffusion model is far more computationally expensive than an autoencoder or a GAN, training a GAN model on the VISCHEMA dataset typically took around 100 minutes, where as a diffusion model typically took around 20 hours. 
+Because of this I limited my search in experiment 3 to manually vary the following parameters of the pallete model available at \cite{JanspiryPalette}: the number of channels used, the normalisation layer used, and the number of noise steps.
 
-
-Exploring this search space exhaustively is unfortunately not feasible, there are over 5000 different combinations possible, and if I tested each combination once for 100 epochs then it would take approximately 300 days to test per experiment.
-% double check these numbers
-% should I describe this in my methodology or above?
-% how long does it take to train an epoch?
-Instead I will have to explore a subset of this search space. For each experiment I estimated some good default parameter and hyperparameter values, by varying these values I can lower the scope of the search space to 
-% maybe I should get an exact value here instead of 100
-approximately 100 combinations, which took \(\sim\)3 days per experiment to test. Unfortunately this does mean that not every combination has been tested, however we should achieve a good approximation of the best parameters and hyperparameters.
-
-
-% Should this go at the end?
-In experiment 3 I was only able to explore a small range of possible hyperparameters and as such my results do not emulate the recent success found in diffusion based image generation.
-% papers on the success of diffusion.
-However, with a greater number of computing resources it may be possible to do so.
+Exploring these search spaces exhaustively is unfortunately not feasible, in experiments 1 and 2 there are over 5000 different combinations possible, and if I tested each combination once for 100 epochs then it would take hundreds of days to test.
+Instead I have explored a subset of this search space. For each experiment I estimated default parameter and hyperparameter values, by varying these values I lowered the scope of the search space to approximately 100 combinations. This took \(\sim\)2/3 days per experiment to test. Unfortunately this does mean that not every combination has been tested, however we should achieve a good approximation of the best parameters and hyperparameters.
 
 \section{Experiment 1}
 
-In this experiment I trained a UNet to predict the VMS maps of images, I trained the model using backpropagation of the L1 loss of the model output given an image, and the corresponding label. 
+In this experiment I trained a UNet to directly predict the VMS maps of images, I trained the model using backpropagation of the L1 loss of the model output given an image, and the corresponding label.
+
+The best parameters and hyperparameters that I found for my model were the following: Encoder Channels = (3,64,128,256,512,1024), Decoder Channels = (1024,512,256,128,64), Batch Normalisation, Adam Optimizer with a learning rate of 0.001 and betas = (0.9, 0.999).
+
+A Diagram of the model with the best parameters can be seen in figure \ref{fig:autoencoderDiagram}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{Experiment 1 Diagram}
+    \caption{This is the best autoencoder model that was found in my hyperparameter search}
+    \label{fig:autoencoderDiagram}
+\end{figure}
 
 
-Diagram of my model:
-
-The best parameters and hyperparameters that I found for my model were the following:
-% Input best hyperparameters
+Training Curve:
 
 \begin{figure}[h]
     \centering
@@ -526,8 +518,7 @@ FID score of Z, L1 Loss of Y.
 % Input Z, Y
 
 \section{Experiment 2}
-
-I explored the following parameter and hyperparameter options:
+This experiment was performed with differentiable augmentation as described in \cite{zhao2020differentiable}. I performed translation and cutout, each with a 90\% chance. I explored the following parameter and hyperparameter options:
 
 \textbf{Normalisation layers}: Batch Normalisation, Instance Norm
 
@@ -582,37 +573,26 @@ The worst results are shown in \ref{fig:GANWorstOutput}, it appears that like ou
 After 200 epochs, L1 Score of ~0.0740
 % Insert X,Y
 
-Here are the images generated when I don't use differentiable augmentation
-% Insert images
-% Insert training graphs
-
-After X epochs L1 Score of Y
-% Input X, Y
 
 \textbf{Wasserstein GAN}: Using a Wasserstein image-to-image GAN as described in \cite{pix2pixwasserstein} I was able to achieve a best score of
 % Insert score here.
 % Insert images.
 
-FID score of Z, L1 Score of Y
-% Input Z, Y
-
-Here are the images generated when I don't use differentiable augmentation
-% Insert images
-% Insert training graphs
-
-FID score of Z, L1 Score of Y
-% Input Z, Y
 
 \section{Experiment 3}
+
+I explored the following parameters:
 
 
 
 \section{Results, Evaluation Metrics, and Analysis}
 
+The best parameters that I found were: 
+
+Evaluating the L1 loss of the diffusion models across the entire validation distribution took approximately 4 hours, because of this I had to evaluate it over a subset every 5 epochs. This unfortunately meant that it was impossible to see if the network was overfitting until I did a full test across the validation distribution at the end of the training. The graph below shows the training and validation loss per epoch for my best model, the validation loss in this case is the loss for removing 1 step of noise from each image, not 2000.
+
 a graph of the train/val loss over time across the different experiments
 
-
-a graph of the FID score at the end of the different experiments
 
 
 a selection of the images with the different training methods
@@ -620,6 +600,7 @@ a selection of the images with the different training methods
 
 Some discussion about them.
 
+In this experiment I was only able to explore a small range of possible hyperparameters and as such my results do not emulate the recent success found in diffusion based image generation. \cite{ramesh2022hierarchical, saharia2022photorealistic} However, with a greater number of computing resources, specifically parallel GPUs, it should be possible to explore a greater search space and achieve better results.
 
 \chapter{Conclusion}
 
