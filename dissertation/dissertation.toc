@@ -1,33 +1,34 @@
 \babel@toc {british}{}\relax 
 \contentsline {chapter}{\numberline {1}Abstract}{iv}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Executive Summary}{vi}{chapter.2}%
-\contentsline {chapter}{\numberline {3}Introduction}{viii}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Background}{viii}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Motivation}{viii}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Structure}{ix}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Literature Review}{x}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Memorability}{x}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Using Deep Learning to Predict Memorability}{xii}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Memorability Datasets}{xii}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Image Synthesis Models}{xiii}{subsection.4.2.2}%
-\contentsline {subsubsection}{\nonumberline Autoencoders}{xiii}{subsubsection*.4}%
-\contentsline {subsubsection}{\nonumberline Generative Adversarial Networks}{xiii}{subsubsection*.6}%
-\contentsline {subsubsection}{\nonumberline Diffusion Models}{xiii}{subsubsection*.8}%
-\contentsline {chapter}{\numberline {5}Methodology}{xv}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Requirements Capture}{xv}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Motivation}{xv}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Experiment 1}{xvi}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Experiment 2}{xvii}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Experiment 3}{xviii}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Results Analysis/Testing}{xx}{section.5.6}%
-\contentsline {chapter}{\numberline {6}Experimental Results}{xxi}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Experimental Environment}{xxi}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Hyperparameter tuning}{xxi}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Experiment 1}{xxii}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Experiment 2}{xxii}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Experiment 3}{xxvi}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Results, Evaluation Metrics, and Analysis}{xxvi}{section.6.6}%
-\contentsline {chapter}{\numberline {7}Conclusion}{xxvii}{chapter.7}%
+\contentsline {chapter}{\numberline {2}Executive Summary}{v}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Introduction}{vii}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Background}{vii}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Motivation}{vii}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Report Structure}{viii}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Literature Review}{ix}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Memorability}{ix}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Using Deep Learning to Predict Memorability}{xi}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Memorability Datasets}{xi}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Image Synthesis Models}{xii}{subsection.4.2.2}%
+\contentsline {subsubsection}{\nonumberline Autoencoders}{xii}{subsubsection*.4}%
+\contentsline {subsubsection}{\nonumberline Generative Adversarial Networks}{xii}{subsubsection*.6}%
+\contentsline {subsubsection}{\nonumberline Diffusion Models}{xii}{subsubsection*.8}%
+\contentsline {chapter}{\numberline {5}Methodology}{xiv}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Requirements Capture}{xiv}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Ethical Concerns}{xiv}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Motivation}{xv}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Experiment 1}{xv}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Experiment 2}{xvi}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Experiment 3}{xviii}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Results Analysis/Testing}{xix}{section.5.7}%
+\contentsline {chapter}{\numberline {6}Experimental Results}{xx}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Experimental Environment}{xx}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Hyperparameter tuning}{xx}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Experiment 1}{xxi}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Experiment 2}{xxi}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Experiment 3}{xxv}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Results, Evaluation Metrics, and Analysis}{xxv}{section.6.6}%
+\contentsline {chapter}{\numberline {7}Conclusion}{xxvi}{chapter.7}%
 \contentsline {chapter}{\numberline {8}Appendix}{xxxi}{chapter.8}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
