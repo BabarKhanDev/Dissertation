@@ -1,11 +1,17 @@
 \documentclass{UoYCSproject}
 % Preamble
-\usepackage{url}     % This is needed for IEEE referencing
 \usepackage{bookmark}
-\usepackage{algpseudocode} % Pseudocode algorithm
+
+% Pseudocode
+\usepackage{algpseudocode}
 \usepackage{algorithm}
+
+% referencing
 \usepackage[backend=biber]{biblatex}
 \addbibresource{references.bib}
+\usepackage{url}     % This is needed for IEEE referencing
+
+% Images
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
 
@@ -598,27 +604,32 @@ In this experiment I was only able to explore a small range of possible hyperpar
 
 \subsection{Examination Across VISCHEMA Categories}
 
-The VISCHEMA dataset is split into 12 different categories, below we can see the accuracy that each model achieves within a category.
+The dataset that I trained on, VISCHEMA PLUS, is composed of two datasets: VISCHEMA and VISCHEMA 2. The VISCHEMA dataset is split into 12 distinct classes, the VISCHEMA 2 dataset is split into 8 distinct classes. Some classes, such as "kitchen", are present in both datasets, but some are present only in VISCHEMA, such as "airport terminal" or VISCHEMA 2, such as "public entertainment". In figure \ref{tab:categories} the average L1 loss each model achieves across each different class is displayed.
 
 \begin{table}[]
-    \begin{tabular}{|l|lll}
-    \hline
-                 & \multicolumn{3}{c|}{Model}                                                                         \\ \hline
-    Category     & \multicolumn{1}{l|}{AutoEncoder} & \multicolumn{1}{l|}{GAN} & \multicolumn{1}{l|}{Diffusion Model} \\ \hline
-    Kitchen      &                                  &                          &                                      \\ \cline{1-1}
-    Living Room  &                                  &                          &                                      \\ \cline{1-1}
-    Conf. Room   &                                  &                          &                                      \\ \cline{1-1}
-    Airport Ter. &                                  &                          &                                      \\ \cline{1-1}
-    House        &                                  &                          &                                      \\ \cline{1-1}
-    Skyscraper   &                                  &                          &                                      \\ \cline{1-1}
-    Amus. park   &                                  &                          &                                      \\ \cline{1-1}
-    Playground   &                                  &                          &                                      \\ \cline{1-1}
-    Pasture      &                                  &                          &                                      \\ \cline{1-1}
-    Golf Course  &                                  &                          &                                      \\ \cline{1-1}
-    Mountain     &                                  &                          &                                      \\ \cline{1-1}
-    Badland      &                                  &                          &                                      \\ \cline{1-1}
+    \centering
+    \begin{tabular}{|l|lll|}
+        \hline
+        \multicolumn{1}{|c|}{} & \multicolumn{3}{c|}{Model}                                                                         \\ \hline
+        Category               & \multicolumn{1}{c|}{Autoencoder} & \multicolumn{1}{c|}{GAN} & \multicolumn{1}{c|}{Diffusion Model} \\ \hline
+        Kitchen                & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{1}   & 1                                    \\ \hline
+        Living Room            & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{1}   & 1                                    \\ \hline
+        Conf. Room             & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{1}   & 1                                    \\ \hline
+        Airport Ter.           & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{1}   & 1                                    \\ \hline
+        House                  & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{1}   & 1                                    \\ \hline
+        Skyscraper             & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{1}   & 1                                    \\ \hline
+        Amus. Park             & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{1}   & 1                                    \\ \hline
+        Playground             & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{1}   & 1                                    \\ \hline
+        Pasture                & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{1}   & 1                                    \\ \hline
+        Golf Course            & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{1}   & 1                                    \\ \hline
+        Mountain               & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{1}   & 1                                    \\ \hline
+        Badland                & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{2}   & 1                                    \\ \hline
     \end{tabular}
-    \end{table}
+    \label{tab:categories}
+    \caption{The average L1 loss that each model achieves over the different categories present in the VISCHEMA validation distribution.}
+\end{table}
+
+
 \chapter{Conclusion}
 
 

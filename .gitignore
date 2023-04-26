@@ -33,3 +33,8 @@ autoencoder/checkpoints/run2/60.pkl
 autoencoder/checkpoints/run2/70.pkl
 autoencoder/checkpoints/run2/80.pkl
 autoencoder/checkpoints/run2/best_weights.pkl
+
+VISCHEMA_1/
+VISCHEMA_2/
+VISCHEMA_categories/
+VISCHEMA_PLUS/
