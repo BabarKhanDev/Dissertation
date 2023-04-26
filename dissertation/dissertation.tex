@@ -606,6 +606,58 @@ In this experiment I was only able to explore a small range of possible hyperpar
 
 The dataset that I trained on, VISCHEMA PLUS, is composed of two datasets: VISCHEMA and VISCHEMA 2. The VISCHEMA dataset is split into 12 distinct classes, the VISCHEMA 2 dataset is split into 8 distinct classes. Some classes, such as "kitchen", are present in both datasets, but some are present only in VISCHEMA, such as "airport terminal" or VISCHEMA 2, such as "public entertainment". In figure \ref{tab:categories} the average L1 loss each model achieves across each different class is displayed.
 
+Val Losses per category
+living room 0.04736742093227804
+mountain 0.09440871913518224
+airport_terminal 0.08488932742100012
+kitchen 0.07214003698900343
+small 0.057248142008718694
+big 0.06313493989762806
+golf_course 0.07559266313910484
+skyscraper 0.14310482740402222
+living_room 0.07218014765530825
+house 0.07482177354395389
+public-entertainment 0.07045600855989116
+isolated 0.07133300821570789
+conference_room 0.09115160930724371
+populated 0.03876365436927268
+playground 0.07888212108186313
+work-home 0.0853188435236613
+amusement_park 0.08619985838110249
+badlands 0.09550997242331505
+pasture 0.055703551042824984
+
+Train Losses per category
+kitchen 0.0547550251299981
+living room 0.04132210256066173
+conference_room 0.07744450638471526
+skyscraper 0.09863790109132727
+small 0.0499351502476651
+mountain 0.0925751381004468
+populated 0.03363309639655514
+big 0.04622329285816301
+amusement_park 0.07270780188264325
+work-home 0.048088241379488916
+house 0.06450215562739793
+public-entertainment 0.047748873976967005
+isolated 0.04441544677815344
+playground 0.05779445893606361
+badlands 0.07724712808665476
+living_room 0.06093246974050999
+airport_terminal 0.061897980210221845
+golf_course 0.05835352713863055
+pasture 0.049044397906126344
+
+Mean loss across Train + Val categories: 0.06830171893324928
+std of loss across train + val categories: 0.02116119603137147
+
+Mean loss across Val categories: 0.07674771710689908
+Std of loss across Val categories: 0.021690102597573778
+
+Mean loss across train categories: 0.05985572075959948
+Std of loss across train categories: 0.016806609234595635
+
+
 \begin{table}[]
     \centering
     \begin{tabular}{|l|lll|}
