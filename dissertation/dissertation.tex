@@ -7,6 +7,11 @@
 \usepackage{algorithm}
 \usepackage{amsmath}
 
+% Table
+\usepackage{booktabs}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
+
 % referencing
 \usepackage[backend=biber]{biblatex}
 \addbibresource{references.bib}
@@ -261,12 +266,66 @@ The DDPM is a diffusion model capable of producing high quality images and achie
 
 \chapter{Methodology}
 
-% I dont think this needs to be long, ~2 pages
 % This should be from a theoretical perspective
 % No need for specific values, just describe what I plan on doing
-% Use general ranges of the params
 
-% Motivation?
+In this chapter I describe the methodology of my project, the requirements for success, an overview of state of the art probabalistic models used to synthesise images, and considerations for the design options and implementation environments. 
+
+During this project I followed a Waterfall method, a sequential development process where each step iteratively builds on and requires the last. A prominent criticism of the Waterfall method is its lack of flexibility, and that criticism is why modern software development tends to use an Agile design method, however due to the fact that the requirements of this project are known beforehand, the Waterfall method is more appropriate. There are 4 relevant Waterfall steps that I will folow and that are described in figure \ref{fig:waterfall method}. These are: The requirements capture, the design, the implementation, and the testing.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{Best GAN Outputs} % CHANGE THIS
+    \caption{Waterfall Method Steps}
+    \label{fig:waterfall method}
+\end{figure}
+
+\textbf{How to measure memorable regions of images}
+
+% THIS ALL NEEDS PROPERLY REFERENCING
+Measuring the memorability of an image has been done by many people 
+% References: Isola etc
+There are two approaches to measuring the memorable regions of an image. First, like Khosla in LaMem, you could split an image into many regions and use a model designed to predict the memorability of an image, predict the memorability of that region, then compose these memorabilities into a memorability map. Or secondly, like in VISCHEMA, you could perform a memorability game like above, except when a user says they remember an image, ask them what part of the image caused them to remember it. Both of these methods have their drawbacks. In the former, the memorability of an image may not be equal to that image within another image. That is to say, the environment in which we see an image, intuitively, must have some impact on the memorability of it. In the latter, the way that people indicate what caused them to remember the image may be fallible, if users draw boxes around objects, they may or may not intend for the edges to be selected. In either case the result is the same, a base of image, memorability map pairs in which supervised learning can occur on.
+% Maybe this discussion should come later?
+
+\textbf{How to predict memorable regions and evaluate the quality of these solutions}
+
+Assuming that we have a databse of image and memorability map pairs as described above, we can use an image to image deep convolutional model to learn a mapping from the image to the memorability map. There are many of these that exist, but fundementally they all perform the same task and can be evaluated the same. Given an image they need to predict what the corresponding memorability map looks like. We can evaluate the quality of these solutions in a number of ways. The L1 and L2 loss can describe the absolute and mean square error between two equally sized images, 
+% pix2pix L1 loss shown better, is it defo sharpness?
+has shown that L1 loss is a better one to preserve the sharpness in an image so we will use that to describe the quality of the predicted memorability maps. We can also compare the outputs of our models quantatatively, do the predicted outputs look similar to the inputs. Its possible that our models could learn to predict something simple, like a single shade of green entirely black images, or just noise, and then refuse to learn more, in this case the outputed labels would be worthless, this can be evaluated by qualitatively evaluating the images. Execution time is also important, I propose that this system can be used by creatives to iteratively improve their images, if the system takes too long to evaluate a single image on modern hardware then it's less useful than a similar performing system that performs much faster.   
+
+
+\textbf{Model Requirements}
+
+In figure \ref{tab:RequirementCaptureTable} I describe the requirements that each probabilistic model will be compared against. A model will be considered unsuccessful if it does not meet every requirement in the "must" section, and will be considered somewhat successful if it meets all of those in the "must" section but not all of those in the "should" section.
+
+\begin{table}[h]
+    \begin{tabular}{@{}llll@{}}
+    \toprule
+    ID & Name & Description & Kind \\ \midrule
+    \multicolumn{4}{l}{{\ul Must}} \\
+    1.1 & Image Input & The implementation of the model should be able to take an image from the dataset as input. & Functional \\
+    1.2 & Image Output & Given an image, the model must output an image the same size as the corresponding memorability map. & Functional \\
+    1.3 & Low Loss & The average loss of the model output given an image, and the corresponding label, should be low. & Functional \\
+    1.4 & Qualitative & When outputs of our model are compared qualitatively with the corresponding label they should look similar. & Functional \\
+    \multicolumn{4}{l}{{\ul Should}} \\
+    2.1 & Performance & The implementation of the model should evaluate fast, it should not take longer to than seconds, given an image, to generate a memorability map. & Non-Functional \\
+     &  &  &  \\ \bottomrule
+    \end{tabular}
+    \caption{Probabilistic Model Requirements Table}
+    \label{tab:RequirementCaptureTable}
+    \end{table}
+
+\textbf{Comparison of available datasets}
+
+\textbf{Comparison of state of the art models}
+
+\textbf{Implementation considerations}
+
+
+% Implementation and testing will be discussed in the results analysis section
+
+\chapter{Old Methodology}
 
 \textbf{Requirements Capture}
 
@@ -793,7 +852,6 @@ Our models have a lot of trouble predicting the red channel of the VMS maps. The
 % golf_course 0.030894182031401075
 % badlands 0.038830878445878625
 % playground 0.030713564150833657
-
 
 \chapter{Conclusion}
 
