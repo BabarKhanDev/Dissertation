@@ -603,30 +603,6 @@ In this experiment I was only able to explore a small range of possible hyperpar
 
 The dataset that I trained on, VISCHEMA PLUS, is composed of two datasets: VISCHEMA and VISCHEMA 2. The VISCHEMA dataset is split into 12 distinct classes, the VISCHEMA 2 dataset is split into 8 distinct classes. One "kitchen", is present in both datasets, but otherwise clases are exclusive to VISCHEMA or VISCHEMA 2. In figure \ref{tab:categories} the average L1 loss each model achieves across each different class in the validation distribution is displayed. The values are rounded to 2 significant figures but in calculations I used the un-rounded versions. Looking at this data we can see that the mean L1 loss across the different classes has a standard deviation of 0.022. Interestingly our accuracy in measuring skyscrapers is the lowest, this is likely due to the large red regions in the VMS that our model has difficulty predicting.
 
-% Autoencoder on VALIDATION vvvv
-% playground 0.13632339877741678
-% public-entertainment 0.1288577037907782
-% big 0.10834309050724619
-% work-home 0.13268107896049816
-% golf_course 0.1328940147963854
-% conference_room 0.17152327547470728
-% house 0.1328673685590426
-% living room 0.07679477110505104
-% kitchen 0.1169572982005775
-% isolated 0.1244304631562794
-% airport_terminal 0.150626262159724
-% small 0.0953560940137035
-% living_room 0.12549114897847174
-% populated 0.06755907108124934
-% skyscraper 0.30982213616371157
-% mountain 0.18839615423764502
-% amusement_park 0.1433355826884508
-% badlands 0.20444528841310078
-% pasture 0.1119538564234972
-
-% Mean loss: 0.13992937144671244
-% STD of losses: 0.051684013454625026
-
 % GAN on VAL vvvv
 % living room 0.04736742093227804
 % mountain 0.09440871913518224
@@ -651,25 +627,53 @@ The dataset that I trained on, VISCHEMA PLUS, is composed of two datasets: VISCH
 % Mean loss across Val categories: 0.07674771710689908
 % Std of loss across Val categories: 0.021690102597573778
 
+% Autoencoder on VALIDATION vvvv
+% playground 0.13632339877741678
+% public-entertainment 0.1288577037907782
+% big 0.10834309050724619
+% work-home 0.13268107896049816
+% golf_course 0.1328940147963854
+% conference_room 0.17152327547470728
+% house 0.1328673685590426
+% living room 0.07679477110505104
+% kitchen 0.1169572982005775
+% isolated 0.1244304631562794
+% airport_terminal 0.150626262159724
+% small 0.0953560940137035
+% living_room 0.12549114897847174
+% populated 0.06755907108124934
+% skyscraper 0.30982213616371157
+% mountain 0.18839615423764502
+% amusement_park 0.1433355826884508
+% badlands 0.20444528841310078
+% pasture 0.1119538564234972
+
+% Mean loss: 0.13992937144671244
+% STD of losses: 0.051684013454625026
+
 
 \begin{table}[]
     \centering
     \begin{tabular}{|l|lll|}
         \hline
-        \multicolumn{1}{|c|}{} & \multicolumn{3}{c|}{Model}                                                                         \\ \hline
-        Category               & \multicolumn{1}{c|}{Autoencoder} & \multicolumn{1}{c|}{GAN}     & \multicolumn{1}{c|}{Diffusion Model} \\ \hline
-        Kitchen                & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{0.072}   & 1                                    \\ \hline
-        Living Room            & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{0.047}   & 1                                    \\ \hline
-        Conf. Room             & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{0.091}   & 1                                    \\ \hline
-        Airport Ter.           & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{0.085}   & 1                                    \\ \hline
-        House                  & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{0.075}   & 1                                    \\ \hline
-        Skyscraper             & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{0.14 }   & 1                                    \\ \hline
-        Amus. Park             & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{0.086}   & 1                                    \\ \hline
-        Playground             & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{0.079}   & 1                                    \\ \hline
-        Pasture                & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{0.056}   & 1                                    \\ \hline
-        Golf Course            & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{0.076}   & 1                                    \\ \hline
-        Mountain               & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{0.094}   & 1                                    \\ \hline
-        Badland                & \multicolumn{1}{l|}{1}           & \multicolumn{1}{l|}{0.096}   & 1                                    \\ \hline
+        \multicolumn{1}{|c|}{} & \multicolumn{3}{c|}{Model}                                                                          \\ \hline
+        Category               & \multicolumn{1}{c|}{Autoencoder} & \multicolumn{1}{c|}{GAN}  & \multicolumn{1}{c|}{Diffusion Model} \\ \hline
+        Kitchen                & \multicolumn{1}{l|}{0.12}        & \multicolumn{1}{l|}{0.072}& 1                                    \\ \hline
+        Living Room            & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.047}& 1                                    \\ \hline
+        Conf. Room             & \multicolumn{1}{l|}{0.17}        & \multicolumn{1}{l|}{0.091}& 1                                    \\ \hline
+        Airport Ter.           & \multicolumn{1}{l|}{0.15}        & \multicolumn{1}{l|}{0.085}& 1                                    \\ \hline
+        House                  & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.075}& 1                                    \\ \hline
+        Skyscraper             & \multicolumn{1}{l|}{0.31}        & \multicolumn{1}{l|}{0.14 }& 1                                    \\ \hline
+        Amus. Park             & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.086}& 1                                    \\ \hline
+        Playground             & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.079}& 1                                    \\ \hline
+        Pasture                & \multicolumn{1}{l|}{0.11}        & \multicolumn{1}{l|}{0.056}& 1                                    \\ \hline
+        Golf Course            & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.076}& 1                                    \\ \hline
+        Mountain               & \multicolumn{1}{l|}{0.19}        & \multicolumn{1}{l|}{0.094}& 1                                    \\ \hline
+        Badland                & \multicolumn{1}{l|}{0.20}        & \multicolumn{1}{l|}{0.096}& 1                                    \\ \hline
+        \hline
+        Mean                   & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.078}& 1                                    \\ \hline
+        Median                 & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.075}& 1                                    \\ \hline
+        Std                    & \multicolumn{1}{l|}{0.052}       & \multicolumn{1}{l|}{0.022}& 1                                    \\ \hline
     \end{tabular}
     \label{tab:categories}
     \caption{The average L1 loss that each model achieves over the different categories present in the VISCHEMA validation distribution.}
