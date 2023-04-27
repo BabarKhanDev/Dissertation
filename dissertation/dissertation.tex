@@ -578,12 +578,9 @@ After 200 epochs, L1 Score of ~0.0740
 % Insert score here.
 % Insert images.
 
-
 \section{Experiment 3}
 
 I explored the following parameters:
-
-
 
 \section{Results, Evaluation Metrics, and Analysis}
 
@@ -606,8 +603,31 @@ In this experiment I was only able to explore a small range of possible hyperpar
 
 The dataset that I trained on, VISCHEMA PLUS, is composed of two datasets: VISCHEMA and VISCHEMA 2. The VISCHEMA dataset is split into 12 distinct classes, the VISCHEMA 2 dataset is split into 8 distinct classes. One "kitchen", is present in both datasets, but otherwise clases are exclusive to VISCHEMA or VISCHEMA 2. In figure \ref{tab:categories} the average L1 loss each model achieves across each different class in the validation distribution is displayed. The values are rounded to 2 significant figures but in calculations I used the un-rounded versions. Looking at this data we can see that the mean L1 loss across the different classes has a standard deviation of 0.022. Interestingly our accuracy in measuring skyscrapers is the lowest, this is likely due to the large red regions in the VMS that our model has difficulty predicting.
 
-% GAN vvvv
-% Val Losses per category
+% Autoencoder on VALIDATION vvvv
+% playground 0.13632339877741678
+% public-entertainment 0.1288577037907782
+% big 0.10834309050724619
+% work-home 0.13268107896049816
+% golf_course 0.1328940147963854
+% conference_room 0.17152327547470728
+% house 0.1328673685590426
+% living room 0.07679477110505104
+% kitchen 0.1169572982005775
+% isolated 0.1244304631562794
+% airport_terminal 0.150626262159724
+% small 0.0953560940137035
+% living_room 0.12549114897847174
+% populated 0.06755907108124934
+% skyscraper 0.30982213616371157
+% mountain 0.18839615423764502
+% amusement_park 0.1433355826884508
+% badlands 0.20444528841310078
+% pasture 0.1119538564234972
+
+% Mean loss: 0.13992937144671244
+% STD of losses: 0.051684013454625026
+
+% GAN on VAL vvvv
 % living room 0.04736742093227804
 % mountain 0.09440871913518224
 % airport_terminal 0.08488932742100012
@@ -659,6 +679,97 @@ The dataset that I trained on, VISCHEMA PLUS, is composed of two datasets: VISCH
 
 Our models have a lot of trouble predicting the red channel of the VMS maps. The red channel indicates that users thought they remembered the image because of this region, when in reality they hadn't been shown this image before. If we measure the loss of our models across just the green channel, that is the regions subjects indicated triggered their memory in images that they correctly identified as seeing before, then we get an L1 loss of X in our autoencoder, Y in our GAN, and Z in our diffusion model.
 % INPUT X Y Z
+
+% Autoencoder VAL
+% GREEN
+% Mean loss: 0.08333277644123882
+% golf_course 0.07630164806659405
+% kitchen 0.07172042690217495
+% airport_terminal 0.07783418972241252
+% conference_room 0.089528377389624
+% house 0.09478799204031627
+% mountain 0.1080946996808052
+% small 0.06579923080770593
+% amusement_park 0.0825555045157671
+% populated 0.05467195534392407
+% pasture 0.06833397038280964
+% isolated 0.07598294953213018
+% public-entertainment 0.09777870543655895
+% skyscraper 0.1808365397155285
+% big 0.08097460954671815
+% playground 0.0760359705558845
+% work-home 0.09419278800487518
+% living room 0.06241267323493958
+% living_room 0.08461419884115458
+% badlands 0.10508802119228575
+
+% RED
+% Mean loss: 0.047803090693923876
+% big 0.02661177253771928
+% conference_room 0.08101891614274964
+% isolated 0.04759527736014741
+% populated 0.012266142385717677
+% playground 0.059464691689104905
+% kitchen 0.044463653315324335
+% small 0.02879853359742188
+% airport_terminal 0.07187960795617025
+% golf_course 0.055669605696144014
+% mountain 0.07916211329367277
+% public-entertainment 0.030252949539793746
+% work-home 0.03769531178598603
+% living room 0.013748132804175838
+% living_room 0.04000693766283803
+% skyscraper 0.12765768594108523
+% badlands 0.09822849246362846
+% house 0.037173117091879246
+% amusement_park 0.05981842910599274
+% pasture 0.04287697393738199
+
+
+%%%%% GAN: VAL %%%%%%
+% GREEN
+% Mean loss: 0.045738369051832706
+% small 0.0383598092747362
+% big 0.046232790198354495
+% work-home 0.05527007579803467
+% living_room 0.04812932843342423
+% skyscraper 0.07902429103851319
+% airport_terminal 0.045305789693405756
+% amusement_park 0.04742709345494708
+% conference_room 0.046596652340321315
+% pasture 0.03138407017104328
+% kitchen 0.04552051015198231
+% populated 0.02893732444040085
+% living room 0.03519031559117138
+% house 0.050250496218601864
+% mountain 0.05652235009308372
+% isolated 0.03986671961405698
+% golf_course 0.04185447555321913
+% public-entertainment 0.050189074306260975
+% badlands 0.05333242110080189
+% playground 0.04568916160081114
+
+% RED
+% Mean loss: 0.025548097236969623
+% populated 0.007714814867971367
+% kitchen 0.023897209559800105
+% amusement_park 0.03592883333719025
+% big 0.014301763880731804
+% public-entertainment 0.01757042340579487
+% living_room 0.021378754259785637
+% conference_room 0.04170004574448934
+% house 0.021817845478653907
+% living room 0.009958033758448438
+% pasture 0.022044006240321323
+% isolated 0.028836247237289652
+% mountain 0.03477212186304054
+% small 0.016294946122032247
+% airport_terminal 0.03686346101427549
+% work-home 0.027192980454613765
+% skyscraper 0.060537529177963734
+% golf_course 0.030894182031401075
+% badlands 0.038830878445878625
+% playground 0.030713564150833657
 
 
 \chapter{Conclusion}
