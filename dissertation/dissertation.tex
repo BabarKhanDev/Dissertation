@@ -38,21 +38,20 @@
 \chapter{Executive Summary}
 
 %The purpose of the research (what's it about and why's that important)
-I investigate a range of deep conditional image to image generative models and their success in learning mappings of images to memorable regions across three different experiments. If successful these models could be used by marketers, educators, or any creators to determine which parts of their images are memorable, and thus help to more easily create memorable images.
+I investigate a range of deep conditional image to image generative models and evaluate their success when learning a mapping of images to memorable regions across three different experiments. If successful these models could have many useful applications across many different industries, allowing creators to have a more informed opinion on which sections of their images are memorable, using this tool to iteratively improve their image memorability.
 %The methodology (how you carried out the research)
-This was done by conducting supervised training using image, VMS pairs in the VISCHEMA dataset. I compare these models using the L1 loss of their predicted memorability maps across the validation portion of the dataset.
+This was done by conducting supervised training using image, VMS pairs in the training portion of the VISCHEMA Plus dataset. I compare these models using a set of defined requirements, including the L1 loss of their predicted memorability maps across the validation portion of the dataset, the qualitative quality of the predictions, and the time to train and evaluate the models.
+
 %The key research findings (what answers you found)
 
+% GAN models can be difficult to work with, and lots of research has gone into creating versatile and robust GAN architectures, adapting an existing, successful, model to your needs can reduce development time. Using a modified pix2pix GAN model \cite{isola2018imagetoimage} I was able to generate very accurate VMS maps, maintaining the blocky shape of the regions, and achieving a mean L1 loss of \(\sim 0.0740\). Generally, these models took longer to train than my autoencoder models.
+% % This is subject to change
+% Diffusion models took the longest to train, and while they can generally produce high quality images \cite{ramesh2022hierarchical, saharia2022photorealistic}, the training loop requires a large amount of computational resources, making it difficult to fine tune in a reasonable time. My best model was able to achieve an L1 loss of (Final Diffusion Loss). Due to computational restraints I was unable to run a large hyperparameter search and my results leave room for improvement.
+% % FILL IN FINAL DIFFUSION LOSS
 
-% GET RID OF ALL OF THIS VVV???
-I have found that autoencoders learn a somewhat accurate mapping but tend to smooth out the blocky VMS components into circular shapes, generally they took the least amount of time to train of the three models proposed, and achieved a mean L1 loss of \(\sim 0.132\) across the validation distribution. 
-GAN models can be difficult to work with, and lots of research has gone into creating versatile and robust GAN architectures, adapting an existing, successful, model to your needs can reduce development time. Using a modified pix2pix GAN model \cite{isola2018imagetoimage} I was able to generate very accurate VMS maps, maintaining the blocky shape of the regions, and achieving a mean L1 loss of \(\sim 0.0740\). Generally, these models took longer to train than my autoencoder models.
-% This is subject to change
-Diffusion models took the longest to train, and while they can generally produce high quality images \cite{ramesh2022hierarchical, saharia2022photorealistic}, the training loop requires a large amount of computational resources, making it difficult to fine tune in a reasonable time. My best model was able to achieve an L1 loss of (Final Diffusion Loss). Due to computational restraints I was unable to run a large hyperparameter search and my results leave room for improvement.
-% FILL IN FINAL DIFFUSION LOSS
-%The implications of these findings (what these answers mean)
+% %The implications of these findings (what these answers mean)
 
-I show that using a GAN model we are able to predict memorable image regions with great accuracy.. I believe this has many useful applications across many different industries, allowing creators to have a more informed opinion on which sections of their images are memorable, using this tool to iteratively improve their image memorability. Hopefully in future work good parameters can be found that allow diffusion models to work with lower noise steps and to produce higher accuracy results.
+% I show that using a GAN model we are able to predict memorable image regions with great accuracy. I believe this has many useful applications across many different industries, allowing creators to have a more informed opinion on which sections of their images are memorable, using this tool to iteratively improve their image memorability. Hopefully in future work good parameters can be found that allow diffusion models to work with lower noise steps and to produce higher accuracy results.
 
 \chapter{Reflections}
 
@@ -239,21 +238,9 @@ LaMem contains 60,000 annotated image and memorability pairs. Memorability is me
 VISCHEMA is a significantly smaller dataset, containing around 1600 images, memorability map pairs in the VISCHEMA Plus version. Their experiment differs from that of Khosla et al., they ask participants to memorize a set of images, and then during a test phase rate how well they remember each image and to select the regions that made them remember it. In order to predict memorability the network output utilises fully connected layers which I believe is unnecessary, and may even hurt performance. More modern computer vision network structures, such as those in \cite{ronneberger2015unet, goodfellow2014generative, ho2020denoising, isola2018imagetoimage, saharia2022palette}, use fully convolutional networks. These maintain spatial locality which allows them to generalise better.
 
 
-\textbf{Image Synthesis Models}
-
-% in 2018? ns on the date, pix2pix was invented, it is a GAN built around the UNet and has also seen great success
-
-% need to introduce GANs, their weaknesses and their benefits
-
-% You typically cant track the progress of a GAN by looking at the loss of the generator or the discriminator, however after running an epoch of training I can compute the loss of the generator across the validation dataset, independent of the discriminator, this allows us to track the progress of the generator and compare it to other methods.
+\textbf{Literature Conclusion}
 
 
-% Maybe here say what a GAN vs a conditional GAN is 
-
-GAN architectures\cite{goodfellow2014generative} use competitive co-evolutionary algorithms where a Generator and a Discriminator compete. The Generator is typically given a latent space vector and uses that to produce an image, the Discriminator has to determine if that image belongs to a given distribution. Conditional GAN architectures use an encoder to transform an image into a latent space vector and then a decoder to transform that back into an image, these networks have seen great success \cite{zhu2020unpaired, karras2019stylebased, isola2018imagetoimage} but are typically unstable and require a lot of parameter fine tuning. They can also suffer from: non-convergence, mode collapse, and diminished gradients \cite{goodfellow2017nips}.
-
-% talk about significance of diffusion, its benefits and weaknesses
-% how it builds ontop of GANs and why they have seen so much success recently
 
 
 \chapter{Methodology}
@@ -274,20 +261,18 @@ During this project I followed a Waterfall method, a sequential development proc
 
 \textbf{How to measure memorable regions of images}
 
-% THIS ALL NEEDS PROPERLY REFERENCING
 There are two approaches to measuring the memorable regions of an image. Both approaches have subjects try to remember previously seen images, like in
 % Memorability experiments
 The approaches differ in their execution of the memorability game. Firstly, like in LaMem \cite{ICCV15_Khosla}, you split an image into many regions, and use a model designed to predict the memorability of an image to predict the memorability of that region, then, compose these memorability, region pairs into a memorability map. 
 Alternatively, like in VISCHEMA \cite{VischemaPaper}, when a user indicates that they remember an image, allow them to mark the region of the image that caused them to remember it. 
 In either case the result is the same, a distribution of image, memorability map pairs in which supervised learning can occur on.
-% Maybe this discussion should come later?
 
 \textbf{How to predict memorable regions and evaluate the quality of these solutions}
 
-Assuming that we have a databse of image, memorability map pairs as described above, then we can use an image to image deep convolutional model to learn a mapping from an image to its corresponding memorability map. There are many image to image models that exist, but fundementally they all perform the same task and can be evaluated the same way, if we abstract the model as a function of an image, then the way we evaluate each function is the same. Given an image the model needs to predict what the corresponding memorability map looks like. We can evaluate the quality of these solutions in a number of ways. The L1 and L2 loss can describe the absolute and mean square error between two equally sized images, 
-% pix2pix L1 loss shown better, is it defo sharpness?
-has shown that L1 loss is a better one to preserve the sharpness in an image so we will use that to describe the quality of the predicted memorability maps. We can also compare the outputs of our models quantatatively, do the predicted outputs look similar to the inputs. Its possible that our models could learn to predict something simple, like a single shade of green entirely black images, or just noise, and then refuse to learn more, in this case the outputed labels would be worthless, this can be evaluated by qualitatively evaluating the images. Execution time is also important, I propose that this system can be used by creatives to iteratively improve their images, if the system takes too long to evaluate a single image on modern hardware then it's less useful than a similar performing system that performs much faster.   
-
+Assuming that we have a databset of image, memorability map pairs as described above, then we can use an image to image deep convolutional model to learn a mapping from an image to its corresponding memorability map. 
+There are many image to image models that exist, but fundementally we can abstract the model as a function of an image, $I$, because of this we can evaluate each model across the same requirements. 
+Given an image the model needs to predict what the corresponding memorability map looks like.
+We can evaluate the quality of these solutions in a number of ways. The L1 and L2 loss can describe the absolute and mean square error between two equally sized images. We can also compare the outputs of our models quantatatively, do the predicted outputs look similar to the inputs. Its possible that our models could learn to predict something simple, like a single shade of green, entirely black images, or just noise, in this case the outputed labels would be worthless. We can evaluate this behavour though qualitative analysis of the output images. Execution time is also important, I propose that this system can be used by creatives to iteratively improve their images, if it takes too long to evaluate a single image on modern hardware then it's less useful than a similar performing model that performs much faster.
 
 \textbf{Model Requirements}
 
@@ -321,6 +306,8 @@ When gathering the VISCHEMA Plus dataset  Akagunduz et al. successfully measure 
 \textbf{Ethical Concerns}
 
 I have chosen to use the VISCHEMA Plus dataset, this was gathered by allowing human participants to indicate which image regions are memorable to them, however I don't believe that any harm will come to those people from the experiments carried out in this project as all data used is anonymised, the only data that Akagunduz et al. published about their subjects was that they were students at the University of York, this isn't enough information to identify them.
+
+As discussed by Dastin \cite{dastin_2018} and Najibi \cite{najibi_2020} it's important to train on a dataset without any biases, as these biases can appear within your learned models. The dataset that we are training on is VISCHEMA Plus, the only information released about the participants is that they studied at the University of York, making it impossible for us to know if these students represented a diverse subset of the population. As such we will work on the worst case assumption, that all of them are biased towards the same output. This would manifest itself within the data as them finding the same regions memorable. If our models were to train on this data then it would predict the same biased regions, and I see no way in which this could cause harm, it would simply predict unmemorable regions.
 
 \textbf{Comparison of state of the art models}
 
@@ -403,7 +390,7 @@ In \cite{zhao2020differentiable} Shengyu et al. show that using differentiable a
 % pix2pix is a conditional generative adversarial network that is used for style transfer, it uses the UNet autoencoder as a backbone. The generator takes an input of size 3xwxh and produces a label of size 3xwxh. The discriminator takes the concatenation of the image and either the real or fake label, 6xwxh and produces an nxm array of boolean values describing, with each boolean describing whether a patch of the label is real or fake. 
 
 %I will train a conditional generative adversarial network to generate images of VMS maps given images from the VISCHEMA dataset. I will use an adapted pix2pix network \cite{isola2018imagetoimage}, making tweaks that I think will increase performance. 
-Pix2pix by Isola et al.\cite{isola2018imagetoimage}, is an image-to-image conditional generative adversarial model based on the UNet \cite{ronneberger2015unet}, designed for style transfer. In this model the generator takes a conditional image and uses that to produce a label, $L_{pred}$, the discriminator takes the concatenation of $I$ along with a real or fake label, and produces a 2D array of boolean values with width $N$, and height, $M$. Each value describes whether the corresponding patch in the image is real or generated. The loss for each network is slightly different to those described in a vanilla GAN, the generator loss is described in equation \ref{eqn:Pix2pix Generator Loss} describing how well it can both trick the generator, and how closely the output matches the input. The discriminator loss is described in equation \ref{eqn:Pix2pix Discriminator Loss}, similar to equation \ref{eqn:Vanilla Discriminator Loss} describes how well D can predict an images distribution. The training stratety for this network is described in algorithm \ref{ALG:GAN}.
+Pix2pix by Isola et al.\cite{isola2018imagetoimage}, is an image-to-image conditional generative adversarial model based on the UNet \cite{ronneberger2015unet}, designed for style transfer. In this model the generator takes a conditional image and uses that to produce a label, $L_{pred}$, the discriminator takes the concatenation of $I$ along with a real or fake label, and produces a 2D array of boolean values with width $N$, and height, $M$. Each value describes whether the corresponding patch in the image is real or generated. The loss for each network is slightly different to those described in a vanilla GAN, the generator loss is described in equation \ref{eqn:Pix2pix Generator Loss} describing how well it can both trick the generator, and how closely the output matches the input. The discriminator loss is described in equation \ref{eqn:Pix2pix Discriminator Loss}, similar to equation \ref{eqn:Vanilla Discriminator Loss} describes how well D can predict an images distribution. The training stratety for this network is described in algorithm \ref{ALG:GAN}. Please see figure \ref{fig:patchGANDiagram} for a diagram of this model.
 
 \begin{equation}
     \label{eqn:Pix2pix Generator Loss}
@@ -417,6 +404,14 @@ Pix2pix by Isola et al.\cite{isola2018imagetoimage}, is an image-to-image condit
     \label{eqn:Pix2pix Discriminator Loss}
     Loss_D = \frac{1}{2NM} \sum_{i=0}^{N}  \sum_{j=0}^{M} ( (D(L_{fake}, I)[i,j] )^2 + (D(L_{real}, I)[i,j] - 1)^2)
 \end{equation}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{PatchGAN Diagram}
+    \caption{Pix2pix Diagram}
+    \label{fig:patchGANDiagram}
+\end{figure}
+
 
 In \cite{arjovsky2017wasserstein} Arjovsky et al. introduce a GAN variant based on the Wasserstein distance of the output distribution and the image distribution, the benefit of this is that the Wasserstein distance is continuous and differentiable almost everywhere, reducing the risk of diminishing gradients. In this case the discriminator no longer outputs a value of $0|1$ and instead produces a continuous variable output, it is therefore renamed to a critic. In \cite{pix2pixwasserstein} Makow investigated the use of Wasserstein Distance in the pix2pix model but unfortunately found that it does not perform much better, however they were limited by their hardware and unable to perform a complete hyperaparameter search. The lack of increase in performance is also likely due to the fact that in pix2pix the generator, not only tries to trick the discriminator, it is also trying to create images close to the ground truth labels, the second part of the loss function is continuous and thus that benefit of the wasserstein distance is limited.
 
@@ -514,6 +509,8 @@ After training all three models I will compare them using the requirements defin
 
 \chapter{Implementation and Experimental Results}
 
+% INTRODUCE THIS CHAPTER
+
 % Approx 10-15 pages
 
 % add plots and tables of results and explain them
@@ -546,9 +543,9 @@ Instead I have explored a subset of this search space. For each experiment I est
 In this experiment I trained a UNet to directly predict the VMS maps of images, I trained the model using backpropagation of the L1 loss of the model output given an image, and the corresponding label. The best parameters and hyperparameters that I found for my model were the following: Encoder Channels = (3,64,128,256,512,1024), Decoder Channels = (1024,512,256,128,64), Batch Normalisation, Adam Optimizer with a learning rate of 0.001 and betas = (0.9, 0.999). A diagram of the training curve for the autoencoder can be seen in figure \ref{fig:autoencoderTraining}. After 80 training epochs I was able to achieve an L1 loss across my validation dataset of ~0.132. A sample of best output images can be seen in figure \ref{fig:autoencoderBestOutput} and a sample of the lowest accurary output images can be seen in figure \ref{fig:autoencoderWorstOutput}. As you can see the autoencoder tends to turn the blocky VMS shape into a rounded circle. It also fails to accurately predict the red regions, this is likely due to there being far more green data than red data. The VISCHEMA dataset is split into 12 distinct classes, in the table below I show the models accuracy across each different class.
 
 \textbf{Requirements Fit}
-As per the requirements outlined in \ref{tab:RequirementCaptureTable} our best autoencoder model achives requirements: 1.1 as it is possible to input an image, 1.2 as the model produces an image when given an input, 1.3 as the mean output loss is relatively low, and 2.1 as it is able to produce an image fast, in approximately Y seconds.
+As per the requirements outlined in \ref{tab:RequirementCaptureTable} our best autoencoder model achieves requirements: 1.1 as it is possible to input an image, 1.2 as the model produces an image when given an input, 1.3 as the mean output loss is relatively low, and 2.1 as it is able to produce an image fast, in approximately Y seconds.
 % INPUT Y
-Unfortunately when I qualitatively analyse the images the model doesn't  
+Unfortunately when I qualitatively analyse the images the model doesn't succeed in achieving requirement 1.4, it learns a somewhat accurate mapping but typically smooth out the blocky VMS components into circular shapes. There are also clear visual blotches present in all of the images, hese don't seem to line up with anything in particular in the input.   
 
 \begin{figure}[h]
     \centering
@@ -572,7 +569,9 @@ Unfortunately when I qualitatively analyse the images the model doesn't
 \end{figure}
 
 \section{GAN Training and Results}
-This experiment was performed with differentiable augmentation as described in \cite{zhao2020differentiable}. I performed translation and cutout, each with a 90\% chance. I explored the following parameter and hyperparameter options:
+
+% https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/issues/1081
+This experiment was performed with differentiable augmentation as described in \cite{zhao2020differentiable}. I performed translation and cutout, each with a 90\% chance. I explored the following parameter and hyperparameter options and then used the best parameters in the final model:
 
 \textbf{Normalisation layers}: Batch Normalisation, Instance Norm
 
