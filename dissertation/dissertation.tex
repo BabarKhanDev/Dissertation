@@ -241,8 +241,6 @@ VISCHEMA is a significantly smaller dataset, containing around 1600 images, memo
 
 \textbf{Image Synthesis Models}
 
-The autoencoder model is composed of 3 parts, an encoder, a bottleneck, and a decoder, these are typically used for compression. The U-Net \cite{ronneberger2015unet} is a variation of an autoencoder which has found great success in semantic image segmentation within the medical field. It makes use of residual connections between corresponding layers in the encoder and decoder blocks, these allow the model to preserve data for use in the decoding stage. This architecture is the backbone of many image to image models \cite{isola2018imagetoimage,saharia2022palette,dhariwal2021diffusion}, and has seen many extensions \cite{zhou2020unet, Qin_2020}
-
 % in 2018? ns on the date, pix2pix was invented, it is a GAN built around the UNet and has also seen great success
 
 % need to introduce GANs, their weaknesses and their benefits
@@ -283,14 +281,16 @@ During this project I followed a Waterfall method, a sequential development proc
 \textbf{How to measure memorable regions of images}
 
 % THIS ALL NEEDS PROPERLY REFERENCING
-Measuring the memorability of an image has been done by many people 
-% References: Isola etc
-There are two approaches to measuring the memorable regions of an image. First, like Khosla in LaMem, you could split an image into many regions and use a model designed to predict the memorability of an image, predict the memorability of that region, then compose these memorabilities into a memorability map. Or secondly, like in VISCHEMA, you could perform a memorability game like above, except when a user says they remember an image, ask them what part of the image caused them to remember it. Both of these methods have their drawbacks. In the former, the memorability of an image may not be equal to that image within another image. That is to say, the environment in which we see an image, intuitively, must have some impact on the memorability of it. In the latter, the way that people indicate what caused them to remember the image may be fallible, if users draw boxes around objects, they may or may not intend for the edges to be selected. In either case the result is the same, a base of image, memorability map pairs in which supervised learning can occur on.
+There are two approaches to measuring the memorable regions of an image. Both approaches have subjects try to remember previously seen images, like in
+% Memorability experiments
+The approaches differ in their execution of the memorability game. Firstly, like in LaMem \cite{ICCV15_Khosla}, you split an image into many regions, and use a model designed to predict the memorability of an image to predict the memorability of that region, then, compose these memorability, region pairs into a memorability map. 
+Alternatively, like in VISCHEMA \cite{VischemaPaper}, when a user indicates that they remember an image, allow them to mark the region of the image that caused them to remember it. 
+In either case the result is the same, a distribution of image, memorability map pairs in which supervised learning can occur on.
 % Maybe this discussion should come later?
 
 \textbf{How to predict memorable regions and evaluate the quality of these solutions}
 
-Assuming that we have a databse of image and memorability map pairs as described above, we can use an image to image deep convolutional model to learn a mapping from the image to the memorability map. There are many of these that exist, but fundementally they all perform the same task and can be evaluated the same. Given an image they need to predict what the corresponding memorability map looks like. We can evaluate the quality of these solutions in a number of ways. The L1 and L2 loss can describe the absolute and mean square error between two equally sized images, 
+Assuming that we have a databse of image, memorability map pairs as described above, then we can use an image to image deep convolutional model to learn a mapping from an image to its corresponding memorability map. There are many image to image models that exist, but fundementally they all perform the same task and can be evaluated the same way, if we abstract the model as a function of an image, then the way we evaluate each function is the same. Given an image the model needs to predict what the corresponding memorability map looks like. We can evaluate the quality of these solutions in a number of ways. The L1 and L2 loss can describe the absolute and mean square error between two equally sized images, 
 % pix2pix L1 loss shown better, is it defo sharpness?
 has shown that L1 loss is a better one to preserve the sharpness in an image so we will use that to describe the quality of the predicted memorability maps. We can also compare the outputs of our models quantatatively, do the predicted outputs look similar to the inputs. Its possible that our models could learn to predict something simple, like a single shade of green entirely black images, or just noise, and then refuse to learn more, in this case the outputed labels would be worthless, this can be evaluated by qualitatively evaluating the images. Execution time is also important, I propose that this system can be used by creatives to iteratively improve their images, if the system takes too long to evaluate a single image on modern hardware then it's less useful than a similar performing system that performs much faster.   
 
@@ -321,30 +321,28 @@ In figure \ref{tab:RequirementCaptureTable} I describe the requirements that eac
 
 \textbf{Comparison of available datasets}
 
-The two dataset options I have considered are LaMem \cite{ICCV15_Khosla} and VISCHEMA \cite{VischemaPaper}. 
-LaMem contains 60,000 images, compared to the 1,600 in VISCHEMA Plus, this significant increase should allow any deep learning models that we use to generalise much more easily and would greatly reduce our risk of overfitting. Unfortunately, while they show in their paper a correlation between region memorability and image memorability, 
-% double check that this is a correlation
-I'm not entirely convinced that this holds in every case, and have chosen to use the VISCHEMA Plus dataset. Akagunduz et al. successfully measure the memorable regions of images, rather than a score per image which I believe to be more robust. The VICHEMA Plus dataset contains 1600 image to VMS mappings, 1280 of these compose the training portion and the remaining 320 the validation portion, due to the small size I will have to make use of tools such as data augmentation to prevent overfitting. Each VMS map represents the memorable regions of its corresponding image.
+The two dataset options I have considered are LaMem \cite{ICCV15_Khosla} and VISCHEMA \cite{VischemaPaper}. The use of either of these comes with drawbacks, LaMem is a much larger dataset, containing 60,000 images compared to the 1,600 images in VISCHEMA Plus, this significant increase should allow any deep learning models to generalise far more easily. Unfortunately I'm not entirely convinced of their methodology for generating memorability maps, the memorability of an image may not be equal to that of an image within another image. That is to say, the environment in which we see an image, intuitively, may have some impact on the memorability of it. In the latter, 
+When gathering the VISCHEMA Plus dataset  Akagunduz et al. successfully measure the memorable regions of images, rather than a score per image which I believe to be more robust. Unfortunately, their dataset is very small, which means that more care would need to be taken to not cause our models to overfit. After evaluating both datasets I have chosen to use the VISCHEMA Plus dataset. 
 
 \textbf{Ethical Concerns}
 
-% NOT GOOD, THIS NEEDS TO BE ABOUT PEOPLE
-I have adapted and used code available in the following repositories \cite{PytorchPix2Pix, JanspiryPalette}, both have licenses that allow their use in this project. I have also used the VISCHEMA dataset \cite{VischemaPaper} to train my models. All other contributions have been referenced. 
+I have chosen to use the VISCHEMA Plus dataset, this was gathered by allowing human participants to indicate which image regions are memorable to them, however I don't believe that any harm will come to those people from the experiments carried out in this project as all data used is anonymised, the only data that Akagunduz et al. published about their subjects was that they were students at the University of York, this isn't enough information to identify them.
 
 \textbf{Comparison of state of the art models}
 
-I aim to create and evaluate a range of deep convolutional image to image model to learn a mapping of VISCHEMA Plus images to their corresponding VMS labels. Our models will all be evaluated against the requirements detailed in \ref{tab:RequirementCaptureTable}. State of the art models would include, autoencoders, GANs, and Diffusion models. As the three of them produce images in different ways I think it would be valuable to compare their performance in the same task. I will run three experiments where I train a UNet autoencoder, a GAN, and a diffusion model to produce a VMS label given an image from the dataset. I hope to be able to find the strengths and weaknesses of each of these systems. For each model I will experiment with network parameters and training hyperparameters to fine tune models that produce the best output.
+I will create and evaluate a range of deep convolutional image to image models that learn a mapping of VISCHEMA Plus images to their corresponding VMS labels. Our models will all be evaluated against the requirements detailed in \ref{tab:RequirementCaptureTable}. State of the art models would include, autoencoders, GANs, and diffusion models, as the three of them produce images in different ways I see value in comparing their performance in the same task. I will run three experiments where I train a UNet autoencoder, a GAN, and a diffusion model to produce a VMS label given an image from the dataset. I hope to be able to find the strengths and weaknesses of each of these systems. For each model I will experiment with network parameters and training hyperparameters to fine tune models that produce the best output.
 
 In each experiment I will automate a system that: tests the effectiveness of different numbers of layers and channels in each network, varies the normalisation method, optimisation function, learning rate, and batch size to find the best training environment and model parameters. It is not be feasible to test every combination of these variables, thus I will employ a strategy where I test every variation of a single parameter/hyperparameter while keeping the rest constant. I will start each model with an estimation of good parameters, then iterate through each individual parameter, varying only that one and measuring the impact on performance. After testing all variations of a single parameter, I will pick the one that gave the highest score and move onto the next parameter. This will bring the size our search space down by an order of magnitude, however we won't be exploring the entire search space and will potentially miss out on good models. 
+
+Due to the long training and evaluation time of diffusion models I plan on performing a smaller parameter/hyperparameter search for those, I hope to still achieve good results, but due to computational and time restrictions I will not be able to experiment as much as I want with them.
 % TALK ABOUT DIFFUSION MODELS TAKING A LONG TIME TO TRAIN AND THUS GETTING LESS TESTING HERE
 
 \textbf{UNet Autoencoders}
 
-The UNet is an Autoencoder model presented in \cite{ronneberger2015unet}. 
-Its original creation was for the purpose of medical image segmentation. A Diagram of the model with the best parameters can be seen in figure \ref{fig:autoencoderDiagram}, the model is composed of two blocks, an encoder and a decoder. 
+The autoencoder model is composed of 3 parts, an encoder, a bottleneck, and a decoder, these are typically used for compression. The U-Net \cite{ronneberger2015unet} is a variation of an autoencoder which has found great success in semantic image segmentation within the medical field. This architecture is the backbone of many image to image models \cite{isola2018imagetoimage,saharia2022palette,dhariwal2021diffusion}, and has seen many extensions \cite{zhou2020unet, Qin_2020}. A Diagram of the model can be seen in figure \ref{fig:autoencoderDiagram}, the model is composed of two blocks, an encoder and a decoder. 
 The encoder, composed of convolutional filters, takes the full sized image and compresses it into a latent space vector.
 Every layer in the encoder halves the resolution of the image and increases the number of channels, the decreasing resolution allows the model to capture image components at different scales. 
-In the higher resolution layers the convolutional filters are able to see fine grain features, such as the leaves in a tree. In the lower resolution layers convolution filters are able to see more coarse features, at the deepest layer a forest of trees. 
+In the higher resolution layers the convolutional filters are able to see fine grain features, for example, the leaves in a tree. In the lower resolution layers convolution filters are able to see more coarse features, for example, at the deepest layer of the same image as above a forest of trees. 
 The decoder then takes that latent space vector and uses upconvolution to create an output image. 
 As the image is passed back through the decoder the opposite happens, the upconvolution layers increase the image resolution and decrease the number of channels. This allows the model to build the output image starting with very coarse details and then at the latter layers fine grain details.
 The network makes use of residual skip connections, these allow the model to preserve encoding features from the encoder layers in the decoding stages, with these the model performs significantly better. These encoding features are concatenated directly onto the input at the opposite decoding layer. 
@@ -356,183 +354,15 @@ The network makes use of residual skip connections, these allow the model to pre
     \label{fig:autoencoderDiagram}
 \end{figure}
 
-If we consider an image $ I $ to be a 3d matrix with width $ w_1 $, height $ h_1 $, and depth $ c_1 $ and a corresponding label $ L $ to be a 3d matrix with width $ w_2 $, height $ h_2 $, and depth $ c_2 $. Then an autoencoder works by taking image $ I $ and producing an output with dimmensions equal to $ L $. We will call the ground truth label $ L_{real} $ and the autoencoder output $ L_{pred} $. It's been shown in 
-% reference to L1 loss being able to produce higher accuracy images in pix2pix paper
-that training with the L1 loss allows models to create sharper images. When training a UNet autoencoder with the L1 loss the equation would be:
+If we consider an image $ I $, a 3D matrix with width $ w_I $, height $ h_I $, and depth $ c_I $ and a corresponding label $ L $ to be a 3d matrix with width $ w_L $, height $ h_L $, and depth $ c_L $. Then an autoencoder works by taking image $ I $ and producing an output with dimmensions equal to $ L $. We will call the ground truth label $ L_{real} $ and the autoencoder output $ L_{pred} $. As this is a regression problem there are a couple of options for loss functions. Firstly the Squared Elucidean norm, also known as MSE loss, this is effectively the distance between our prediction and ground truth label squared. The second option is the L1 loss, or the mean absolute error loss, this measures the absolute difference between our prediction and the ground truth label.
+Because the L1 loss does not contain any square numbers I will choose to use it over the MSE loss, this should hopefully contribute to the prevention of the exploding gradients problem. Our Loss function is described in equation \ref{eqn:UNet Loss}
 
 \begin{equation}
     \label{eqn:UNet Loss}
-    \texttt{UNet Loss} = \frac{1}{w \times h \times c} \sum_{i = 0}^{w_2} \sum_{j = 0}^{h_2} \sum_{k = 0}^{c_2}(L_{real}[i,j,k], L_{pred}[i,j,k] ) 
+    \texttt{UNet Loss} = \frac{1}{w \times h \times c} \sum_{i = 0}^{w_L} \sum_{j = 0}^{h_L} \sum_{k = 0}^{c_L}(L_{real}[i,j,k], L_{pred}[i,j,k] ) 
 \end{equation}
 
-This loss describes the average absolute difference between each corresponding pixel in the ground truth label and the predicted label. Each convolutional layer within the UNet has adjustable weights $w$ that can be adjusted to produce a better output. The training loop uses backpropagation of this loss to adjust the model weights. To adjust a given weight $w_i$ calculate $ \frac{\delta L}{\delta w_i} $ and use gradient descent to adjust it. Please see algorithm \ref{ALG:Autoencoder} for the full training loop.
-
-\begin{algorithm}
-\caption{UNet Autoencoder Training Strategy}\label{ALG:Autoencoder}
-\begin{algorithmic}[1]
-\For{$\texttt{every epoch}$}
-\For{$I, L_{real} \texttt{ in training dataloader}$}
-\State
-\State $L_{pred} = model(I)$
-\State $loss = L1( L_{pred}, L_{real} ) $
-\State $\texttt{Update weights of model with backpropagation}$
-\State
-\EndFor
-\EndFor
-\end{algorithmic}
-\end{algorithm}
-
-textbf{Generative Adversarial Networks}
-
-% presented by ian goodfellow and is composed of a generaor and a discriminator
-
-The Generative Adversarial Network is an image synthesis model described by Goodfellow et al \cite{goodfellow2014generative}. In this model there are two adversarial networks, a generator, $ G $, and a discriminator, $ D $,. I will describe an image from the learning distribution as real, and one created by the generator as fake. The goal of the generator is to, given a latent space vector $ z $, produce an image that the discriminator thinks is real. The goal of the discriminator is to take an image, either real or fake, and say which it is. In its vanilla form the loss of each network is relative to the performance of the other making it impossible to see if the networks have converged. The loss function described in \cite{goodfellow2014generative} is a minimax game, where G is trying to maximise the probability of D making a mistake, and D is trying to minimise it. More formally: The loss function of G is such that it is trying to maximise equation \ref{eqn:Vanilla Generator Loss} and the loss function of D is such that it is trying to maximise equation \ref{eqn:Vanilla Discriminator Loss}. Condtional generative adversarial networks can create images using a latent space vector and a condition parameter. For example, the class of the image to produce, simply pass this parameter into both the generator and the discriminator. In this case the discriminator outputs the probability that $ L $ is real and that meets the condition.
-
-
-\begin{equation}
-    \label{eqn:Vanilla Generator Loss}
-    Loss_G = -logD (G(z)) 
-\end{equation}
-
-\begin{equation}
-    \label{eqn:Vanilla Discriminator Loss}
-    Loss_D = -[c \times logD(x) + (1-c) log (1 - D(x))] \\
-\end{equation}
-
-\[ c =
-\begin{cases}
-  1, & \text{if}\ real(x) \\
-  0, & \text{otherwise}
-\end{cases} \]
-
-
-Lots of work has gone into making GAN models more stable and I will use these findings in my own models. Brock et al. find that when 'increasing the batch size by a factor of 8 ... models reach better final performance in fewer iterations, but become unstable and undergo complete training collapse'\cite[3]{brock2019large}.
-%Because of this I will experiment with early stopping and low batch sizes.
-In \cite{zhao2020differentiable} Shengyu et al. show that using differentiable augmentation on your images increases the quality of the outputted images. With a dataset with as few as 100 images they are able to produce high quality outputs.
-% This is useful to us because the VISCHEMA plus dataset only has 1280 training images, which typically wouldn't train very well on a GAN.
-
-% pix2pix is a conditional generative adversarial network that is used for style transfer, it uses the UNet autoencoder as a backbone. The generator takes an input of size 3xwxh and produces a label of size 3xwxh. The discriminator takes the concatenation of the image and either the real or fake label, 6xwxh and produces an nxm array of boolean values describing, with each boolean describing whether a patch of the label is real or fake. 
-
-%I will train a conditional generative adversarial network to generate images of VMS maps given images from the VISCHEMA dataset. I will use an adapted pix2pix network \cite{isola2018imagetoimage}, making tweaks that I think will increase performance. 
-Pix2pix by Isola et al.\cite{isola2018imagetoimage}, is an image-to-image conditional generative adversarial model based on the UNet \cite{ronneberger2015unet}, designed for style transfer. In this model the generator takes a conditional image and uses that to produce a label, $L_{pred}$, the discriminator takes the concatenation of $I$ along with a real or fake label, and produces a 2D array of boolean values with width $w_p$, and height, $h_p$. Each value describes whether the corresponding patch in the image is real or generated. The loss for each network is slightly different to those described in a vanilla GAN, the generator loss is described in equation \ref{eqn:Pix2pix Generator Loss} describing how well it can both trick the generator, and how closely the output matches the input. The discriminator loss is described in equation \ref{eqn:Pix2pix Discriminator Loss}, similar to equation \ref{eqn:Vanilla Discriminator Loss} describes how well D can predict an images distribution. The training stratety for this network is described in algorithm \ref{ALG:GAN}.
-
-\begin{equation}
-    \label{eqn:Pix2pix Generator Loss}
-    \begin{split}
-    Loss_G = & \frac{1}{w_ph_p} \sum_{i=0}^{w_p} \sum_{j=0}^{h_p} (D(L_{pred}, I)_{[i,j]} -1 )^2\\
-           + & \frac{1}{w_2h_2c_2} \sum_{i=0}^{w_2} \sum_{j=0}^{h_2} \sum_{k=0}^{c_2} |L_{pred}[i,j,k] - L_{real}[i,j,k]|
-    \end{split}    
-\end{equation}
-
-\begin{equation}
-    \label{eqn:Pix2pix Discriminator Loss}
-    Loss_D = \frac{1}{2w_ph_p} \sum_{i=0}^{w_p}  \sum_{j=0}^{h_p} ( (D(L_{fake}, I)[i,j] )^2 + (D(L_{real}, I)[i,j] - 1)^2)
-\end{equation}
-
-In \cite{arjovsky2017wasserstein} Arjovsky et al. introduce a GAN variant based on the Wasserstein distance of the output distribution and the image distribution, the benefit of this is that the Wasserstein distance is continuous and differentiable almost everywhere, reducing the risk of diminishing gradients. In this case the discriminator no longer outputs a value of $0|1$ and instead produces a continuous variable output, it is therefore renamed to a critic. In \cite{pix2pixwasserstein} Makow investigated the use of Wasserstein Distance in the pix2pix model but unfortunately found that it does not perform much better, however they were limited by their hardware and unable to perform a complete hyperaparameter search. The lack of increase in performance is also likely due to the fact that in pix2pix the generator, not only tries to trick the discriminator, it is also trying to create images close to the ground truth labels, the second part of the loss function is continuous and thus that benefit of the wasserstein distance is limited.
-
-%I would still like to experiment with it as VISCHEMA plus is different from any dataset used in \cite{isola2018imagetoimage} and as Makow states they were unable to perform a complete hyperparameter search, meaning that its possible we could achieve greater results than vanilla pix2pix.
-% I will be adapting the following PyTorch implementation \cite{PytorchPix2Pix} for my experiment. 
-
-
-
-% https://www.youtube.com/watch?v=J97EM3Clyys
-% https://github.com/mit-han-lab/data-efficient-gans/blob/master/DiffAugment-stylegan2-pytorch/DiffAugment_pytorch.py
-% horizontal flips are a good application on the real images
-% You could augment the real images -> this will cause the generator to learn to generate augments, this is bad for augments such as cutout
-% You could augment the real images and the fake images when the discriminator sees them, the generator will have an easier time fooling the discriminator
-% Solution: Augment real and fake images for the discriminator and the generator
-% Need to be able to differentiate the augmentation so that we can update the generators weights using gradient descent
-% How do we make our augmentations differentiable?
-% We provide a torch tensor that represents the images as input, then we randomly sample parameters related to augmentation. e.g. translation amount or cutout coords. Apply this augmentation to the input tensor
-% since it is all done using torch operations, the computational graph will be computed for these functions
-% Kornia can do this for us.
-% pass the augmentation module, kornia, into the discriminator. Apply augments on the input to the discriminator first but only when training 
-
-%https://cs230.stanford.edu/projects_spring_2018/reports/8289943.pdf 
-
-
-%Because these two loss values are relative to the performance of each other they can't be used to see if our generator has converged on a solution. Therefore it is necessary, at each epoch, to also compute the L1 loss of the fake labels and real labels across the training and the validation dataset, as these values are calculated independently of the discriminator. This will inform allow us to see if the generator is overfitting, underfitting, or training well. 
-
-\begin{algorithm}
-\caption{Pix2pix Training Strategy}\label{ALG:GAN}
-\begin{algorithmic}[1]
-\For{$\texttt{every epoch}$}
-\For{$I, L_{r} \texttt{ in training dataloader}$}
-\State
-\State $L_{f} = G(I)$
-\State
-\State $pred_{fake} = D(L_{f}, I) $
-\State $loss_G = MSE( pred_{fake}, 1 ) + L1(L_{f}, L_{r}) $
-\State $\texttt{Update weights of G with backpropagation}$
-\State
-\State $pred_{real} = D(L_{r}, I)$
-\State $loss_D = 0.5 \times  ( MSE( pred_{fake}, 0) + MSE( pred_{real}, 1) ) $
-\State $\texttt{Update weights of D with backpropagation}$
-\State
-\EndFor
-\EndFor
-\end{algorithmic}
-\end{algorithm}
-
-
-
-\textbf{Implementation considerations}
-
-
-% Implementation and testing will be discussed in the results analysis section
-
-\chapter{Old Methodology}
-
-\textbf{Requirements Capture}
-
-The two dataset options I have considered are LaMem \cite{ICCV15_Khosla} and VISCHEMA \cite{VischemaPaper}. I have chosen to use the latter to train my image to image network because Akagunduz et al. successfully measure the memorable regions of images, rather than a score per image, while Khosla et al. are able to convert these scores into memorability maps, that is inherently less robust than the experiment presented in \cite{VischemaPaper}. I'm also not convinced that the memorability of an image stays the same if that image is part of another image, for example if a person saw an image of an advert vs an image of that same advert on the side of a bus, it doesn't seem intuitive to me that the advert would be just as memorable in both cases.   
-
-The VISCHEMA Plus dataset contains 1600 image to VMS mappings, 1280 of these compose the training portion and the remaining 320 the validation portion. I aim to use a range of deep convolutional image to image model to learn a mapping of these images to their corresponding VMS labels. Our models should learn a general understanding of the mapping such that when it is provided with an image that matches our distribution, it can accurately create a VMS label for it. Our model will be successful if they can learn to create accurate mappings across the validation dataset, I will evaluate accuracy using the L1 loss function and through qualitative analysis. 
-
-
-
-\textbf{Motivation}
-
-As autoencoders, GANs, and diffusion models all produce images in different ways. Autoencoders learn to produce output images directly through the backpropagation of the loss between its output and the ideal output. GAN generators learn to produce images by tricking a discriminator. Diffusion models learn to produce images by removing noise from latent space iteratively. I think it would be interesting to compare how the 3 of them perform when asked the same task. I will run three experiments where I train a UNet autoencoder, a GAN, and a diffusion model to produce a VMS label given an image from the dataset. I hope to be able to find the strengths and weaknesses of each of these systems in this application. For each model I will experiment with network parameters and training hyperparameters to fine tune models that produce the best output.
-
-
-In each experiment I will automate a system that: tests the effectiveness of different numbers of layers and channels in each network, varies the normalisation method, optimisation function, learning rate, and batch size to find the best training environment and model parameters. It is not be feasible to test every combination of these variables, thus I will employ a training strategy to test every variation of a single parameter/hyperparameter while keeping the rest constant.
-
-
-I will start each model with an estimation of good parameters, then iterate through each individual parameter, varying only that one and measuring the impact on performance. After testing all variations of a single parameter, I will pick the one that gave the highest score and move onto the next parameter. This will bring the size our search space down by an order of magnitude, however we won't be exploring the entire search space and will potentially miss out on good models. 
-
-
-This training strategy will be especially necessary in experiment 2 as training within a GAN is typically unstable and good parameter choices are necessary. In experiment 3 I will also vary the noise scheduler and the beta values.
-
-\textbf{UNet Autoencoders}
-
-The UNet is an Autoencoder model presented in \cite{ronneberger2015unet}. 
-Its original creation was for the purpose of medical image segmentation. A Diagram of the model with the best parameters can be seen in figure \ref{fig:autoencoderDiagram}, the model is composed of two blocks, an encoder and a decoder. 
-The encoder, composed of convolutional filters, takes the full sized image and compresses it into a latent space vector.
-Every layer in the encoder halves the resolution of the image and increases the number of channels, the decreasing resolution allows the model to capture image components at different scales. 
-In the higher resolution layers the convolutional filters are able to see fine grain features, such as the leaves in a tree. In the lower resolution layers convolution filters are able to see more coarse features, at the deepest layer a forest of trees. 
-The decoder then takes that latent space vector and uses upconvolution to create an output image. 
-As the image is passed back through the decoder the opposite happens, the upconvolution layers increase the image resolution and decrease the number of channels. This allows the model to build the output image starting with very coarse details and then at the latter layers fine grain details.
-The network makes use of residual skip connections, these allow the model to preserve encoding features from the encoder layers in the decoding stages, with these the model performs significantly better. These encoding features are concatenated directly onto the input at the opposite decoding layer. 
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\linewidth]{UNet Diagram}
-    \caption{UNet Autoencoder Diagram}
-    \label{fig:autoencoderDiagramOLD}
-\end{figure}
-
-If we consider an image $ I $ to be a 3d matrix with width $ w_1 $, height $ h_1 $, and depth $ c_1 $ and a corresponding label $ L $ to be a 3d matrix with width $ w_2 $, height $ h_2 $, and depth $ c_2 $. Then an autoencoder works by taking image $ I $ and producing an output with dimmensions equal to $ L $. We will call the ground truth label $ L_{real} $ and the autoencoder output $ L_{pred} $. It's been shown in 
-% reference to L1 loss being able to produce higher accuracy images in pix2pix paper
-that training with the L1 loss allows models to create sharper images. When training a UNet autoencoder with the L1 loss the equation would be:
-
-\begin{equation}
-    \label{eqn:UNet Loss}
-    \texttt{UNet Loss} = \frac{1}{w \times h \times c} \sum_{i = 0}^{w_2} \sum_{j = 0}^{h_2} \sum_{k = 0}^{c_2}(L_{real}[i,j,k], L_{pred}[i,j,k] ) 
-\end{equation}
-
-This loss describes the average absolute difference between each corresponding pixel in the ground truth label and the predicted label. Each convolutional layer within the UNet has adjustable weights $w$ that can be adjusted to produce a better output. The training loop uses backpropagation of this loss to adjust the model weights. To adjust a given weight $w_i$ calculate $ \frac{\delta L}{\delta w_i} $ and use gradient descent to adjust it. Please see algorithm \ref{ALG:Autoencoder} for the full training loop.
+This loss describes the average absolute difference between each corresponding pixel in the ground truth label and the predicted label. Each convolutional layer within the UNet has adjustable weights $w$ that can be adjusted to produce a better output. The training loop uses backpropagation of this loss to adjust the model weights. To adjust a given weight $w_j$ calculate $ \frac{\delta L}{\delta w_j} $ and use gradient descent to adjust it. Please see algorithm \ref{ALG:Autoencoder} for the full training loop.
 
 \begin{algorithm}
 \caption{UNet Autoencoder Training Strategy}\label{ALG:Autoencoder}
@@ -553,8 +383,7 @@ This loss describes the average absolute difference between each corresponding p
 
 % presented by ian goodfellow and is composed of a generaor and a discriminator
 
-The Generative Adversarial Network is an image synthesis model described by Goodfellow et al \cite{goodfellow2014generative}. In this model there are two adversarial networks, a generator, $ G $, and a discriminator, $ D $,. I will describe an image from the learning distribution as real, and one created by the generator as fake. The goal of the generator is to, given a latent space vector $ z $, produce an image that the discriminator thinks is real. The goal of the discriminator is to take an image, either real or fake, and say which it is. In its vanilla form the loss of each network is relative to the performance of the other making it impossible to see if the networks have converged. The loss function described in \cite{goodfellow2014generative} is a minimax game, where G is trying to maximise the probability of D making a mistake, and D is trying to minimise it. More formally: The loss function of G is such that it is trying to maximise equation \ref{eqn:Vanilla Generator Loss} and the loss function of D is such that it is trying to maximise equation \ref{eqn:Vanilla Discriminator Loss}. Condtional generative adversarial networks can create images using a latent space vector and a condition parameter. For example, the class of the image to produce, simply pass this parameter into both the generator and the discriminator. In this case the discriminator outputs the probability that $ L $ is real and that meets the condition.
-
+The Generative Adversarial Network is an image synthesis model described by Goodfellow et al \cite{goodfellow2014generative}. In this model there are two adversarial networks, a generator, $ G $, and a discriminator, $ D $. I will describe a ground truth image as real, and one created by the generator as fake. The goal of the generator is to, given a latent space vector $ z $, produce an image that the discriminator thinks is real. The goal of the discriminator is to take an image, either real or fake, and predict which it is. In its vanilla form the loss of each network is relative to the performance of the other making it impossible to see if the networks have converged. The loss function described in \cite{goodfellow2014generative} is a minimax game, where G is trying to maximise the probability of D making a mistake, and D is trying to minimise it. More formally: The loss function of G is such that it is trying to maximise equation \ref{eqn:Vanilla Generator Loss} and the loss function of D is such that it is trying to maximise equation \ref{eqn:Vanilla Discriminator Loss}. Condtional generative adversarial networks can create images using a latent space vector and a condition parameter. For example, the class of the image to produce, simply pass this parameter into both the generator and the discriminator. In this case the discriminator outputs the probability that $ L $ is real and that meets the condition parameter.
 
 \begin{equation}
     \label{eqn:Vanilla Generator Loss}
@@ -572,7 +401,6 @@ The Generative Adversarial Network is an image synthesis model described by Good
   0, & \text{otherwise}
 \end{cases} \]
 
-
 Lots of work has gone into making GAN models more stable and I will use these findings in my own models. Brock et al. find that when 'increasing the batch size by a factor of 8 ... models reach better final performance in fewer iterations, but become unstable and undergo complete training collapse'\cite[3]{brock2019large}.
 %Because of this I will experiment with early stopping and low batch sizes.
 In \cite{zhao2020differentiable} Shengyu et al. show that using differentiable augmentation on your images increases the quality of the outputted images. With a dataset with as few as 100 images they are able to produce high quality outputs.
@@ -581,19 +409,19 @@ In \cite{zhao2020differentiable} Shengyu et al. show that using differentiable a
 % pix2pix is a conditional generative adversarial network that is used for style transfer, it uses the UNet autoencoder as a backbone. The generator takes an input of size 3xwxh and produces a label of size 3xwxh. The discriminator takes the concatenation of the image and either the real or fake label, 6xwxh and produces an nxm array of boolean values describing, with each boolean describing whether a patch of the label is real or fake. 
 
 %I will train a conditional generative adversarial network to generate images of VMS maps given images from the VISCHEMA dataset. I will use an adapted pix2pix network \cite{isola2018imagetoimage}, making tweaks that I think will increase performance. 
-Pix2pix by Isola et al.\cite{isola2018imagetoimage}, is an image-to-image conditional generative adversarial model based on the UNet \cite{ronneberger2015unet}, designed for style transfer. In this model the generator takes a conditional image and uses that to produce a label, $L_{pred}$, the discriminator takes the concatenation of $I$ along with a real or fake label, and produces a 2D array of boolean values with width $w_p$, and height, $h_p$. Each value describes whether the corresponding patch in the image is real or generated. The loss for each network is slightly different to those described in a vanilla GAN, the generator loss is described in equation \ref{eqn:Pix2pix Generator Loss} describing how well it can both trick the generator, and how closely the output matches the input. The discriminator loss is described in equation \ref{eqn:Pix2pix Discriminator Loss}, similar to equation \ref{eqn:Vanilla Discriminator Loss} describes how well D can predict an images distribution. The training stratety for this network is described in algorithm \ref{ALG:GAN}.
+Pix2pix by Isola et al.\cite{isola2018imagetoimage}, is an image-to-image conditional generative adversarial model based on the UNet \cite{ronneberger2015unet}, designed for style transfer. In this model the generator takes a conditional image and uses that to produce a label, $L_{pred}$, the discriminator takes the concatenation of $I$ along with a real or fake label, and produces a 2D array of boolean values with width $N$, and height, $M$. Each value describes whether the corresponding patch in the image is real or generated. The loss for each network is slightly different to those described in a vanilla GAN, the generator loss is described in equation \ref{eqn:Pix2pix Generator Loss} describing how well it can both trick the generator, and how closely the output matches the input. The discriminator loss is described in equation \ref{eqn:Pix2pix Discriminator Loss}, similar to equation \ref{eqn:Vanilla Discriminator Loss} describes how well D can predict an images distribution. The training stratety for this network is described in algorithm \ref{ALG:GAN}.
 
 \begin{equation}
     \label{eqn:Pix2pix Generator Loss}
     \begin{split}
-    Loss_G = & \frac{1}{w_ph_p} \sum_{i=0}^{w_p} \sum_{j=0}^{h_p} (D(L_{pred}, I)_{[i,j]} -1 )^2\\
-           + & \frac{1}{w_2h_2c_2} \sum_{i=0}^{w_2} \sum_{j=0}^{h_2} \sum_{k=0}^{c_2} |L_{pred}[i,j,k] - L_{real}[i,j,k]|
+    Loss_G = & \frac{1}{NM} \sum_{i=0}^{N} \sum_{j=0}^{M} (D(L_{pred}, I)_{[i,j]} -1 )^2\\
+           + & \frac{1}{w_Lh_Lc_L} \sum_{i=0}^{w_L} \sum_{j=0}^{h_L} \sum_{k=0}^{c_L} |L_{pred}[i,j,k] - L_{real}[i,j,k]|
     \end{split}    
 \end{equation}
 
 \begin{equation}
     \label{eqn:Pix2pix Discriminator Loss}
-    Loss_D = \frac{1}{2w_ph_p} \sum_{i=0}^{w_p}  \sum_{j=0}^{h_p} ( (D(L_{fake}, I)[i,j] )^2 + (D(L_{real}, I)[i,j] - 1)^2)
+    Loss_D = \frac{1}{2NM} \sum_{i=0}^{N}  \sum_{j=0}^{M} ( (D(L_{fake}, I)[i,j] )^2 + (D(L_{real}, I)[i,j] - 1)^2)
 \end{equation}
 
 In \cite{arjovsky2017wasserstein} Arjovsky et al. introduce a GAN variant based on the Wasserstein distance of the output distribution and the image distribution, the benefit of this is that the Wasserstein distance is continuous and differentiable almost everywhere, reducing the risk of diminishing gradients. In this case the discriminator no longer outputs a value of $0|1$ and instead produces a continuous variable output, it is therefore renamed to a critic. In \cite{pix2pixwasserstein} Makow investigated the use of Wasserstein Distance in the pix2pix model but unfortunately found that it does not perform much better, however they were limited by their hardware and unable to perform a complete hyperaparameter search. The lack of increase in performance is also likely due to the fact that in pix2pix the generator, not only tries to trick the discriminator, it is also trying to create images close to the ground truth labels, the second part of the loss function is continuous and thus that benefit of the wasserstein distance is limited.
@@ -641,6 +469,7 @@ In \cite{arjovsky2017wasserstein} Arjovsky et al. introduce a GAN variant based 
 \EndFor
 \end{algorithmic}
 \end{algorithm}
+
 
 \textbf{Diffusion Models}
 
@@ -677,15 +506,15 @@ The loss calculated for backpropagation is relative to the performance in estima
 \end{algorithmic}
 \end{algorithm}
 
+\textbf{Implementation considerations}
+
+C++ and Python are both suitable for machine learning tasks, they both have a plethora of libraries such as Tensorflow, Pytorch, and Caffe that aid in development. In fact, quite a lot of libraries, including the former two, are available on both Python and C++. I have chosen to use Python for this project as, personally, it is the easier language of the two to work with. This project is meant as a proof of concept, and as such I prioritise the quicker development time with Python, over the faster execution speed of C++. I have also chosen to use the PyTorch library to do the majority of the machine learning code, this is because it has lots of prebuilt C++ functions which should speed up execution time significantly. The methods that I will apply should work in any language or framework, PyTorch is simply an abstraction that should shorten development time. I will implement my own UNet code but for the GAN and diffusion models I have chosen to adapt and use code available in the following repositories \cite{PytorchPix2Pix, JanspiryPalette} respectively. Both have licenses that allow their use in this project. 
+
 \textbf{Results Analysis/Testing}
 
-After performing all 3 experiments I will compare the results across the validation dataset qualitatively and using the L1 loss. The L1 loss will tell me how statistically close the outputs are but through qualitative analysis I can see if the outputs actually resemble the true labels, or if the models have achieved a low L1 loss through some exploit. 
+After training all three models I will compare them using the requirements defined in \ref{tab:RequirementCaptureTable}.
 
-
-I can also compare the L1 loss across the training and validation sets to see if a model has generalised well, if the loss across the training dataset is much smaller/larger than the validation dataset then it will imply that the model has become overfit/underfit respectively. Ideally they should be similar. 
-
-
-\chapter{Experimental Results}
+\chapter{Implementation and Experimental Results}
 
 % Approx 10-15 pages
 
@@ -698,8 +527,6 @@ I can also compare the L1 loss across the training and validation sets to see if
 
 \section{Experimental Environment}
 
-I have implement the experiments in Python using the PyTorch machine learning framework, however the methodology that I describe should produce similar results in any programming language or framework.
-
 This model was trained on a computer using an RTX 3070 with 8GB of VRAM and an AMD Ryzen 3600 with 32GB of system RAM.
 Testing the hyperparameter options for experiment 1 took approximately 2 days and I trained the final model over the course of 40 minutes.
 Testing the hyperparameter options for experiment 2 took approximately 3 days and I trained my final model over the course of 2 hours.  
@@ -710,14 +537,13 @@ Testing the hyperparameter options for experiment 1 took approximately 2 weeks a
 
 For experiments 1 and 2 I automated the process of exploring the parameter and hyperparameter search space. In my search I varied the following parameters: The normalisation layer used, the channel layouts used, the optimiser used, the learning rates for the optimiser, and, if the Adam optimiser was used, the beta values. In experiment 2 I allowed for the generator and discriminator models to use different normalisation functions, optimisers, and learning rates. 
 
-
 Training a diffusion model is far more computationally expensive than an autoencoder or a GAN, training a GAN model on the VISCHEMA dataset typically took around 100 minutes, where as a diffusion model typically took around 20 hours. 
 Because of this I limited my search in experiment 3 to manually vary the following parameters of the pallete model available at \cite{JanspiryPalette}: the number of channels used, the normalisation layer used, and the number of noise steps.
 
 Exploring these search spaces exhaustively is unfortunately not feasible, in experiments 1 and 2 there are over 5000 different combinations possible, and if I tested each combination once for 100 epochs then it would take hundreds of days to test.
 Instead I have explored a subset of this search space. For each experiment I estimated default parameter and hyperparameter values, by varying these values I lowered the scope of the search space to approximately 100 combinations. This took \(\sim\)2/3 days per experiment to test. Unfortunately this does mean that not every combination has been tested, however we should achieve a good approximation of the best parameters and hyperparameters.
 
-\section{Experiment 1}
+\section{UNet Autoencoder Training and Results}
 
 In this experiment I trained a UNet to directly predict the VMS maps of images, I trained the model using backpropagation of the L1 loss of the model output given an image, and the corresponding label.
 
@@ -753,7 +579,7 @@ A sample of best output images can be seen in figure \ref{fig:autoencoderBestOut
 
 Conclusions
 
-\section{Experiment 2}
+\section{GAN Training and Results}
 This experiment was performed with differentiable augmentation as described in \cite{zhao2020differentiable}. I performed translation and cutout, each with a 90\% chance. I explored the following parameter and hyperparameter options:
 
 \textbf{Normalisation layers}: Batch Normalisation, Instance Norm
@@ -811,11 +637,9 @@ After 200 epochs, mean L1 Score of ~0.0740
 % Insert score here.
 % Insert images.
 
-\section{Experiment 3}
+\section{Diffusion Model Training and Results}
 
 I explored the following parameters:
-
-\section{Results, Evaluation Metrics, and Analysis}
 
 The best parameters that I found were: 
 
@@ -831,6 +655,8 @@ a selection of the images with the different training methods
 Some discussion about them.
 
 In this experiment I was only able to explore a small range of possible hyperparameters and as such my results do not emulate the recent success found in diffusion based image generation. \cite{ramesh2022hierarchical, saharia2022photorealistic} However, with a greater number of computing resources, specifically parallel GPUs, it should be possible to explore a greater search space and achieve better results.
+
+\section{Results, Evaluation Metrics, and Analysis}
 
 \subsection{Examination Across VISCHEMA Categories}
 
