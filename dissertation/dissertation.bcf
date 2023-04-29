@@ -2444,10 +2444,14 @@
     <bcf:citekey order="54" intorder="1">PytorchPix2Pix</bcf:citekey>
     <bcf:citekey order="54" intorder="2">JanspiryPalette</bcf:citekey>
     <bcf:citekey order="55" intorder="1">JanspiryPalette</bcf:citekey>
-    <bcf:citekey order="56" intorder="1">zhao2020differentiable</bcf:citekey>
-    <bcf:citekey order="57" intorder="1">pix2pixwasserstein</bcf:citekey>
-    <bcf:citekey order="58" intorder="1">ramesh2022hierarchical</bcf:citekey>
-    <bcf:citekey order="58" intorder="2">saharia2022photorealistic</bcf:citekey>
+    <bcf:citekey order="56" intorder="1">ronneberger2015unet</bcf:citekey>
+    <bcf:citekey order="57" intorder="1">zhao2020differentiable</bcf:citekey>
+    <bcf:citekey order="58" intorder="1">pix2pixwasserstein</bcf:citekey>
+    <bcf:citekey order="59" intorder="1">ramesh2022hierarchical</bcf:citekey>
+    <bcf:citekey order="59" intorder="2">saharia2022photorealistic</bcf:citekey>
+    <bcf:citekey order="60" intorder="1">isola2018imagetoimage</bcf:citekey>
+    <bcf:citekey order="61" intorder="1">ramesh2022hierarchical</bcf:citekey>
+    <bcf:citekey order="61" intorder="2">saharia2022photorealistic</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

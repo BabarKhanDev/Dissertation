@@ -6,15 +6,7 @@
 \contentsline {section}{\numberline {4.1}Using Deep Learning to Predict Memorability}{xi}{section.4.1}%
 \contentsline {chapter}{\numberline {5}Methodology}{xiii}{chapter.5}%
 \contentsline {chapter}{\numberline {6}Implementation and Experimental Results}{xxiv}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Experimental Environment}{xxiv}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Hyperparameter tuning}{xxiv}{section.6.2}%
-\contentsline {section}{\numberline {6.3}UNet Autoencoder Training and Results}{xxv}{section.6.3}%
-\contentsline {section}{\numberline {6.4}GAN Training and Results}{xxvi}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Diffusion Model Training and Results}{xxix}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Results, Evaluation Metrics, and Analysis}{xxx}{section.6.6}%
-\contentsline {subsection}{\numberline {6.6.1}Examination Across VISCHEMA Categories}{xxx}{subsection.6.6.1}%
-\contentsline {subsection}{\numberline {6.6.2}Measuring loss across just the Green channel}{xxxi}{subsection.6.6.2}%
-\contentsline {chapter}{\numberline {7}Conclusion}{xxxii}{chapter.7}%
-\contentsline {chapter}{\numberline {8}Appendix}{xxxvi}{chapter.8}%
+\contentsline {chapter}{\numberline {7}Conclusion}{xxxi}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Appendix}{xxxv}{chapter.8}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

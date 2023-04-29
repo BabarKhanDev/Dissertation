@@ -517,6 +517,8 @@ After training all three models I will compare them using the requirements defin
 
 \chapter{Implementation and Experimental Results}
 
+In this chapter I describe the implementation, tuning, and results of my models, how successful they were, and show data about their training.
+
 % INTRODUCE THIS CHAPTER
 
 % Approx 10-15 pages
@@ -528,32 +530,31 @@ After training all three models I will compare them using the requirements defin
 %    solved with gan
 %    in experiments?
 
-\section{Experimental Environment}
+\textbf{Experimental Environment}
 
-This model was trained on a computer using an RTX 3070 with 8GB of VRAM and an AMD Ryzen 3600 with 32GB of system RAM.
-Testing the hyperparameter options for experiment 1 took approximately 2 days and I trained the final model over the course of 40 minutes.
-Testing the hyperparameter options for experiment 2 took approximately 3 days and I trained my final model over the course of 2 hours.  
-Testing the hyperparameter options for experiment 1 took approximately 2 weeks and I trained the final model over the course of Y hours (Not trained final model yet)
+This model was trained on a computer using an RTX 3070 with 8GB of VRAM and an AMD Ryzen 3600 with 32GB of system RAM, due to the relatively low video RAM a lot of effort was made to keep memory usage down in each model. During training I resized each image to 128px x 128px and after each training epoch explicitly deleted the image, label, and output from memory.
+Testing the hyperparameter options for the UNet Autoencoder model took approximately 2 days and I trained the final model over the course of 40 minutes.
+Testing the hyperparameter options for GAN model took approximately 3 days and I trained my final model over the course of 2 hours.  
+Testing the hyperparameter options for Diffusion model took approximately 2 weeks and I trained the final model over the course of Y hours (Not trained final model yet)
 % FILL IN X AND Y
 
-\section{Hyperparameter tuning}
+\textbf{Hyperparameter tuning}
 
-For experiments 1 and 2 I automated the process of exploring the parameter and hyperparameter search space. In my search I varied the following parameters: The normalisation layer used, the channel layouts used, the optimiser used, the learning rates for the optimiser, and, if the Adam optimiser was used, the beta values. In experiment 2 I allowed for the generator and discriminator models to use different normalisation functions, optimisers, and learning rates. 
+When tuning the UNet autoencoder and GAN models I automated the process of exploring the parameter and hyperparameter search space. In my search I varied the following parameters: The normalisation layer used, the channel layouts used, the optimiser used, the learning rates for the optimiser, and, if the Adam optimiser was used, the beta values. In experiment 2 I allowed for the generator and discriminator models to use different normalisation functions, optimisers, and learning rates. 
 
-Training a diffusion model is far more computationally expensive than an autoencoder or a GAN, training a GAN model on the VISCHEMA dataset typically took around 100 minutes, where as a diffusion model typically took around 20 hours. 
-Because of this I limited my search in experiment 3 to manually vary the following parameters of the pallete model available at \cite{JanspiryPalette}: the number of channels used, the normalisation layer used, and the number of noise steps.
+Training a diffusion model is far more computationally expensive than an autoencoder or a GAN, training and evaluating a GAN model on the VISCHEMA dataset typically took around 200 minutes, where as a diffusion model typically took around 20 hours. 
+Because of this I limited my search across diffusion models to manually vary the following parameters of the pallete model available at \cite{JanspiryPalette}: the number of channels used, the normalisation layer used, and the number of noise steps.
 
-Exploring these search spaces exhaustively is unfortunately not feasible, in experiments 1 and 2 there are over 5000 different combinations possible, and if I tested each combination once for 100 epochs then it would take hundreds of days to test.
-Instead I have explored a subset of this search space. For each experiment I estimated default parameter and hyperparameter values, by varying these values I lowered the scope of the search space to approximately 100 combinations. This took \(\sim\)2/3 days per experiment to test. Unfortunately this does mean that not every combination has been tested, however we should achieve a good approximation of the best parameters and hyperparameters.
+Exploring these search spaces exhaustively is unfortunately not feasible, for the Autoencoder and GAN models there are over 5000 different possible combinations, and if I tested each combination once for 100 epochs then it would take hundreds of days to test.
+Instead I have explored a subset of this search space. For each experiment I estimated default parameter and hyperparameter values, by varying these values I lowered the scope of the search space to approximately 100 perumtations. This took \(\sim\)2/3 days per experiment to test. Unfortunately this does mean that not every combination has been tested, however we should achieve a good approximation of the best parameters and hyperparameters.
 
-\section{UNet Autoencoder Training and Results}
+\textbf{UNet Autoencoder Training and Results}
 
-In this experiment I trained a UNet to directly predict the VMS maps of images, I trained the model using backpropagation of the L1 loss of the model output given an image, and the corresponding label. The best parameters and hyperparameters that I found for my model were the following: Encoder Channels = (3,64,128,256,512,1024), Decoder Channels = (1024,512,256,128,64), Batch Normalisation, Adam Optimizer with a learning rate of 0.001 and betas = (0.9, 0.999). A diagram of the training curve for the autoencoder can be seen in figure \ref{fig:autoencoderTraining}. After 80 training epochs I was able to achieve an L1 loss across my validation dataset of ~0.132. A sample of best output images can be seen in figure \ref{fig:autoencoderBestOutput} and a sample of the lowest accurary output images can be seen in figure \ref{fig:autoencoderWorstOutput}. As you can see the autoencoder tends to turn the blocky VMS shape into a rounded circle. It also fails to accurately predict the red regions, this is likely due to there being far more green data than red data. The VISCHEMA dataset is split into 12 distinct classes, in the table below I show the models accuracy across each different class.
+In this experiment I created and trained a UNet model as described in \cite{ronneberger2015unet} to directly predict the VMS maps of images, I trained the model using backpropagation of the L1 loss, described in equation \ref{eqn:UNet Loss}, of the model output given an image, and the corresponding label. The best parameters and hyperparameters that I found for my model were the following: Encoder Channels = (3,64,128,256,512,1024), Decoder Channels = (1024,512,256,128,64), Batch Normalisation, Adam Optimizer with a learning rate of 0.001 and betas = (0.9, 0.999). A diagram of the training curve for the autoencoder can be seen in figure \ref{fig:autoencoderTraining}. After 80 training epochs I was able to achieve an L1 loss across the validation dataset of ~0.132. A sample of the best output images can be seen in figure \ref{fig:autoencoderBestOutput}, and a sample of the lowest accurary output images can be seen in figure \ref{fig:autoencoderWorstOutput}. As you can see the autoencoder tends to turn the blocky VMS shape into a rounded circle. It also fails to accurately predict the red regions, this is likely due to there being far more green data than red data. The VISCHEMA dataset is split into 12 distinct classes, in table \ref{tab:categories} I show the models accuracy across each different class.
 
-\textbf{Requirements Fit}
-As per the requirements outlined in \ref{tab:RequirementCaptureTable} our best autoencoder model achieves requirements: 1.1 as it is possible to input an image, 1.2 as the model produces an image when given an input, 1.3 as the mean output loss is relatively low, and 2.1 as it is able to produce an image fast, in approximately Y seconds.
-% INPUT Y
-Unfortunately when I qualitatively analyse the images the model doesn't succeed in achieving requirement 1.4, it learns a somewhat accurate mapping but typically smooth out the blocky VMS components into circular shapes. There are also clear visual blotches present in all of the images, hese don't seem to line up with anything in particular in the input.   
+\textbf{UNet Autoencoder Requirements Fit}
+As per the requirements outlined in \ref{tab:RequirementCaptureTable} our best autoencoder model achieves requirements: 1.1 as it is possible to input an image, 1.2 as the model produces an image when given an input, 1.3 as the mean output loss is relatively low, and 2.1 as it is able to produce an image fast, in approximately 7 milliseconds.
+Unfortunately when I qualitatively analyse the images the model doesn't succeed in achieving requirement 1.4, it learns a somewhat accurate mapping but typically smooth out the blocky VMS components into circular shapes. There are also clear small visual blotches present in all of the predictions, these don't seem to line up with anything in particular in the input image or label.   
 
 \begin{figure}[h]
     \centering
@@ -569,95 +570,104 @@ Unfortunately when I qualitatively analyse the images the model doesn't succeed 
     \label{fig:autoencoderBestOutput}
 \end{figure}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\linewidth]{Worst autoencoder Outputs}
-    \caption{Worst Autoencoder Outputs}
-    \label{fig:autoencoderWorstOutput}
-\end{figure}
-
-\section{GAN Training and Results}
+\textbf{GAN Training and Results}
 
 % https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/issues/1081
-This experiment was performed with differentiable augmentation as described in \cite{zhao2020differentiable}. I performed translation and cutout, each with a 90\% chance. I explored the following parameter and hyperparameter options and then used the best parameters in the final model:
-
-\textbf{Normalisation layers}: Batch Normalisation, Instance Norm
-
-\textbf{Channel layouts}:
-I iterated over generator encoder and decoder, and discriminator channel layouts of following form, with values of $c$ from \{32,64,50,100\}:
-\begin{itemize}
-\item Encoder: (3, $c$, 2$c$, 4$c$, 8$c$, 16$c$), 
-\item Decoder: (16$c$, 8$c$, 4$c$, 2$c$, $c$),
-\item Discriminator: (6, $c$, 2$c$, 4$c$, 8$c$, 16$c$).
-\end{itemize}
-
-\textbf{Optimisers}:
-\begin{itemize}
-\item SGD, using the following learning rates: 0.005, 0.01, 0.02,
-\item Adam, using the following learning rates: 0.0005, 0.001, 0.002, and using the following betas values: (0.9, 0.999), (0, 0.999), (0.5, 0.999),
-\item Adadelta, using the following learning rates: 0.5, 1, 2.
-\end{itemize}
-
-\emph{Note: I didn't need to specify default values for the normalisation layer as these were the first variables I tested.}
-
-\textbf{Default Generator Parameters and Hyperparameters}: 
-\begin{itemize}
-\item $C$ = 64
-\item Optimiser: Adam, betas = (0.9, 0.999)
-\item Learning Rate: 0.001
-\end{itemize}
-\textbf{Default Discriminator Parameters and Hyperparameters}:
-\begin{itemize}
-\item $C$ = 64
-\item Optimiser: Adam, betas = (0.9, 0.999)
-\item Learning Rate: 0.001
-\end{itemize}
-I then iterated over each parameter/hyperparameter and varied them sequentially. I tested each combination for 100 epochs and used the L1 loss across the validation dataset as the score, if any new parameter options gave a better L1 score the it would become the default used going forward. This meant that I only had to iterate \(\sim\)100 combinations. I found the following best options.
+This experiment was performed with differentiable augmentation as described in \cite{zhao2020differentiable}. I performed translation and cutout, each with a 90\% chance. I explored the best parameters found, and used in the final model were: 
 
 \textbf{Best Generator}: Batch Normalisation, $C$ = 32, SGD Optimiser with a learning rate of 0.01.
 % LETS TEST THESE?
 \textbf{Best Discriminator}: Batch Normalisation, $c$ = 100, Adam optimiser with betas = (0.9, 0.999) and a learning rate of 0.001.
 
-With this combination we achieved a loss of \(\sim\)1.02 across the validation dataset. I found other good results using similar combinations. Using the Adatelta optimiser for the generator and the Adam optimiser for the discriminator achieved a loss of \(\sim\)1.03 across the validation dataset. Using the Adam optimiser for both the generator and discriminator achieved a loss of \(\sim\)1.04 across the validation dataset.
+% \textbf{Normalisation layers}: Batch Normalisation, Instance Norm
+
+% \textbf{Channel layouts}:
+% I iterated over generator encoder and decoder, and discriminator channel layouts of following form, with values of $c$ from \{32,64,50,100\}:
+% \begin{itemize}
+% \item Encoder: (3, $c$, 2$c$, 4$c$, 8$c$, 16$c$), 
+% \item Decoder: (16$c$, 8$c$, 4$c$, 2$c$, $c$),
+% \item Discriminator: (6, $c$, 2$c$, 4$c$, 8$c$, 16$c$).
+% \end{itemize}
+
+% \textbf{Optimisers}:
+% \begin{itemize}
+% \item SGD, using the following learning rates: 0.005, 0.01, 0.02,
+% \item Adam, using the following learning rates: 0.0005, 0.001, 0.002, and using the following betas values: (0.9, 0.999), (0, 0.999), (0.5, 0.999),
+% \item Adadelta, using the following learning rates: 0.5, 1, 2.
+% \end{itemize}
+
+% \emph{Note: I didn't need to specify default values for the normalisation layer as these were the first variables I tested.}
+
+% \textbf{Default Generator Parameters and Hyperparameters}: 
+% \begin{itemize}
+% \item $C$ = 64
+% \item Optimiser: Adam, betas = (0.9, 0.999)
+% \item Learning Rate: 0.001
+% \end{itemize}
+% \textbf{Default Discriminator Parameters and Hyperparameters}:
+% \begin{itemize}
+% \item $C$ = 64
+% \item Optimiser: Adam, betas = (0.9, 0.999)
+% \item Learning Rate: 0.001
+% \end{itemize}
+% I then iterated over each parameter/hyperparameter and varied them sequentially. I tested each combination for 100 epochs and used the L1 loss across the validation dataset as the score, if any new parameter options gave a better L1 score the it would become the default used going forward. This meant that I only had to iterate \(\sim\)100 combinations. I found the following best options.
 
 % THE ABOVE IS BS AND NEEDS CHANGING
 
-After 200 epochs of training our model is able to achieve a mean L1 score of ~0.0740 across our validation dataset. This is significantly better than our autoencoder model. 
-Figure \ref{fig:GANBestOutput} shows the outputs across the validation portion of our dataset with the lowest L1 Loss. They're accurately labelled with the correct regions as memorable. 
-but frankly are quite boring, the low L1 loss across these is because the labels simply have lots of black data, the loss across these is 0 if the model also outputs black, therfore any model that just predicts fully black images with random green regions would likely have a low loss across these images. 
-Figure \ref{fig:GANGoodOutput} shows what I think are far more impressive results, even if they have a higher loss than those present in figure \ref{fig:GANBestOutput}. For these images the model is able to accurately predict large regions of the image that are memorable.
-The worst results are shown in \ref{fig:GANWorstOutput}, it appears that, like our autoencoder model from experiment 1, this model finds it difficult to predict red regions, i.e. those that users hallucinate seeing.
+After 200 epochs of training our model is able to achieve a mean L1 score of ~0.0740 across our validation dataset. This is significantly better than our autoencoder model. A diagram of the training curve for the final GAN model can be seen in figure \ref{fig:GANTraining}. 
+Figure \ref{fig:GANBestOutput} shows the outputs across the validation portion of our dataset with the lowest L1 Loss. They're accurately labelled with the correct regions as memorable
+but frankly are quite boring, and dont necessarily show off the high quality outputs capable of our model, the low L1 loss across these is because the labels simply have lots of black data, therfore any model that just predicts fully black images with random green regions would likely have a low loss across these images. 
+Instead I present figure \ref{fig:GANGoodOutput} which shows what I think are far more impressive results, despite the higher loss than the images presented in figure \ref{fig:GANBestOutput}. For these images the model is able to accurately predict large regions of the image that are memorable.
+The worst results are shown in \ref{fig:GANWorstOutput}, it appears that, like our autoencoder model from experiment 1, this model finds it difficult to predict red regions, i.e. those that users hallucinate remembering.
 
-After 200 epochs, mean L1 Score of ~0.0740
-% Insert X,Y
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{GAN Training Curve}
+    \caption{GAN training graph. There are 4 losses plotted in this graph, in pale green the L1 loss across the training data and dark green a linear regression of that, in blue the loss when tricking the discriminator, in red and orange the discriminator loss when predicting fake and real images respectively.}
+    \label{fig:GANTraining}
+\end{figure}
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[]{Good GAN Outputs}
+    \caption{Favourite GAN Outputs}
+    \label{fig:GANGoodOutput}
+\end{figure}
 
 \textbf{Wasserstein GAN}: Using a Wasserstein image-to-image GAN as described in \cite{pix2pixwasserstein} I was able to achieve a best score of
 % Insert score here.
 % Insert images.
 
-\section{Diffusion Model Training and Results}
+\textbf{GAN Requirements Fit}
+As per the requirements outlined in \ref{tab:RequirementCaptureTable} our best autoencoder model achieves all requirements: 1.1 as it is possible to input an image, 1.2 as the model produces an image when given an input, 1.3 as the mean output loss is relatively low, 1.4, it learns a very accurate model of the mapping and is able to create convincing memorability maps and 2.1 as it is able to produce an image fast, in ~3.0 milliseconds. My only concern would be that it fails to accurately predict the red component of the VMS images, however I believe this is significantly less important than predicting the green component, and as such our model is still successful.
 
-I explored the following parameters:
+\textbf{Diffusion Model Training and Results}
 
-The best parameters that I found were: 
+The best parameters that I found for this model were: 
 
-Evaluating the L1 loss of the diffusion models across the entire validation distribution took approximately 4 hours, because of this I had to evaluate it over a subset every 5 epochs. This unfortunately meant that it was impossible to see if the network was overfitting until I did a full test across the validation distribution at the end of the training. The graph below shows the training and validation loss per epoch for my best model, the validation loss in this case is the loss for removing 1 step of noise from each image, not 2000.
+Evaluating the L1 loss of the diffusion models across the entire validation distribution took approximately 4 hours, because of this, during training I had to evaluate the performance over a subset of the validation distribution every 5 epochs. This unfortunately made it impossible to see if the network was overfitting until I did a full test across the validation distribution at the end of the training. The graph in figure 
+% TRAINING GRAPH
+shows the training and validation loss per epoch for my best model, the validation loss in this case is the loss for removing 1 step of noise from each image, not the full 2000. 
+You can see a selection of the best outputs in figure 
+% BEST OUTPUTS
+and a selection of the worst outputs in figure 
+% WORST OUTPUTS
+. As you can see the network still produces images with random noise, unfortunately I could not get the network to not do this.
+
 
 a graph of the train/val loss over time across the different experiments
 
-
-
 a selection of the images with the different training methods
-
-
-Some discussion about them.
 
 In this experiment I was only able to explore a small range of possible hyperparameters and as such my results do not emulate the recent success found in diffusion based image generation. \cite{ramesh2022hierarchical, saharia2022photorealistic} However, with a greater number of computing resources, specifically parallel GPUs, it should be possible to explore a greater search space and achieve better results.
 
-\section{Results, Evaluation Metrics, and Analysis}
 
-\subsection{Examination Across VISCHEMA Categories}
+\textbf{Diffusion Requirements Fit}
+%Some discussion about them.
+
+\textbf{Results, Evaluation Metrics, and Analysis}
+
+\textbf{Examination Across VISCHEMA Categories}
 
 The dataset that I trained on, VISCHEMA PLUS, is composed of two datasets: VISCHEMA and VISCHEMA 2. The VISCHEMA dataset is split into 12 distinct classes, the VISCHEMA 2 dataset is split into 8 distinct classes. One "kitchen", is present in both datasets, but otherwise clases are exclusive to VISCHEMA or VISCHEMA 2. In figure \ref{tab:categories} the average L1 loss each model achieves across each different class in the validation distribution is displayed. The values are rounded to 2 significant figures but in calculations I used the un-rounded versions. Looking at this data we can see that the mean L1 loss across the different classes has a standard deviation of 0.022. Interestingly our accuracy in measuring skyscrapers is the lowest, this is likely due to the large red regions in the VMS that our model has difficulty predicting.
 
@@ -737,123 +747,45 @@ The dataset that I trained on, VISCHEMA PLUS, is composed of two datasets: VISCH
     \caption{The average L1 loss that each model achieves over the different categories present in the VISCHEMA validation distribution.}
 \end{table}
 
-\subsection{Measuring loss across just the Green channel}
+\textbf{Measuring loss across just the Green channel}
 
-Our models have a lot of trouble predicting the red channel of the VMS maps. The red channel indicates that users thought they remembered the image because of this region, when in reality they hadn't been shown this image before. If we measure the loss of our models across just the green channel, that is the regions subjects indicated triggered their memory in images that they correctly identified as seeing before, then we get an L1 loss of X in our autoencoder, Y in our GAN, and Z in our diffusion model.
-% INPUT X Y Z
-
-% Autoencoder VAL
-% GREEN
-% Mean loss: 0.08333277644123882
-% golf_course 0.07630164806659405
-% kitchen 0.07172042690217495
-% airport_terminal 0.07783418972241252
-% conference_room 0.089528377389624
-% house 0.09478799204031627
-% mountain 0.1080946996808052
-% small 0.06579923080770593
-% amusement_park 0.0825555045157671
-% populated 0.05467195534392407
-% pasture 0.06833397038280964
-% isolated 0.07598294953213018
-% public-entertainment 0.09777870543655895
-% skyscraper 0.1808365397155285
-% big 0.08097460954671815
-% playground 0.0760359705558845
-% work-home 0.09419278800487518
-% living room 0.06241267323493958
-% living_room 0.08461419884115458
-% badlands 0.10508802119228575
-
-% RED
-% Mean loss: 0.047803090693923876
-% big 0.02661177253771928
-% conference_room 0.08101891614274964
-% isolated 0.04759527736014741
-% populated 0.012266142385717677
-% playground 0.059464691689104905
-% kitchen 0.044463653315324335
-% small 0.02879853359742188
-% airport_terminal 0.07187960795617025
-% golf_course 0.055669605696144014
-% mountain 0.07916211329367277
-% public-entertainment 0.030252949539793746
-% work-home 0.03769531178598603
-% living room 0.013748132804175838
-% living_room 0.04000693766283803
-% skyscraper 0.12765768594108523
-% badlands 0.09822849246362846
-% house 0.037173117091879246
-% amusement_park 0.05981842910599274
-% pasture 0.04287697393738199
-
-
-%%%%% GAN: VAL %%%%%%
-% GREEN
-% Mean loss: 0.045738369051832706
-% small 0.0383598092747362
-% big 0.046232790198354495
-% work-home 0.05527007579803467
-% living_room 0.04812932843342423
-% skyscraper 0.07902429103851319
-% airport_terminal 0.045305789693405756
-% amusement_park 0.04742709345494708
-% conference_room 0.046596652340321315
-% pasture 0.03138407017104328
-% kitchen 0.04552051015198231
-% populated 0.02893732444040085
-% living room 0.03519031559117138
-% house 0.050250496218601864
-% mountain 0.05652235009308372
-% isolated 0.03986671961405698
-% golf_course 0.04185447555321913
-% public-entertainment 0.050189074306260975
-% badlands 0.05333242110080189
-% playground 0.04568916160081114
-
-% RED
-% Mean loss: 0.025548097236969623
-% populated 0.007714814867971367
-% kitchen 0.023897209559800105
-% amusement_park 0.03592883333719025
-% big 0.014301763880731804
-% public-entertainment 0.01757042340579487
-% living_room 0.021378754259785637
-% conference_room 0.04170004574448934
-% house 0.021817845478653907
-% living room 0.009958033758448438
-% pasture 0.022044006240321323
-% isolated 0.028836247237289652
-% mountain 0.03477212186304054
-% small 0.016294946122032247
-% airport_terminal 0.03686346101427549
-% work-home 0.027192980454613765
-% skyscraper 0.060537529177963734
-% golf_course 0.030894182031401075
-% badlands 0.038830878445878625
-% playground 0.030713564150833657
+Our models have a lot of trouble predicting the red channel of the VMS maps. The red channel indicates that users thought they remembered the image because of this region, when in reality they hadn't been shown this image before. If we measure the loss of our models across just the green channel, that is the regions subjects indicated triggered their memory in images that they correctly identified as seeing before, 
+then our average L1 loss across the validation dataset decreases from ~0.132 to \(\sim \)0.083 with our autoencoder model, 
+from ~0.0740 to \(\sim \) 0.046 in our GAN, 
+and from Y to \(\sim \) Z in our diffusion model.
+% INPUT Y AND Z 
+Because this loss is the mean across each pixel, we can compare the them regardless of the change in channel depth. Clearly our models are better at predicting green regions rather than red ones. I suspect that this is due to the much larger amount of green data than red in the dataset.
 
 \chapter{Conclusion}
 
-
-
 % Approx 1-2 pages
 % how it went
+UNet Autoencoders are simple to implement and I have found that they produce somewhat successful results, they train very quickly and can create labels in milliseconds, but fail under qualitative analysis. 
+
+GAN models can be difficult to work with, and lots of research has gone into creating versatile and robust GAN architectures, adapting an existing, successful, model to your needs can reduce development time. Using a modified pix2pix GAN model \cite{isola2018imagetoimage} I was able to generate very accurate VMS maps, maintaining the blocky shape of the regions, and achieving a mean L1 loss of \(\sim 0.0740\). Generally, these models took longer to train than my autoencoder models but given an image they are able to produce an image in a similar time to a UNet autoencoder.
+
+Diffusion models took the longest to train, and while they can generally produce high quality images \cite{ramesh2022hierarchical, saharia2022photorealistic}, the training loop requires a large amount of computational resources, making it difficult to fine tune in a reasonable time. My best model was able to achieve an L1 loss of (Final Diffusion Loss). Due to computational restraints I was unable to run a large hyperparameter search and my results leave room for improvement.
+%FILL IN FINAL DIFFUSION LOSS
+
+% %The implications of these findings (what these answers mean)
+
+I show that using a GAN model we are able to predict memorable image regions with great accuracy. I believe this has many useful applications across many different industries, allowing creators to have a more informed opinion on which sections of their images are memorable, using this tool to iteratively improve their image memorability.
 % future work better generator better result
+
 % applications
-
-% Put this in the conclusion
-Diffusion models lend themselves well to multiple GPU architectures, and if I were to run this experiment again I would hope to have access to a system capable of running them faster. While diffusion models have seen lots of mainstream attention recently, until home computing power is significantly greater it is infeasible for most to train their own in any reasonable amount of time. 
-
-Greater time means greater costs and until the hardware to run diffusion models increases in performance I can't see any benefits over using a GAN model.
-
-Unfortunately I can't recommend the use of diffusion models to generate memorability maps, even if my models were able to generate accurate results, the time required using current hardware is simply too great.
+Hopefully in future work good parameters can be found that allow diffusion models to work with lower noise steps and to produce higher accuracy results. Diffusion models lend themselves well to multiple GPU architectures, and if I were to run this project again I would hope to have access to a system capable of running them faster. While diffusion models have seen lots of mainstream attention recently, until home computing power is significantly greater it is infeasible for most to train their own in any reasonable amount of time. 
 
 \printbibliography
 
 \chapter{Appendix}
 
-Best results:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{Worst autoencoder Outputs}
+    \caption{Worst Autoencoder Outputs}
+    \label{fig:autoencoderWorstOutput}
+\end{figure}
+
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{Best GAN Outputs}
@@ -861,15 +793,6 @@ Best results:
     \label{fig:GANBestOutput}
 \end{figure}
 
-Favourite Results:
-\begin{figure}[ht]
-    \centering
-    \includegraphics[]{Good GAN Outputs}
-    \caption{Favourite GAN Outputs}
-    \label{fig:GANGoodOutput}
-\end{figure}
-
-Worst results:
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{Worst GAN Outputs}
