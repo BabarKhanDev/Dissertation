@@ -476,7 +476,7 @@ Testing the hyperparameter options for Diffusion model took approximately 2 week
 When tuning the UNet autoencoder and GAN models I automated the process of exploring the parameter and hyperparameter search space. In my search I varied the following parameters: The normalisation layer used, the channel layouts used, the optimiser used, the learning rates for the optimiser, and, if the Adam optimiser was used, the beta values. In experiment 2 I allowed for the generator and discriminator models to use different normalisation functions, optimisers, and learning rates. 
 
 Training a diffusion model is far more computationally expensive than an autoencoder or a GAN, training and evaluating a GAN model on the VISCHEMA dataset typically took around 200 minutes, where as a diffusion model typically took around 20 hours. 
-Because of this I limited my search across diffusion models to manually vary the following parameters of the palette model available at \cite{JanspiryPalette}: the number of channels used, the normalisation layer used, and the number of noise steps.
+Because of this I limited my search across diffusion models to manually vary the following parameters of the palette model available at \cite{JanspiryPalette}: the number of channels used, the normalisation layer used, the noise scheduling algorithm, and the number of noise steps.
 
 Exploring these search spaces exhaustively is unfortunately not feasible, for the Autoencoder and GAN models there are over 5000 different possible combinations, and if I tested each combination once for 100 epochs then it would take hundreds of days to test.
 Instead I have explored a subset of this search space. For each experiment I estimated default parameter and hyperparameter values, by varying these values I lowered the scope of the search space to approximately 100 permutations. This took \(\sim\)2/3 days per experiment to test. Unfortunately this does mean that not every combination has been tested, however we should achieve a good approximation of the best parameters and hyperparameters.
@@ -538,7 +538,7 @@ Our best GAN model is incredibly successful and achieves all requirements outlin
 
 \textbf{Diffusion Model Training and Results}
 
-I found that the best parameters for this network were: Group Norm, Encoder channel layout = (64, 128, 256, 512), Decoder channel layout = (512, 256, 128, 64), Linear beta scheduler with a start of 1e-6 and an end of 0.01.
+I found that the best parameters for this network were: Group Norm, Encoder channel layout = (64, 128, 256, 512), Decoder channel layout = (512, 256, 128, 64), Cosine beta scheduler with a start of 1e-6 and an end of 0.01.
 
 Evaluating the L1 loss of the diffusion models across the entire validation distribution took approximately 2 hours, because of this, during training I couldn't see if the l1 loss was going down, I could still however test if it was overfitting by evaluating the ability to remove a random step of noise every epoch. After training I did a full test across the validation distribution. The graph in figure 
 \ref{fig:DiffusionTraining}
@@ -566,7 +566,7 @@ and a selection of the worst outputs in figure
 \textbf{Diffusion Requirements Fit}
 %Some discussion about them.
 
-My best diffusion model is incredibly unsuccessful. It is only able to pass requirements 1.1 and 1.2; you can input an image and it outputs an image. The output images have a very large mean loss of \( \sim 0.48 \) and as such fail requirement 1.3, and when I qualitatively analyse the output images, they either look like accurate VMS maps for completely different images, look noisy, or both, and as such the model fails requirement 1.4. The model also takes on average 23 seconds to produce an image, compared to our autoencoder and GAN models this is far too long, taking thousands of times longer than either of those models, and as such it fails requirement 2.1. 
+My best diffusion model is incredibly unsuccessful. It is only able to pass requirements 1.1 and 1.2; you can input an image and it outputs an image. The output images have a very large mean loss of \( \sim 0.31 \) and as such fail requirement 1.3, and when I qualitatively analyse the output images, they either look like accurate VMS maps for completely different images, look noisy, or both, and as such the model fails requirement 1.4. The model also takes on average 23 seconds to produce an image, compared to our autoencoder and GAN models this is far too long, taking thousands of times longer than either of those models, and as such it fails requirement 2.1. 
 
 \textbf{Results, Evaluation Metrics, and Analysis}
 
@@ -574,7 +574,14 @@ My best diffusion model is incredibly unsuccessful. It is only able to pass requ
 
 The dataset that I trained on, VISCHEMA PLUS, is composed of two datasets: VISCHEMA and VISCHEMA 2. The VISCHEMA dataset is split into 12 distinct classes, the VISCHEMA 2 dataset is split into 8 distinct classes. The "kitchen" class is present in both datasets, but otherwise classes are exclusive to VISCHEMA or VISCHEMA 2. In figure \ref{tab:categories} the average L1 loss each model achieves across each different class in the validation distribution is displayed. The values are rounded to 2 significant figures but in calculations I used the un-rounded versions. 
 
-Looking at this data we can see that our GAN model is the most consistent, with a standard deviation in the mean L1 loss across the different classes of 0.022, the autoencoder model isn't much worse with a standard deviation 0f 0.052, and our diffusion model is the worst with a standard deviation 0f 0.07. Across both our autoencoder and GAN models, the accuracy in measuring memorability maps for skyscrapers is the lowest, this is likely due to the large red regions in the VMS that our model has difficulty predicting, interestingly, this is one of the best classes that our diffusion model produces. Looking at the diffusion model outputs I can see that it has a tendency to predict red far more often than the other networks, this may be the reason that it produces much better results for skyscrapers than most of its other classes.  
+Looking at this data we can see that our GAN model is the most consistent, with a standard deviation in the mean L1 loss across the different classes of 0.022, the autoencoder model is the worst with a standard deviation 0f 0.052, and our diffusion model is in the middle with a standard deviation 0f 0.047. Across both our autoencoder and GAN models, the accuracy in measuring memorability maps for skyscrapers is the lowest, this is likely due to the large red regions in the VMS that our model has difficulty predicting, interestingly, this is one of the best classes that our diffusion model produces. Looking at the diffusion model outputs I can see that it has a tendency to predict red far more often than the other networks, this may be the reason that it produces much better results for skyscrapers than most of its other classes.  
+
+% Populated
+% Big
+% public entertainment
+% isolated
+% small
+% work-home
 
 \begin{table}[]
     \centering
@@ -582,22 +589,22 @@ Looking at this data we can see that our GAN model is the most consistent, with 
         \hline
         \multicolumn{1}{|c|}{} & \multicolumn{3}{c|}{Model}                                                                          \\ \hline
         Category               & \multicolumn{1}{c|}{Autoencoder} & \multicolumn{1}{c|}{GAN}  & \multicolumn{1}{c|}{Diffusion Model} \\ \hline
-        Kitchen                & \multicolumn{1}{l|}{0.12}        & \multicolumn{1}{l|}{0.072}& 0.51                                    \\ \hline
-        Living Room            & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.047}& 0.63                                    \\ \hline
-        Conf. Room             & \multicolumn{1}{l|}{0.17}        & \multicolumn{1}{l|}{0.091}& 0.45                                    \\ \hline
-        Airport Ter.           & \multicolumn{1}{l|}{0.15}        & \multicolumn{1}{l|}{0.085}& 0.44                                    \\ \hline
-        House                  & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.075}& 0.31                                    \\ \hline
-        Skyscraper             & \multicolumn{1}{l|}{0.31}        & \multicolumn{1}{l|}{0.14 }& 0.36                                    \\ \hline
-        Amus. Park             & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.086}& 0.41                                    \\ \hline
-        Playground             & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.079}& 0.45                                    \\ \hline
-        Pasture                & \multicolumn{1}{l|}{0.11}        & \multicolumn{1}{l|}{0.056}& 0.51                                    \\ \hline
-        Golf Course            & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.076}& 0.43                                    \\ \hline
-        Mountain               & \multicolumn{1}{l|}{0.19}        & \multicolumn{1}{l|}{0.094}& 0.51                                    \\ \hline
-        Badland                & \multicolumn{1}{l|}{0.20}        & \multicolumn{1}{l|}{0.096}& 0.47                                    \\ \hline
+        Kitchen                & \multicolumn{1}{l|}{0.12}        & \multicolumn{1}{l|}{0.072}& 0.35                                    \\ \hline
+        Living Room            & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.047}& 0.28                                    \\ \hline
+        Conf. Room             & \multicolumn{1}{l|}{0.17}        & \multicolumn{1}{l|}{0.091}& 0.34                                    \\ \hline
+        Airport Ter.           & \multicolumn{1}{l|}{0.15}        & \multicolumn{1}{l|}{0.085}& 0.29                                    \\ \hline
+        House                  & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.075}& 0.25                                    \\ \hline
+        Skyscraper             & \multicolumn{1}{l|}{0.31}        & \multicolumn{1}{l|}{0.14 }& 0.31                                    \\ \hline
+        Amus. Park             & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.086}& 0.44                                    \\ \hline
+        Playground             & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.079}& 0.34                                    \\ \hline
+        Pasture                & \multicolumn{1}{l|}{0.11}        & \multicolumn{1}{l|}{0.056}& 0.37                                    \\ \hline
+        Golf Course            & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.076}& 0.34                                    \\ \hline
+        Mountain               & \multicolumn{1}{l|}{0.19}        & \multicolumn{1}{l|}{0.094}& 0.32                                    \\ \hline
+        Badland                & \multicolumn{1}{l|}{0.20}        & \multicolumn{1}{l|}{0.096}& 0.23                                    \\ \hline
         \hline
-        Mean                   & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.078}& 0.47                                    \\ \hline
-        Median                 & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.075}& 0.46                                    \\ \hline
-        Std                    & \multicolumn{1}{l|}{0.052}       & \multicolumn{1}{l|}{0.022}& 0.07                                    \\ \hline
+        Mean                   & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.078}& 0.31                                    \\ \hline
+        Median                 & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.075}& 0.31                                    \\ \hline
+        Std                    & \multicolumn{1}{l|}{0.052}       & \multicolumn{1}{l|}{0.022}& 0.047                                   \\ \hline
     \end{tabular}
     \label{tab:categories}
     \caption{The average L1 loss that each model achieves over the different categories present in the VISCHEMA validation distribution.}
@@ -608,8 +615,8 @@ Looking at this data we can see that our GAN model is the most consistent, with 
 Our models have a lot of trouble predicting the red channel of the VMS maps. The red channel indicates that users thought they remembered the image because of this region, when in reality they had not been shown this image before. If we measure the loss of our models across just the green channel, that is the regions subjects indicated triggered their memory in images that they correctly identified as seeing before, 
 then our average L1 loss across the validation dataset decreases from ~0.132 to \(\sim \)0.083 with our autoencoder model, 
 from ~0.0740 to \(\sim \) 0.046 in our GAN, 
-and from \(\sim 0.48 \) to \(\sim 0.32 \) in our diffusion model.
-Because this loss is the mean across each pixel, we can compare the them regardless of the change in channel depth. Clearly our models are better at predicting green regions rather than red ones. I suspect that this is due to the much larger amount of green data than red in the dataset.
+and increases from \(\sim 0.31 \) to \(\sim 0.54 \) in our diffusion model, this reinforces my belief that the model has a tendancy to predict red more often than it appears.
+Because this loss is the mean across each pixel, we can compare the them regardless of the change in channel depth. Clearly our autoencoder and GAN models are better at predicting green regions rather than red ones. I suspect that this is due to the much larger amount of green data than red in the dataset. I'm not sure why the diffusion model has learned to predict red more prominantly than green.
 
 \chapter{Conclusion}
 
