@@ -24,7 +24,7 @@
 % Title Page
 \author{Babar Khan}
 \title{Predicting Memorable Regions Of Images}
-\date{2023-April-23}
+\date{2023-April}
 \protect\supervisor{Adrian Bors}
 \SWE
 
@@ -102,7 +102,7 @@ To create a model that does this is an incredibly difficult task, success has be
 
 \textbf{Report Structure}
 
-This report is organised as follows: Chapter 3 discusses existing literature in image memorability, Chapter 4 discusses the project methodology, I describe available deep learning datasets and existing image to image models, Chapter 5 details my experiments and results, and Chapter 6 my conclusion, where I discuss the implications of my findings.    
+This report is organised as follows: Chapter 3 discusses existing literature in image memorability, Chapter 4 discusses the project methodology, I describe available deep learning datasets and existing image to image models, Chapter 5 details my experiments and results, and Chapter 6 my conclusion, where I discuss the implications of my findings and posibilities for future work.    
 
 \chapter{Literature Review}
 
@@ -116,6 +116,14 @@ This report is organised as follows: Chapter 3 discusses existing literature in 
 % It was found that people are not very good at remembering nonsense sylables or sentences but are much better at remembering digits, consonants, and colours. Remembering geometric designs is placed somewhere in the middle.
 % This would seem to indicate that people are not very good at recalling images, however in Nickerson's work we can see that subjects are extremely good at recognising images. 
 
+In Breners work \cite{BrenerMemorySpan} subjects' abilities to remember a series of units was tested, with units defined based on the test performed, 
+\begin{quote}
+    In the digit test, for example, each digit was a unit; in the sentence test each sentence was a unit, etc. ... Each nonsense syllable constituted a unit ... Each consonant constituted a unit ... Each [geometric] design constituted a unit. \cite[p.468]{BrenerMemorySpan}
+\end{quote}
+
+Each unit was presented to participants on a piece of card, one card was shown every two seconds, and at the end of the series of cards participants would have to repeat the series to the experimenter. If a participant repeated all units correctly then the length of the series would increase, otherwise it would decrease. Once a subject could answer the entire series correctly, every other series length was tested. It was found that people are not very good at remembering nonsense syllables or sentences but are much better at remembering digits, consonants, and colours. Remembering geometric designs is placed somewhere in the middle. This is of interest because it is very similar to our investigation into what aspects make images memorable. Brener was interested in consonants, colours, geometric designs, and other units, and his finding that different units can be significantly harder or easier to remember is useful to us. If we swap out units for image properties such as texture, contrast, saturation etc, or even more abstract features that a CNN may recognise, then it should be possible to find how memorability is impacted by these. 
+ 
+
 % R. Nickerson Short-term memory for complex meaningful visual configurations 1965
 % Subjects are shown new and old photos and they have to identify if the photo is new or old
 % P(Ro/So) = ~0.9
@@ -123,6 +131,9 @@ This report is organised as follows: Chapter 3 discusses existing literature in 
 % subjects were more likely to correctly identify a photo as new than they were to correctly identify a photo as old
 % Shown 1 image at a time with 50% chance of being old and 50% chance of being new
 % 
+The mean score of 5.31 found for geometric designs seems to indicate that people are not great at recalling images, however in Nickerson's extremely influential work \cite{NickersonShortTermMemory} we can see the opposite, subjects are found to be extremely good at recognising previously seen images. Nickerson found that subjects shown a series of images are, with great accuracy, able to recall if the photo is one they have seen before or not. An item is referred to as 'new on its first occurrence and old on its second occurrence'\cite[p.156]{NickersonShortTermMemory}, it was found that subjects shown one image at a time, each with equal chance of being old or new, are able to correctly distinguish them with 95\% accuracy. Nickerson's experiment is very different to Brener's, in the former a subjects ability to recognise an image is tested, where as in the latter subjects abilities to recall is tested. Nickerson laid the groundwork for the memorability game that all experiments described ahead are based on and adapt.  
+
+Like in \cite{NickersonShortTermMemory}, Shepard's work in \cite{ShepardRecognition} also found that subjects are able to distinguish with great accuracy new and old images, the mean percentage of images correctly identified was 99.7\% after a delay of 2 hours, 92.0\% after a delay of 3 days. 87.0\% after a delay of 7 days, and 57.7\% after a delay of 120 days. The introduction of a delay into the memorability game allows us to see that regardless of whether the image is in our short-term memory (2 hour delay) or our long-term memory (3-120 days) subjects are able to correctly identify an incredible amount of images. This 
 
 % L. Standing. Learning 10,000 pictures. In Quarterly Journal of Experimental Psychology, 1973
 % ## What is the goal of this paper ##
@@ -133,6 +144,8 @@ This report is organised as follows: Chapter 3 discusses existing literature in 
 % The experiments don't have many people involved Experment 2 only has 2 subjects and experiment 4, 4.
 % He tested normal and vivid pictures
 %------------
+Standing built on the work of Nickerson, Shepard, and Brener in \cite{standing10000pictures}. Four experiments were ran which tested memory capacity and retrieval speed for pictures and words, I am interested in the performance related to pictures specifically. He found that, when measured under testing conditions, the capacity for image recognition from memory is almost limitless. In Standing's first experiment he tested 'normal' and 'vivid' images. He describes 'normal' images as those that 'may be characterized as resembling a highly variegated collection of competent snapshots'\cite[p.208]{standing10000pictures}, and 'vivid' images are described as 'striking pictures ... with definitely interesting subject matter'\cite[p.208]{standing10000pictures}. Much like how in Brener's work \cite{BrenerMemorySpan} the memorability of an object was variable based on what classification of unit was tested, this work shows that on an even more specific level, the classification of the image into normal or vivid, has an impact on subjects' memory, Standing found that the vivid images were more likely to be remembered by subjects.
+
 
 % F. Brady, T. Konkle, G. A. Alvarez, and A. Oliva. Visual long-term memory has a massive storage capacity for object details. In Proceedings of the National Academy of Sciences, 2008
 % This is about how much detail is required to remember an image, rather than if you can just remember it or not
@@ -141,19 +154,6 @@ This report is organised as follows: Chapter 3 discusses existing literature in 
 % this builds directly onto the world of Standing in 1973
 %------------
 
-In Breners work \cite{BrenerMemorySpan} subjects' abilities to remember a series of units was tested, with units defined based on the test performed, 
-\begin{quote}
-    In the digit test, for example, each digit was a unit; in the sentence test each sentence was a unit, etc. ... Each nonsense syllable constituted a unit ... Each consonant constituted a unit ... Each [geometric] design constituted a unit. \cite[p.468]{BrenerMemorySpan}
-\end{quote}
-
-It was found that people are not very good at remembering nonsense syllables or sentences but are much better at remembering digits, consonants, and colours. Remembering geometric designs is placed somewhere in the middle. This is of interest because it is very similar to our investigation into what aspects make images memorable. Brener was interested in consonants, colours, geometric designs, and other units, and his finding that different units can be significantly harder or easier to remember is useful to us. If we swap out units for image properties such as texture, contrast, saturation etc, or even more abstract features that a CNN may recognise, then it should be possible to find how memorability is impacted by these.   
-
-The mean score of 5.31 found for geometric designs seems to indicate that people are not great at recalling images, however in Nickerson's work \cite{NickersonShortTermMemory} we can see the opposite, subjects are found to be extremely good at recognising images. Nickerson found that subjects shown a series of images are, with great accuracy, able to recall if the photo is one they have seen before or not. An item is referred to as 'new on its first occurrence and old on its second occurrence'\cite[p.156]{NickersonShortTermMemory}, it was found that subjects shown one image at a time, each with equal chance of being old or new, are able to correctly distinguish them with 95\% accuracy. 
-
-Like in \cite{NickersonShortTermMemory}, Shepard's work \cite{ShepardRecognition} also found that subjects are able to distinguish with great accuracy new and old images, the mean percentage of images correctly identified was 99.7\% after a delay of 2 hours, 92.0\% after a delay of 3 days. 87.0\% after a delay of 7 days, and 57.7\% after a delay of 120 days. The introduction of a delay into Nickerson's experiment allows us to see that regardless of whether the image is in our short-term memory (2 hour delay) or our long-term memory (3-120 days) subjects are able to correctly identify an incredible amount of images. 
-
-Standing built on the work of Nickerson, Shepard, and Brener in \cite{standing10000pictures}. Four experiments were ran which tested memory capacity and retrieval speed for pictures and words, I am interested in the performance related to pictures specifically. He found that, when measured under testing conditions, the capacity for image recognition from memory is almost limitless. In Standing's first experiment he tested 'normal' and 'vivid' images. He describes 'normal' images as those that 'may be characterized as resembling a highly variegated collection of competent snapshots'\cite[p.208]{standing10000pictures}, and 'vivid' images are described as 'striking pictures ... with definitely interesting subject matter'\cite[p.208]{standing10000pictures}. Much like how in Brener's work \cite{BrenerMemorySpan} the memorability of an object was variable based on what classification of unit was tested, this work shows that on an even more specific level, the classification of the image into normal or vivid, has an impact on subjects' memory, Standing found that the vivid images were more likely to be remembered by subjects.
-
 Lots of work has been done to further build on that of Standing, Nickerson, Brener et al. Brady et al. \cite{brady2008visual} performed research into how much information is retained in long term memory and found that subjects are able to remember not just the gist of an image, but also fine grain information such as the state of objects within an image, and that they are able to distinguish between variants of objects shown in images. An example shown was an abacus in two different states, 13/14 subjects were able to distinguish which one they had seen before.
 
 % D. A. Brown, I. Neath, and N. Chater. A temporal ratio model of memory. Psych. Review, 2007.
@@ -161,37 +161,22 @@ Lots of work has been done to further build on that of Standing, Nickerson, Bren
 % Traces of items are represented in memory partyly in terms of how long ago they were observed
 % Similar mechanisms govern retrieval from memory over many different timescales
 
-Konkle et al. build further on the work in \cite{standing10000pictures, brady2008visual} by studying the impact that categorical distinctness has on memorability. This was tested by creating a dataset of images composed of categories such as tables, cameras, and bread etc. Each category had between 1 and 16 images, and a memory test like those performed in \cite{standing10000pictures, brady2008visual}
+In \cite{KonkleDistinct} Konkle et al. build further on the work in \cite{standing10000pictures, brady2008visual} by studying the impact that categorical distinctness has on memorability. This was tested by creating a dataset of images composed of categories such as tables, cameras, and bread etc. Each category had between 1 and 16 images, and a standard memory game like those performed in \cite{NickersonShortTermMemory, standing10000pictures, brady2008visual}
 % check which other memory tests this matches
 was performed. The percentage correctly identified was found to decrease as the number of images within a category increased, from this we can see that categorically distinct images are more likely to be remembered. 
 
-Studies by Isola et al. \cite{Isola2011, IsolaParikhTorralbaOliva2011} were performed with the goal of identifying a collection of visual attributes that make images memorable, and to use those to predict the memorability of an image. It was found that properties such as mean saturation, and the log number of objects, has less impact on the memorability score than object statistics. 
-%WTF are object statistics?
-Categories such as: person, person sitting, and floor, were most helpful image memorability. The categories: ceilings, buildings, and mountains, were least helpful. Their approach was limited by the fact that the object statistics were annotated by hand, this would both make automating the process of determining image memorability impossible, and limit them from finding any abstract properties that helped/hindered memorability.
+Groundbreaking studies by Isola et al. \cite{Isola2011, IsolaParikhTorralbaOliva2011} were performed with the goal of identifying a collection of visual attributes that make images memorable, and to use those to predict the memorability of an image.
+They performed a memorability game similar to the work described above and used this to assign a memorability score to each image, their work finds that image memorability is cosistent among participants and that even after seeing potentially hundreds of images, participants can correctly recognise a previously seen image.
+It was found that properties such as mean saturation, and the log number of objects, have less impact on the memorability score than object statistics.  Categories such as: person, person sitting, and floor, were most helpful image memorability. The categories: sky, tree, and mountain, were least helpful.
+Their approach was unfortunately limited by the fact that the object statistics were annotated by hand, this would both make automating the process of determining image memorability impossible, and limit them from finding any abstract properties that helped/hindered memorability. Nevertheless, this work is incredibly influential and most memorability work going forward has built on this.
 
-Khosla et al. \cite{NIPS12_Khosla} built on the work in \cite{Isola2011, IsolaParikhTorralbaOliva2011} by, instead of determining memorability of an entire image, creating a model that discovers memorability maps of individual images without human annotation. These memorability maps are able to distinguish which areas of an image are remembered, forgotten, or hallucinated. Their approach, similar to Isola et al. in \cite{Isola2011, IsolaParikhTorralbaOliva2011}, is limited by the arbitrarily picked list of features that define memorability.
+Khosla et al. \cite{NIPS12_Khosla} built on the work in \cite{Isola2011, IsolaParikhTorralbaOliva2011} by, instead of determining memorability of an entire image, creating a model that discovers memorability maps of individual images without human annotation. These memorability maps are able to distinguish which areas of an image are remembered, forgotten, or hallucinated. These memorability mapes are binary vector encodings of the external and internal representations, $v_j$ and $\tilde{v}_j$ respectively, each with indexes for every annotated object category. The external representation refers to the ground truth image, where as the internal representation refers to the image that a person may store in their memory. They describe the noisy process of external to internal representation, and how some objects are forgotten, remembered, or hallucinated. The distance between $v_j$ and $\tilde{v}_j$ is inversely proportional the memorability of an image. By testing the effect of gradient, colour, texture, saliency, shape, and semantics on image ,memorability they are able to compute memorability map images. Their approach, similar to Isola et al. in \cite{Isola2011, IsolaParikhTorralbaOliva2011}, is limited by the arbitrarily picked list of features that define memorability.  
 
-
-% Lets talk a bit about video memorability
-
-In \cite{HASSON2004,HASSONNeurocinematics,HASSON2008} it is shown by Hasson et al. that using fMRI scans we can accurately measure video memorability, 
-% 22 in the computational paper talks about showing correlations between signals and semantic content in the movie. I should talk about all 3 of these and what they do
-This is then built on by Junwei et al. in \cite{fMRIPredictions} where they create a memorability experiment composed of videos rather than images, they then train a prediction model across the fMRI data to predict the memorability of unseen videos.  
-
-
-\section{Using Deep Learning to Predict Memorability}
-
-% How do I want this to flow?
-%   Deep learning intro? talk about it being an image segmentation problem and something about convolution and learning filters
-%   Possible Datasets
-%   Auto Encoders (UNET)
-%   GANS
-%   Diffusion
+Further work by Khosla et al. in \cite{ICCV15_Khosla} showed how you can use deep learning to learn to predict the memorability of an image using supervised learning of image and memorability pairs. They conduct a large scale memorability game experiment across 60,000 images, using a similar protocol to \cite{isola2014memorability}, and build a convolutional neural network, MemNet, capable of predicting memorability with a rank correlation of 0.64.  
 
 \textbf{Literature Conclusion}
-% NEEDS DOING
 
-
+There has been lots of work on human memorability but it wasn't until recently that work on determining image memorability automatically had been done. The work by Isola et al. \cite{Isola2011,IsolaParikhTorralbaOliva2011} and Khosla et al. \cite{ICCV15_Khosla} represents the current state of the art in image memorability, using deep learning to automatically determine the memorability of images.
 
 \chapter{Methodology}
 
@@ -204,7 +189,7 @@ During this project I followed a Waterfall method, a sequential development proc
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=\linewidth]{Best GAN Outputs} % CHANGE THIS
+    \includegraphics[width=\linewidth]{Waterfall Model} % CHANGE THIS
     \caption{Waterfall Method Steps}
     \label{fig:waterfall method}
 \end{figure}
@@ -217,7 +202,7 @@ The approaches differ in their execution of the memorability game. Firstly, like
 Alternatively, like in VISCHEMA \cite{VischemaPaper}, when a user indicates that they remember an image, allow them to mark the region of the image that caused them to remember it. 
 In either case the result is the same, a distribution of image, memorability map pairs in which supervised learning can occur on.
 
-\textbf{How to predict memorable regions and evaluate the quality of these solutions}
+\textbf{Predicting memorable regions and evaluating prediction quality}
 
 Assuming that we have a dataset of image, memorability map pairs as described above, then we can use an image to image deep convolutional model to learn a mapping from an image to its corresponding memorability map. 
 There are many image to image models that exist, but fundamentally we can abstract the model as a function of an image, $I$, because of this we can evaluate each model across the same requirements. 
@@ -431,7 +416,7 @@ Using a conditional image, $I$ and a ground truth label, $L_{real}$ with this mo
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{Diffusion Model}
-    \caption{Palette Diagram}
+    \caption{Conditional Diffusion Model}
     \label{fig:DiffusionDiagram}
 \end{figure}
 
@@ -501,13 +486,13 @@ Instead I have explored a subset of this search space. For each experiment I est
 In this experiment I created and trained a UNet model as described in \cite{ronneberger2015unet} to directly predict the VMS maps of images, I trained the model using backpropagation of the L1 loss, described in equation \ref{eqn:UNet Loss}, of the model output given an image, and the corresponding label. The best parameters and hyperparameters that I found for my model were the following: Encoder Channels = (3,64,128,256,512,1024), Decoder Channels = (1024,512,256,128,64), Batch Normalisation, Adam Optimizer with a learning rate of 0.001 and betas = (0.9, 0.999). A diagram of the training curve for the autoencoder can be seen in figure \ref{fig:autoencoderTraining}. After 80 training epochs I was able to achieve an L1 loss across the validation dataset of ~0.132. A sample of the best output images can be seen in figure \ref{fig:autoencoderBestOutput}, and a sample of the lowest accuracy output images can be seen in figure \ref{fig:autoencoderWorstOutput}. As you can see the autoencoder tends to turn the blocky VMS shape into a rounded circle. It also fails to accurately predict the red regions, this is likely due to there being far more green data than red data. The VISCHEMA dataset is split into 12 distinct classes, in table \ref{tab:categories} I show the models accuracy across each different class.
 
 \textbf{UNet Autoencoder Requirements Fit}
-As per the requirements outlined in \ref{tab:RequirementCaptureTable} our best autoencoder model achieves requirements: 1.1 as it is possible to input an image, 1.2 as the model produces an image when given an input, 1.3 as the mean output loss is relatively low, and 2.1 as it is able to produce an image fast, in approximately 7 milliseconds.
+As outlined in \ref{tab:RequirementCaptureTable} our best autoencoder model succeeded in the following requirements: 1.1 as it is possible to input an image, 1.2 as the model produces an image when given an input, 1.3 as the mean output loss is relatively low, and 2.1 as it is able to produce an image fast, in approximately 7 milliseconds.
 Unfortunately when I qualitatively analyse the images the model does not succeed in achieving requirement 1.4, it learns a somewhat accurate mapping but typically smooth out the blocky VMS components into circular shapes. There are also clear small visual blotches present in all of the predictions, these do not seem to line up with anything in particular in the input image or label.   
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{Autoencoder Training Curve}
-    \caption{Autoencoder training graph. The red plot describes the training loss per epoch and the green plot the validation loss. The validation loss closely matches the training loss as the model does not become overfit.}
+    \caption{Autoencoder training graph. The red plot describes the training loss per epoch and the green plot the validation loss. The validation loss closely matches the training loss, indicating that the model does not become overfit to the training data.}
     \label{fig:autoencoderTraining}
 \end{figure}
 
@@ -521,48 +506,15 @@ Unfortunately when I qualitatively analyse the images the model does not succeed
 \textbf{GAN Training and Results}
 
 % https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/issues/1081
-This experiment was performed with differentiable augmentation as described in \cite{zhao2020differentiable}. I performed translation and cutout, each with a 90\% chance. I explored the best parameters found, and used in the final model were: 
+This experiment was performed with differentiable augmentation as described in \cite{zhao2020differentiable}. I performed translation and cutout, each with a 90\% chance.
 
-\textbf{Best Generator}: Batch Normalisation, $C$ = 32, SGD Optimiser with a learning rate of 0.01.
-% LETS TEST THESE?
-\textbf{Best Discriminator}: Batch Normalisation, $c$ = 100, Adam optimiser with betas = (0.9, 0.999) and a learning rate of 0.001.
+After performing a hyperparameter search, training each model for approximately 100 epochs, we find that the best hyperparameters for our Generator and Discrminator are as follows:
 
-% \textbf{Normalisation layers}: Batch Normalisation, Instance Norm
+\textbf{Best Generator}: Batch normalisation, Encoder channel layout = (6, 64, 128, 256, 512, 1024), Decoder channel layout = (1024, 512, 256, 128, 64, 3), Adam optimiser with betas = (0.5, 0.999) and an initial learning rate of 0.0002.
 
-% \textbf{Channel layouts}:
-% I iterated over generator encoder and decoder, and discriminator channel layouts of following form, with values of $c$ from \{32,64,50,100\}:
-% \begin{itemize}
-% \item Encoder: (3, $c$, 2$c$, 4$c$, 8$c$, 16$c$), 
-% \item Decoder: (16$c$, 8$c$, 4$c$, 2$c$, $c$),
-% \item Discriminator: (6, $c$, 2$c$, 4$c$, 8$c$, 16$c$).
-% \end{itemize}
+\textbf{Best Discriminator}: Batch normalisation, Channel layout = (6, 64, 128, 256, 512), Adam optimiser with betas = (0.5, 0.999) and a learning rate of 0.0002.
 
-% \textbf{Optimisers}:
-% \begin{itemize}
-% \item SGD, using the following learning rates: 0.005, 0.01, 0.02,
-% \item Adam, using the following learning rates: 0.0005, 0.001, 0.002, and using the following betas values: (0.9, 0.999), (0, 0.999), (0.5, 0.999),
-% \item Adadelta, using the following learning rates: 0.5, 1, 2.
-% \end{itemize}
-
-% \emph{Note: I didn't need to specify default values for the normalisation layer as these were the first variables I tested.}
-
-% \textbf{Default Generator Parameters and Hyperparameters}: 
-% \begin{itemize}
-% \item $C$ = 64
-% \item Optimiser: Adam, betas = (0.9, 0.999)
-% \item Learning Rate: 0.001
-% \end{itemize}
-% \textbf{Default Discriminator Parameters and Hyperparameters}:
-% \begin{itemize}
-% \item $C$ = 64
-% \item Optimiser: Adam, betas = (0.9, 0.999)
-% \item Learning Rate: 0.001
-% \end{itemize}
-% I then iterated over each parameter/hyperparameter and varied them sequentially. I tested each combination for 100 epochs and used the L1 loss across the validation dataset as the score, if any new parameter options gave a better L1 score the it would become the default used going forward. This meant that I only had to iterate \(\sim\)100 combinations. I found the following best options.
-
-% THE ABOVE IS BS AND NEEDS CHANGING
-
-After 200 epochs of training our model is able to achieve a mean L1 score of ~0.0740 across our validation dataset. This is significantly better than our autoencoder model. A diagram of the training curve for the final GAN model can be seen in figure \ref{fig:GANTraining}. 
+Using these parameters, after 200 epochs of training our model is able to achieve a mean L1 score of ~0.0740 across our validation dataset. This is significantly better than our autoencoder model. A diagram of the training curve for the final GAN model can be seen in figure \ref{fig:GANTraining}. 
 Figure \ref{fig:GANBestOutput} shows the outputs across the validation portion of our dataset with the lowest L1 Loss. They are accurately labelled with the correct regions as memorable but frankly are quite boring, and do not necessarily show off the high quality outputs capable of our model, the low L1 loss across these is because the labels simply have lots of black data, therefore any model that just predicts fully black images with random green regions would likely have a low loss across these images. 
 Instead I present figure \ref{fig:GANGoodOutput} which shows what I think are far more impressive results, despite the higher loss than the images presented in figure \ref{fig:GANBestOutput}. For these images the model is able to accurately predict large regions of the image that are memorable. This is why requirement 1.4 is important, it qualitative analysis allows for a much more nuanced analysis of how the outputs look.  
 The worst results are shown in \ref{fig:GANWorstOutput}, it appears that, like our autoencoder model from experiment 1, this model finds it difficult to predict red regions, i.e. those that users hallucinate remembering.
@@ -576,102 +528,53 @@ The worst results are shown in \ref{fig:GANWorstOutput}, it appears that, like o
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[]{Good GAN Outputs}
+    \includegraphics[width=\linewidth]{Good GAN Outputs}
     \caption{Favourite GAN Outputs}
     \label{fig:GANGoodOutput}
 \end{figure}
 
-\textbf{Wasserstein GAN}: Using a Wasserstein image-to-image GAN as described in \cite{pix2pixwasserstein} I was able to achieve a best score of
-% Insert score here.
-% Insert images.
-
 \textbf{GAN Requirements Fit}
-As per the requirements outlined in \ref{tab:RequirementCaptureTable} our best autoencoder model achieves all requirements: 1.1 as it is possible to input an image, 1.2 as the model produces an image when given an input, 1.3 as the mean output loss is relatively low, 1.4, it learns a very accurate model of the mapping and is able to create convincing memorability maps and 2.1 as it is able to produce an image fast, in ~3.0 milliseconds. My only concern would be that it fails to accurately predict the red component of the VMS images, however I believe this is significantly less important than predicting the green component, and as such our model is still successful.
+Our best GAN model is incredibly successful and achieves all requirements outlined in \ref{tab:RequirementCaptureTable}: 1.1 as it is possible to input an image, 1.2 as the model produces an image when given an input, 1.3 as the mean output loss is very low, 1.4, it learns a very accurate model of the mapping and is able to create convincing memorability maps and 2.1 as it is able to produce an image in ~3.0 milliseconds. My only concern would be that it fails to accurately predict the red component of the VMS images, however I believe this is significantly less important than predicting the green component, and as such our model is still successful.
 
 \textbf{Diffusion Model Training and Results}
 
-The best parameters that I found for this model were: 
+I found that the best parameters for this network were: Group Norm, Encoder channel layout = (64, 128, 256, 512), Decoder channel layout = (512, 256, 128, 64), Linear beta scheduler with a start of 1e-6 and an end of 0.01.
 
-Evaluating the L1 loss of the diffusion models across the entire validation distribution took approximately 4 hours, because of this, during training I had to evaluate the performance over a subset of the validation distribution every 5 epochs. This unfortunately made it impossible to see if the network was overfitting until I did a full test across the validation distribution at the end of the training. The graph in figure 
-% TRAINING GRAPH
+Evaluating the L1 loss of the diffusion models across the entire validation distribution took approximately 2 hours, because of this, during training I couldn't see if the l1 loss was going down, I could still however test if it was overfitting by evaluating the ability to remove a random step of noise every epoch. After training I did a full test across the validation distribution. The graph in figure 
+\ref{fig:DiffusionTraining}
 shows the training and validation loss per epoch for my best model, the validation loss in this case is the loss for removing 1 step of noise from each image, not the full 2000. 
 You can see a selection of the best outputs in figure 
-% BEST OUTPUTS
+\ref{fig:DiffusionBestOutputs}
 and a selection of the worst outputs in figure 
-% WORST OUTPUTS
-. As you can see the network still produces images with random noise, unfortunately I could not get the network to not do this.
+\ref{fig:DiffusionWorstOutput}
+. As you can see the network still produces images with random noise, unfortunately I could not get the network to not do this. In this experiment I was only able to explore a small range of possible hyperparameters and as such my results do not emulate the recent success found in diffusion based image generation. \cite{ramesh2022hierarchical, saharia2022photorealistic} However, with a greater number of computing resources, specifically parallel GPUs, it should be possible to explore a greater search space and achieve better results.
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{Diffusion Best Outputs}
+    \caption{Best Diffusion Outputs}
+    \label{fig:DiffusionBestOutput}
+\end{figure}
 
-a graph of the train/val loss over time across the different experiments
-
-a selection of the images with the different training methods
-
-In this experiment I was only able to explore a small range of possible hyperparameters and as such my results do not emulate the recent success found in diffusion based image generation. \cite{ramesh2022hierarchical, saharia2022photorealistic} However, with a greater number of computing resources, specifically parallel GPUs, it should be possible to explore a greater search space and achieve better results.
-
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{GAN training curve}
+    \caption{Diffusion Training Curve}
+    \label{fig:DiffusionTraining}
+\end{figure}
 
 \textbf{Diffusion Requirements Fit}
 %Some discussion about them.
-It passes requirement 1.1 and 1.2 as you can input an image and it outputs an image.
-1.3 -> low loss
-1.4 -> qualitative
 
-It fails requirement 2.1 as it takes 25 seconds to evaluate an image, this is far too long. 
-
+My best diffusion model is incredibly unsuccessful. It is only able to pass requirements 1.1 and 1.2; you can input an image and it outputs an image. The output images have a very large mean loss of \( \sim 0.48 \) and as such fail requirement 1.3, and when I qualitatively analyse the output images, they either look like accurate VMS maps for completely different images, look noisy, or both, and as such the model fails requirement 1.4. The model also takes on average 23 seconds to produce an image, compared to our autoencoder and GAN models this is far too long, taking thousands of times longer than either of those models, and as such it fails requirement 2.1. 
 
 \textbf{Results, Evaluation Metrics, and Analysis}
 
 \textbf{Examination Across VISCHEMA Categories}
 
-The dataset that I trained on, VISCHEMA PLUS, is composed of two datasets: VISCHEMA and VISCHEMA 2. The VISCHEMA dataset is split into 12 distinct classes, the VISCHEMA 2 dataset is split into 8 distinct classes. One "kitchen", is present in both datasets, but otherwise classes are exclusive to VISCHEMA or VISCHEMA 2. In figure \ref{tab:categories} the average L1 loss each model achieves across each different class in the validation distribution is displayed. The values are rounded to 2 significant figures but in calculations I used the un-rounded versions. Looking at this data we can see that the mean L1 loss across the different classes has a standard deviation of 0.022. Interestingly our accuracy in measuring skyscrapers is the lowest, this is likely due to the large red regions in the VMS that our model has difficulty predicting.
+The dataset that I trained on, VISCHEMA PLUS, is composed of two datasets: VISCHEMA and VISCHEMA 2. The VISCHEMA dataset is split into 12 distinct classes, the VISCHEMA 2 dataset is split into 8 distinct classes. The "kitchen" class is present in both datasets, but otherwise classes are exclusive to VISCHEMA or VISCHEMA 2. In figure \ref{tab:categories} the average L1 loss each model achieves across each different class in the validation distribution is displayed. The values are rounded to 2 significant figures but in calculations I used the un-rounded versions. 
 
-% GAN on VAL vvvv
-% living room 0.04736742093227804
-% mountain 0.09440871913518224
-% airport_terminal 0.08488932742100012
-% kitchen 0.07214003698900343
-% small 0.057248142008718694
-% big 0.06313493989762806
-% golf_course 0.07559266313910484
-% skyscraper 0.14310482740402222
-% living_room 0.07218014765530825
-% house 0.07482177354395389
-% public-entertainment 0.07045600855989116
-% isolated 0.07133300821570789
-% conference_room 0.09115160930724371
-% populated 0.03876365436927268
-% playground 0.07888212108186313
-% work-home 0.0853188435236613
-% amusement_park 0.08619985838110249
-% badlands 0.09550997242331505
-% pasture 0.055703551042824984
-
-% Mean loss across Val categories: 0.07674771710689908
-% Std of loss across Val categories: 0.021690102597573778
-
-% Autoencoder on VALIDATION vvvv
-% playground 0.13632339877741678
-% public-entertainment 0.1288577037907782
-% big 0.10834309050724619
-% work-home 0.13268107896049816
-% golf_course 0.1328940147963854
-% conference_room 0.17152327547470728
-% house 0.1328673685590426
-% living room 0.07679477110505104
-% kitchen 0.1169572982005775
-% isolated 0.1244304631562794
-% airport_terminal 0.150626262159724
-% small 0.0953560940137035
-% living_room 0.12549114897847174
-% populated 0.06755907108124934
-% skyscraper 0.30982213616371157
-% mountain 0.18839615423764502
-% amusement_park 0.1433355826884508
-% badlands 0.20444528841310078
-% pasture 0.1119538564234972
-
-% Mean loss: 0.13992937144671244
-% STD of losses: 0.051684013454625026
-
+Looking at this data we can see that our GAN model is the most consistent, with a standard deviation in the mean L1 loss across the different classes of 0.022, the autoencoder model isn't much worse with a standard deviation 0f 0.052, and our diffusion model is the worst with a standard deviation 0f 0.07. Across both our autoencoder and GAN models, the accuracy in measuring memorability maps for skyscrapers is the lowest, this is likely due to the large red regions in the VMS that our model has difficulty predicting, interestingly, this is one of the best classes that our diffusion model produces. Looking at the diffusion model outputs I can see that it has a tendency to predict red far more often than the other networks, this may be the reason that it produces much better results for skyscrapers than most of its other classes.  
 
 \begin{table}[]
     \centering
@@ -679,22 +582,22 @@ The dataset that I trained on, VISCHEMA PLUS, is composed of two datasets: VISCH
         \hline
         \multicolumn{1}{|c|}{} & \multicolumn{3}{c|}{Model}                                                                          \\ \hline
         Category               & \multicolumn{1}{c|}{Autoencoder} & \multicolumn{1}{c|}{GAN}  & \multicolumn{1}{c|}{Diffusion Model} \\ \hline
-        Kitchen                & \multicolumn{1}{l|}{0.12}        & \multicolumn{1}{l|}{0.072}& 1                                    \\ \hline
-        Living Room            & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.047}& 1                                    \\ \hline
-        Conf. Room             & \multicolumn{1}{l|}{0.17}        & \multicolumn{1}{l|}{0.091}& 1                                    \\ \hline
-        Airport Ter.           & \multicolumn{1}{l|}{0.15}        & \multicolumn{1}{l|}{0.085}& 1                                    \\ \hline
-        House                  & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.075}& 1                                    \\ \hline
-        Skyscraper             & \multicolumn{1}{l|}{0.31}        & \multicolumn{1}{l|}{0.14 }& 1                                    \\ \hline
-        Amus. Park             & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.086}& 1                                    \\ \hline
-        Playground             & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.079}& 1                                    \\ \hline
-        Pasture                & \multicolumn{1}{l|}{0.11}        & \multicolumn{1}{l|}{0.056}& 1                                    \\ \hline
-        Golf Course            & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.076}& 1                                    \\ \hline
-        Mountain               & \multicolumn{1}{l|}{0.19}        & \multicolumn{1}{l|}{0.094}& 1                                    \\ \hline
-        Badland                & \multicolumn{1}{l|}{0.20}        & \multicolumn{1}{l|}{0.096}& 1                                    \\ \hline
+        Kitchen                & \multicolumn{1}{l|}{0.12}        & \multicolumn{1}{l|}{0.072}& 0.51                                    \\ \hline
+        Living Room            & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.047}& 0.63                                    \\ \hline
+        Conf. Room             & \multicolumn{1}{l|}{0.17}        & \multicolumn{1}{l|}{0.091}& 0.45                                    \\ \hline
+        Airport Ter.           & \multicolumn{1}{l|}{0.15}        & \multicolumn{1}{l|}{0.085}& 0.44                                    \\ \hline
+        House                  & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.075}& 0.31                                    \\ \hline
+        Skyscraper             & \multicolumn{1}{l|}{0.31}        & \multicolumn{1}{l|}{0.14 }& 0.36                                    \\ \hline
+        Amus. Park             & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.086}& 0.41                                    \\ \hline
+        Playground             & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.079}& 0.45                                    \\ \hline
+        Pasture                & \multicolumn{1}{l|}{0.11}        & \multicolumn{1}{l|}{0.056}& 0.51                                    \\ \hline
+        Golf Course            & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.076}& 0.43                                    \\ \hline
+        Mountain               & \multicolumn{1}{l|}{0.19}        & \multicolumn{1}{l|}{0.094}& 0.51                                    \\ \hline
+        Badland                & \multicolumn{1}{l|}{0.20}        & \multicolumn{1}{l|}{0.096}& 0.47                                    \\ \hline
         \hline
-        Mean                   & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.078}& 1                                    \\ \hline
-        Median                 & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.075}& 1                                    \\ \hline
-        Std                    & \multicolumn{1}{l|}{0.052}       & \multicolumn{1}{l|}{0.022}& 1                                    \\ \hline
+        Mean                   & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.078}& 0.47                                    \\ \hline
+        Median                 & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.075}& 0.46                                    \\ \hline
+        Std                    & \multicolumn{1}{l|}{0.052}       & \multicolumn{1}{l|}{0.022}& 0.07                                    \\ \hline
     \end{tabular}
     \label{tab:categories}
     \caption{The average L1 loss that each model achieves over the different categories present in the VISCHEMA validation distribution.}
@@ -705,14 +608,28 @@ The dataset that I trained on, VISCHEMA PLUS, is composed of two datasets: VISCH
 Our models have a lot of trouble predicting the red channel of the VMS maps. The red channel indicates that users thought they remembered the image because of this region, when in reality they had not been shown this image before. If we measure the loss of our models across just the green channel, that is the regions subjects indicated triggered their memory in images that they correctly identified as seeing before, 
 then our average L1 loss across the validation dataset decreases from ~0.132 to \(\sim \)0.083 with our autoencoder model, 
 from ~0.0740 to \(\sim \) 0.046 in our GAN, 
-and from Y to \(\sim \) Z in our diffusion model.
-% INPUT Y AND Z 
+and from \(\sim 0.48 \) to \(\sim 0.32 \) in our diffusion model.
 Because this loss is the mean across each pixel, we can compare the them regardless of the change in channel depth. Clearly our models are better at predicting green regions rather than red ones. I suspect that this is due to the much larger amount of green data than red in the dataset.
 
 \chapter{Conclusion}
 
 % % Approx 1-2 pages
 % % how it went
+
+%Results are skilfully synthesised to identify a detailed set of clear outcomes for the project, and their potential implications in the context of the topic of study are substantial and robustly argued. 
+% Outcomes are evaluated on self-defined success criteria for the project and related back to the original aim and motivation of the project. 
+%The Conclusions clearly refer back to the implications of the project relating to the overall motivation.
+
+The goal of this project was to explore state of the art image to image models in the context of generating VMS schemas from the VISCHEMA Plus dataset. I had the most success generating these using a Pix2pix style GAN, achieving a mean L1 loss of \(\sim 0.0740 \) and very convincing memorability maps. I had moderate success using an autoencoder, achieving a mean L1 loss of \(\sim 0.132\) and somewhat unconvincing memorability maps. I had very little success using a diffusion model, achieving a mean L1 loss of \(\sim 0.48 \) and memorability maps that very often just look like noise.
+
+The success found in GAN models has many wide reaching applications, image memorability is an important factor in many creative fields, educators want memorable diagrams, marketing agencies want memorable adverts, musicians want memorable album art, movie and tv producers want memorable scenes. While GAN models can take much longer to train than autoencoder models, during evaluation they execute in very similar times, and as such if any creative professional was to use an automated memorability map generator to aid in their work, I would recommend that a GAN model is used, as the increased quality comes at no hit to performance. In fact, because it takes only milliseconds to execute, I could see an application where a memorability map is generated in real time as people make changes to their images.
+
+Even if it were possible to generate accurate and convincing memorability maps using diffusion models, there is also a great issue with the execution time. Nobody would want to wait almost half a minute for the memorability map to be generated, especially in a process that is supposed to be iterative and fast. For their success, not only would the model accuracy have to be increased, but it would also need to generate the VMS schemas in far fewer noise steps/computing power would need to increase significantly to make up for the increased computation required. 
+
+In future work I would love to spend more time working on diffusion models, I find them fascinating and with the success found in the industry \cite{ramesh2022hierarchical, saharia2022photorealistic} it seems fessible to me to fix the accuracy issues. Ideally I would have access to a multi-GPU architecture in order to speed up the development and testing process.
+
+I would also be interested in exploring the application of memorability to videos, there are far more factors involved including audio, movement, fps, that would greatly increase the complexity of the problem. Research has been done in \cite{HASSON2004, HASSONNeurocinematics, HASSON2008, fMRIPredictions} using fMRI scans to estimate the memorability of video streams using an extension of the memorability game. I would love to expand upon this work.
+
 % UNet Autoencoders are simple to implement and I have found that they produce somewhat successful results, they train very quickly and can create labels in milliseconds, but fail under qualitative analysis. 
 
 % GAN models can be difficult to work with, and lots of research has gone into creating versatile and robust GAN architectures, adapting an existing, successful, model to your needs can reduce development time. Using a modified pix2pix GAN model \cite{isola2018imagetoimage} I was able to generate very accurate VMS maps, maintaining the blocky shape of the regions, and achieving a mean L1 loss of \(\sim 0.0740\). Generally, these models took longer to train than my autoencoder models but given an image they are able to produce an image in a similar time to a UNet autoencoder.
@@ -727,8 +644,6 @@ Because this loss is the mean across each pixel, we can compare the them regardl
 
 % % applications
 % Hopefully in future work good parameters can be found that allow diffusion models to work with lower noise steps and to produce higher accuracy results. Diffusion models lend themselves well to multiple GPU architectures, and if I were to run this project again I would hope to have access to a system capable of running them faster. While diffusion models have seen lots of mainstream attention recently, until home computing power is significantly greater it is infeasible for most to train their own in any reasonable amount of time. 
-
-\printbibliography
 
 \chapter{Appendix}
 
@@ -752,5 +667,14 @@ Because this loss is the mean across each pixel, we can compare the them regardl
     \caption{Worst GAN Outputs}
     \label{fig:GANWorstOutput}
 \end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{Worst Diffusion Outputs}
+    \caption{Worst Diffusion Outputs}
+    \label{fig:DiffusionWorstOutput}
+\end{figure}
+
+\printbibliography
 
 \end{document}
