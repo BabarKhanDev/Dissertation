@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Arch Linux) (preloaded format=pdflatex 2023.4.11)  1 MAY 2023 20:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Arch Linux) (preloaded format=pdflatex 2023.4.11)  1 MAY 2023 20:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1113,22 +1113,18 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.5.3}) h
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.538 
-       <../images//Best autoencoder Outputs.png> <../images/GAN training curve.png>]
-
-LaTeX Warning: Reference `fig:DiffusionBestOutputs' on page xxvi undefined on input line 547.
-
-[26
+       <../images//Best autoencoder Outputs.png> <../images/GAN training curve.png>] [26
 pdfTeX warning (ext4): destination with the same identifier (name{figure.5.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.551 
        <../images//Good GAN Outputs.png>]
-<../images//Diffusion Best Outputs.png, id=336, 1076.1003pt x 604.1772pt>
+<../images//Diffusion Best Outputs.png, id=338, 1076.1003pt x 604.1772pt>
 File: ../images//Diffusion Best Outputs.png Graphic file (type png)
 <use ../images//Diffusion Best Outputs.png>
 Package pdftex.def Info: ../images//Diffusion Best Outputs.png  used on input line 554.
 (pdftex.def)             Requested size: 369.8859pt x 207.66696pt.
-<../images//GAN training curve.png, id=337, 894.7026pt x 323.7696pt>
+<../images//GAN training curve.png, id=339, 894.7026pt x 323.7696pt>
 File: ../images//GAN training curve.png Graphic file (type png)
 <use ../images//GAN training curve.png>
 Package pdftex.def Info: ../images//GAN training curve.png  used on input line 561.
@@ -1154,22 +1150,22 @@ chapter 6.
 
 ] [31]
 chapter 7.
-<../images//Worst autoencoder Outputs.png, id=369, 1076.1003pt x 604.1772pt>
+<../images//Worst autoencoder Outputs.png, id=370, 1076.1003pt x 604.1772pt>
 File: ../images//Worst autoencoder Outputs.png Graphic file (type png)
 <use ../images//Worst autoencoder Outputs.png>
 Package pdftex.def Info: ../images//Worst autoencoder Outputs.png  used on input line 652.
 (pdftex.def)             Requested size: 369.8859pt x 207.66696pt.
-<../images//Best GAN Outputs.png, id=370, 1076.1003pt x 604.1772pt>
+<../images//Best GAN Outputs.png, id=371, 1076.1003pt x 604.1772pt>
 File: ../images//Best GAN Outputs.png Graphic file (type png)
 <use ../images//Best GAN Outputs.png>
 Package pdftex.def Info: ../images//Best GAN Outputs.png  used on input line 659.
 (pdftex.def)             Requested size: 369.8859pt x 207.66696pt.
-<../images//Worst GAN Outputs.png, id=371, 1076.1003pt x 604.1772pt>
+<../images//Worst GAN Outputs.png, id=372, 1076.1003pt x 604.1772pt>
 File: ../images//Worst GAN Outputs.png Graphic file (type png)
 <use ../images//Worst GAN Outputs.png>
 Package pdftex.def Info: ../images//Worst GAN Outputs.png  used on input line 666.
 (pdftex.def)             Requested size: 369.8859pt x 207.66696pt.
-<../images//Worst Diffusion Outputs.png, id=372, 1076.1003pt x 604.1772pt>
+<../images//Worst Diffusion Outputs.png, id=373, 1076.1003pt x 604.1772pt>
 File: ../images//Worst Diffusion Outputs.png Graphic file (type png)
 <use ../images//Worst Diffusion Outputs.png>
 Package pdftex.def Info: ../images//Worst Diffusion Outputs.png  used on input line 673.
@@ -1206,9 +1202,6 @@ LaTeX Font Info:    Font shape `T1/phv/m/sc' will be
  [35
 
 ] [36] [37] [38] (./dissertation.aux)
-
-LaTeX Warning: There were undefined references.
-
 Package logreq Info: Writing requests to 'dissertation.run.xml'.
 \openout1 = `dissertation.run.xml'.
 
@@ -1218,18 +1211,18 @@ Package logreq Info: Writing requests to 'dissertation.run.xml'.
 ### simple group (level 1) entered at line 49 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 26103 strings out of 476025
- 482118 string characters out of 5796532
+ 26102 strings out of 476025
+ 482093 string characters out of 5796532
  1866388 words of memory out of 5000000
- 45802 multiletter control sequences out of 15000+600000
+ 45801 multiletter control sequences out of 15000+600000
  576430 words of font info for 274 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  122i,15n,120p,10708b,20803s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/share/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on dissertation.pdf (38 pages, 12288126 bytes).
+Output written on dissertation.pdf (38 pages, 12287999 bytes).
 PDF statistics:
- 570 PDF objects out of 1000 (max. 8388607)
- 471 compressed objects within 5 object streams
+ 571 PDF objects out of 1000 (max. 8388607)
+ 472 compressed objects within 5 object streams
  115 named destinations out of 1000 (max. 500000)
  45700 words of extra memory for PDF output out of 51595 (max. 10000000)
 
