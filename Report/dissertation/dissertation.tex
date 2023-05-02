@@ -204,7 +204,7 @@ During this project I followed a Waterfall method, a sequential development proc
     \label{fig:waterfall method}
 \end{figure}
 
-\section{How to measure memorable regions of images}
+\section{How to measure memorable regions of images} 
 
 There are two approaches to measuring the memorable regions of an image. Both approaches have subjects try to remember previously seen images using a memorability game, the approaches differ slightly. Firstly, like in LaMem \cite{ICCV15_Khosla}, you split an image into many regions, and use a model designed to predict the memorability of an image to predict the memorability of that region. Then compose these memorability, region pairs into a memorability map. 
 Alternatively, like in VISCHEMA \cite{VischemaPaper}, when a user indicates that they remember an image, allow them to mark the region of the image that caused them to remember it. 
@@ -258,9 +258,8 @@ I will create and evaluate a range of deep convolutional image to image models t
 In each experiment I will automate a system that: tests the effectiveness of different numbers of layers and channels in each network, varies the normalisation method, optimisation function, learning rate, and batch size to find the best training environment and model parameters. It is not be feasible to test every combination of these variables, thus I will employ a strategy where I test every variation of a single parameter/hyperparameter while keeping the rest constant. I will start each model with an estimation of good parameters, then iterate through each individual parameter, varying only that one and measuring the impact on performance. After testing all variations of a single parameter, I will pick the one that gave the highest score and move onto the next parameter. This will bring the size our search space down by an order of magnitude, however we will not be exploring the entire search space and will potentially miss out on good models. 
 
 Due to the long training and evaluation time of diffusion models I plan on performing a smaller parameter/hyperparameter search for those, I hope to still achieve good results, but due to computational and time restrictions I will not be able to experiment as much as I want with them.
-% TALK ABOUT DIFFUSION MODELS TAKING A LONG TIME TO TRAIN AND THUS GETTING LESS TESTING HERE
 
-\subsection{UNet Autoencoders}
+\subsection{UNet Autoencoders} \label{UNET_METHODS}
 
 The autoencoder model is composed of 3 parts, an encoder, a bottleneck, and a decoder, these are typically used for compression. The U-Net \cite{ronneberger2015unet} is a variation of an autoencoder which has found great success in semantic image segmentation within the medical field. This architecture is the backbone of many image to image models \cite{isola2018imagetoimage,saharia2022palette,dhariwal2021diffusion}, and has seen many extensions \cite{zhou2020unet, Qin_2020}. A Diagram of the model can be seen in figure \ref{fig:autoencoderDiagram}, the model is composed of two blocks, an encoder and a decoder. 
 The encoder, composed of convolutional filters, takes the full sized image and compresses it into a latent space vector.
@@ -302,9 +301,7 @@ This loss describes the average absolute difference between each corresponding p
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Generative Adversarial Networks}
-
-% presented by ian goodfellow and is composed of a generaor and a discriminator
+\subsection{Generative Adversarial Networks} \label{GAN_METHODS}
 
 The Generative Adversarial Network is an image synthesis model described by Goodfellow et al \cite{goodfellow2014generative}. In this model there are two adversarial networks, a generator, $ G $, and a discriminator, $ D $. I will describe a ground truth image as real, and one created by the generator as fake. The goal of the generator is to, given a latent space vector $ z $, produce an image that the discriminator thinks is real. The goal of the discriminator is to take an image, either real or fake, and predict which it is. In its vanilla form the loss of each network is relative to the performance of the other making it impossible to see if the networks have converged. The loss function described in \cite{goodfellow2014generative} is a minimax game, where G is trying to maximise the probability of D making a mistake, and D is trying to minimise it. More formally: The loss function of G is such that it is trying to maximise equation \ref{eqn:Vanilla Generator Loss} and the loss function of D is such that it is trying to maximise equation \ref{eqn:Vanilla Discriminator Loss}. Conditional generative adversarial networks can create images using a latent space vector and a condition parameter. For example, the class of the image to produce, simply pass this parameter into both the generator and the discriminator. In this case the discriminator outputs the probability that $ L $ is real and that meets the condition parameter.
 
@@ -324,14 +321,8 @@ The Generative Adversarial Network is an image synthesis model described by Good
   0, & \text{otherwise}
 \end{cases} \]
 
-Lots of work has gone into making GAN models more stable and I will use these findings in my own models. Brock et al. find that when 'increasing the batch size by a factor of 8 ... models reach better final performance in fewer iterations, but become unstable and undergo complete training collapse'\cite[3]{brock2019large}.
-%Because of this I will experiment with early stopping and low batch sizes.
-In \cite{zhao2020differentiable} Shengyu et al. show that using differentiable augmentation on your images increases the quality of the outputted images. With a dataset with as few as 100 images they are able to produce high quality outputs.
-% This is useful to us because the VISCHEMA plus dataset only has 1280 training images, which typically wouldn't train very well on a GAN.
+Lots of work has gone into making GAN models more stable and I will use these findings in my own models. Brock et al. find that when 'increasing the batch size by a factor of 8 ... models reach better final performance in fewer iterations, but become unstable and undergo complete training collapse'\cite[3]{brock2019large}. In \cite{zhao2020differentiable} Shengyu et al. show that using differentiable augmentation on your images increases the quality of the outputted images. With a dataset with as few as 100 images they are able to produce high quality outputs.
 
-% pix2pix is a conditional generative adversarial network that is used for style transfer, it uses the UNet autoencoder as a backbone. The generator takes an input of size 3xwxh and produces a label of size 3xwxh. The discriminator takes the concatenation of the image and either the real or fake label, 6xwxh and produces an nxm array of boolean values describing, with each boolean describing whether a patch of the label is real or fake. 
-
-%I will train a conditional generative adversarial network to generate images of VMS maps given images from the VISCHEMA dataset. I will use an adapted pix2pix network \cite{isola2018imagetoimage}, making tweaks that I think will increase performance. 
 Pix2pix by Isola et al.\cite{isola2018imagetoimage}, is an image-to-image conditional generative adversarial model based on the UNet \cite{ronneberger2015unet}, designed for style transfer. In this model the generator takes a conditional image and uses that to produce a label, $L_{pred}$, the discriminator takes the concatenation of $I$ along with a real or fake label, and produces a 2D array of boolean values with width $N$, and height, $M$. Each value describes whether the corresponding patch in the image is real or generated. The loss for each network is slightly different to those described in a vanilla GAN, the generator loss is described in equation \ref{eqn:Pix2pix Generator Loss} describing how well it can both trick the generator, and how closely the output matches the input. The discriminator loss is described in equation \ref{eqn:Pix2pix Discriminator Loss}, similar to equation \ref{eqn:Vanilla Discriminator Loss} describes how well D can predict an images distribution. The training strategy for this network is described in algorithm \ref{ALG:GAN} and figure \ref{fig:patchGANDiagram} shows a diagram of it.
 
 \begin{equation}
@@ -378,40 +369,11 @@ Pix2pix by Isola et al.\cite{isola2018imagetoimage}, is an image-to-image condit
 
 In \cite{arjovsky2017wasserstein} Arjovsky et al. introduce a GAN variant based on the Wasserstein distance of the output distribution and the image distribution, the benefit of this is that the Wasserstein distance is continuous and differentiable almost everywhere, reducing the risk of diminishing gradients. In this case the discriminator no longer outputs a value of $0|1$ and instead produces a continuous variable output, it is therefore renamed to a critic. In \cite{pix2pixwasserstein} Makow investigated the use of Wasserstein Distance in the pix2pix model but unfortunately found that it does not perform much better, however they were limited by their hardware and unable to perform a complete hyperparameter search. The lack of increase in performance is also likely due to the fact that in pix2pix the generator, not only tries to trick the discriminator, it is also trying to create images close to the ground truth labels, the second part of the loss function is continuous and thus that benefit of the Wasserstein distance is limited.
 
-%I would still like to experiment with it as VISCHEMA plus is different from any dataset used in \cite{isola2018imagetoimage} and as Makow states they were unable to perform a complete hyperparameter search, meaning that its possible we could achieve greater results than vanilla pix2pix.
-% I will be adapting the following PyTorch implementation \cite{PytorchPix2Pix} for my experiment. 
-
-
-
-% https://www.youtube.com/watch?v=J97EM3Clyys
-% https://github.com/mit-han-lab/data-efficient-gans/blob/master/DiffAugment-stylegan2-pytorch/DiffAugment_pytorch.py
-% horizontal flips are a good application on the real images
-% You could augment the real images -> this will cause the generator to learn to generate augments, this is bad for augments such as cutout
-% You could augment the real images and the fake images when the discriminator sees them, the generator will have an easier time fooling the discriminator
-% Solution: Augment real and fake images for the discriminator and the generator
-% Need to be able to differentiate the augmentation so that we can update the generators weights using gradient descent
-% How do we make our augmentations differentiable?
-% We provide a torch tensor that represents the images as input, then we randomly sample parameters related to augmentation. e.g. translation amount or cutout coords. Apply this augmentation to the input tensor
-% since it is all done using torch operations, the computational graph will be computed for these functions
-% Kornia can do this for us.
-% pass the augmentation module, kornia, into the discriminator. Apply augments on the input to the discriminator first but only when training 
-
-%https://cs230.stanford.edu/projects_spring_2018/reports/8289943.pdf 
-
-
-%Because these two loss values are relative to the performance of each other they can't be used to see if our generator has converged on a solution. Therefore it is necessary, at each epoch, to also compute the L1 loss of the fake labels and real labels across the training and the validation dataset, as these values are calculated independently of the discriminator. This will inform allow us to see if the generator is overfitting, underfitting, or training well. 
-
-
-
-\subsection{Diffusion Models}
+\subsection{Diffusion Models} \label{DIFFUSION_METHODS}
 
 Diffusion based generative models work by learning to iteratively remove Gaussian noise from a sample T times until it produces an image from the training domain. The model was first proposed by Sohl-Dickstein et al. \cite{sohldickstein2015deep}, and has been further developed by Ho et al. \cite{ho2020denoising},  Dhariwal and Nichol \cite{dhariwal2021diffusion}, and Saharia et al. \cite{saharia2022palette}. They are a class of machine learning models that work using a forward diffusion process systematically destroying the structure in a data distribution, and learn a backwards process to restore the structure. The method uses a Markov chain to convert $ x_t $ into $ x_{t-1} $. Starting with $ x_T $, a sample of Gaussian noise, a generative Markov chain converts this into $ x_0 $, which is a sample from the target data distribution. Because the model only estimates small perturbations of noise, $ x_t $ given $ x_{t-1} $ , rather than an entire transformation from $ x_T $ to $ x_0 $, it is tractable to train. Recent research has found that diffusion models are able to synthesise images with greater image sample quality than GANs \cite{dhariwal2021diffusion}, and recent diffusion models have seen immense commercial success where GANs never did \cite{ramesh2022hierarchical, saharia2022photorealistic}. I want to investigate if that same success can be found in this domain.
 
 The DDPM is a diffusion model capable of producing high quality images and achieved state of the art FID scores across the CIFAR10 dataset \cite{ho2020denoising}. Dhariwal and Nichol \cite{dhariwal2021diffusion} show tweaks that allow for diffusion models to achieve state of the art FID scores across the ImageNet dataset and when used in combination with upsampling diffusion further improve FID scores. They do this by using improvements proposed in \cite{song2022denoising, nichol2021improved, song2021scorebased, brock2019large, karras2019stylebased}.
-
-%These improvements also reduce the number of noise steps required from thousands to (in some cases) 50. Through the decrease in noise steps they are able to reduce the amount of time that it takes to generate an image. Chen discusses in \cite{chen2023importance} how changing the resolution of an image has an impact on the noise scheduling required, he finds that the optimal scheduler at a smaller resolution may cause under training for higher resolution images. Multiple strategies are proposed to adjust noise scheduling. Firstly, changing the noise schedule functions to those based on cosine or sigmoid, with temperature scaling. Secondly, reducing the input scaling factor from 1 increases the noise levels which destroys more information at the same noise level. They then combine these into a compound noise scheduling strategy.
-
-%I will adapt a PyTorch implementation of Palette \cite{JanspiryPalette} and train it to predict labels from the VISCHEMA dataset. 
 
 Palette is a versatile conditional image to image diffusion model proposed by Saharia et al. \cite{saharia2022palette} that is able to uncrop, inpaint, colourize, and remove JPEG artifacts from images. Because of this versatility I think it could learn to predict VMS maps from images. 
 
@@ -429,8 +391,6 @@ Using a conditional image, $I$ and a ground truth label, $L_{real}$ with this mo
     \label{fig:DiffusionDiagram}
 \end{figure}
 
-% Maybe theres a better way to write this?
-% Look at the papers and see if its there
 \begin{algorithm}
 \caption{Diffusion Model Training Strategy}\label{ALG:Diffusion}
 \begin{algorithmic}[1]
@@ -491,7 +451,7 @@ Instead I have explored a subset of this search space. For each experiment I est
 
 \section{UNet Autoencoder Training and Results}
 
-In this experiment I created and trained a UNet model as described in \cite{ronneberger2015unet} to directly predict the VMS maps of images, I trained the model using backpropagation of the L1 loss, described in equation \ref{eqn:UNet Loss}, of the model output given an image, and the corresponding label. The best parameters and hyperparameters that I found for my model were the following: Encoder Channels = (3,64,128,256,512,1024), Decoder Channels = (1024,512,256,128,64), Batch Normalisation, Adam Optimizer with a learning rate of 0.001 and betas = (0.9, 0.999). A diagram of the training curve for the autoencoder can be seen in figure \ref{fig:autoencoderTraining}. After 80 training epochs I was able to achieve an L1 loss across the validation dataset of \( \sim 0.132 \). 
+In this experiment I created and trained a UNet model as described in section \ref{UNET_METHODS} to directly predict the VMS maps of images, I trained the model using backpropagation of the L1 loss, described in equation \ref{eqn:UNet Loss}, of the model output given an image, and the corresponding label. The best parameters and hyperparameters that I found for my model were the following: Encoder Channels = (3,64,128,256,512,1024), Decoder Channels = (1024,512,256,128,64), Batch Normalisation, Adam Optimizer with a learning rate of 0.001 and betas = (0.9, 0.999). A diagram of the training curve for the autoencoder can be seen in figure \ref{fig:autoencoderTraining}. After 80 training epochs I was able to achieve an L1 loss across the validation dataset of \( \sim 0.132 \). 
 
 A sample of the best output images can be seen in figure \ref{fig:autoencoderBestOutput}.
 As you can see the autoencoder tends to turn the blocky VMS shape into a rounded blurry selection.
@@ -521,7 +481,7 @@ Unfortunately when I qualitatively analyse the images the model does not succeed
 \section{GAN Training and Results}
 
 % https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/issues/1081
-This experiment was performed with differentiable augmentation as described in \cite{zhao2020differentiable}. I performed translation and cutout, each with a 90\% chance. After performing a hyperparameter search, where we trained each model for approximately 100 epochs, we find that the best hyperparameters for our Generator and Discriminator are as follows:
+In this experiment I created and trained a modified pix2pix GAN as described in section \ref{GAN_METHODS}. This experiment was performed with differentiable augmentation as described in \cite{zhao2020differentiable}. After performing a hyperparameter search, where we trained each model for approximately 100 epochs, we find that the best hyperparameters for our Generator and Discriminator are as follows:
 
 \textbf{Best Generator}: Batch normalisation, Encoder channel layout = (6, 64, 128, 256, 512, 1024), Decoder channel layout = (1024, 512, 256, 128, 64, 3), Adam optimiser with betas = (0.5, 0.999) and an initial learning rate of 0.0002.
 
@@ -554,7 +514,7 @@ Our best GAN model is incredibly successful and achieves all requirements outlin
 
 \section{Diffusion Model Training and Results}
 
-I found that the best parameters for this network were: Group Normalisation, Encoder channel layout = (64, 128, 256, 512), Decoder channel layout = (512, 256, 128, 64), and a cosine beta scheduler with a start of 1e-6 and an end of 0.02.
+In this experiment I trained a modified conditional diffusion model as described in section \ref{DIFFUSION_METHODS}. I found that the best parameters for this network were: Group Normalisation, Encoder channel layout = (64, 128, 256, 512), Decoder channel layout = (512, 256, 128, 64), and a cosine beta scheduler with a start of 1e-6 and an end of 0.02.
 
 Evaluating the L1 loss of the diffusion models across the entire validation distribution takes approximately 2 hours with the parameters above, because of this, during training I couldn't see if the L1 loss was going down, I could still test if it was overfitting by evaluating the ability to remove a random step of noise every epoch across the validation set. The graph in figure 
 \ref{fig:DiffusionTraining}
