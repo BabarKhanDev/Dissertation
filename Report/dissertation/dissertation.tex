@@ -491,7 +491,13 @@ Instead I have explored a subset of this search space. For each experiment I est
 
 \section{UNet Autoencoder Training and Results}
 
-In this experiment I created and trained a UNet model as described in \cite{ronneberger2015unet} to directly predict the VMS maps of images, I trained the model using backpropagation of the L1 loss, described in equation \ref{eqn:UNet Loss}, of the model output given an image, and the corresponding label. The best parameters and hyperparameters that I found for my model were the following: Encoder Channels = (3,64,128,256,512,1024), Decoder Channels = (1024,512,256,128,64), Batch Normalisation, Adam Optimizer with a learning rate of 0.001 and betas = (0.9, 0.999). A diagram of the training curve for the autoencoder can be seen in figure \ref{fig:autoencoderTraining}. After 80 training epochs I was able to achieve an L1 loss across the validation dataset of \( \sim 0.132 \). A sample of the best output images can be seen in figure \ref{fig:autoencoderBestOutput}, and a sample of the lowest accuracy output images can be seen in figure \ref{fig:autoencoderWorstOutput}. As you can see the autoencoder tends to turn the blocky VMS shape into a rounded circle. It is less accurately able predict the red regions, this is likely due to there being far more green data than red data.
+In this experiment I created and trained a UNet model as described in \cite{ronneberger2015unet} to directly predict the VMS maps of images, I trained the model using backpropagation of the L1 loss, described in equation \ref{eqn:UNet Loss}, of the model output given an image, and the corresponding label. The best parameters and hyperparameters that I found for my model were the following: Encoder Channels = (3,64,128,256,512,1024), Decoder Channels = (1024,512,256,128,64), Batch Normalisation, Adam Optimizer with a learning rate of 0.001 and betas = (0.9, 0.999). A diagram of the training curve for the autoencoder can be seen in figure \ref{fig:autoencoderTraining}. After 80 training epochs I was able to achieve an L1 loss across the validation dataset of \( \sim 0.132 \). 
+
+A sample of the best output images can be seen in figure \ref{fig:autoencoderBestOutput}.
+% TALK ABOUT THE BEST IMAGES
+A sample of the lowest accuracy output images can be seen in figure \ref{fig:autoencoderWorstOutput}.
+% TALK ABOUT THE WORST IMAGES
+As you can see the autoencoder tends to turn the blocky VMS shape into a rounded circle. It is less accurately able predict the red regions, this is likely due to there being far more green data than red data.
 
 \subsection{UNet Autoencoder Requirements Fit}
 As outlined in \ref{tab:RequirementCaptureTable} our best autoencoder model succeeded in the following requirements: 1.1 as it is possible to input an image, 1.2 as the model produces an image when given an input, 1.3 as the mean output loss is relatively low, and 2.1 as it is able to produce an image fast, in approximately 7 milliseconds.
@@ -507,16 +513,14 @@ Unfortunately when I qualitatively analyse the images the model does not succeed
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{Best autoencoder Outputs}
-    \caption{Best Autoencoder Outputs}
+    \caption{Lowest Loss Autoencoder Outputs}
     \label{fig:autoencoderBestOutput}
 \end{figure}
 
 \section{GAN Training and Results}
 
 % https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/issues/1081
-This experiment was performed with differentiable augmentation as described in \cite{zhao2020differentiable}. I performed translation and cutout, each with a 90\% chance.
-
-After performing a hyperparameter search, training each model for approximately 100 epochs, we find that the best hyperparameters for our Generator and Discriminator are as follows:
+This experiment was performed with differentiable augmentation as described in \cite{zhao2020differentiable}. I performed translation and cutout, each with a 90\% chance. After performing a hyperparameter search, where we trained each model for approximately 100 epochs, we find that the best hyperparameters for our Generator and Discriminator are as follows:
 
 \textbf{Best Generator}: Batch normalisation, Encoder channel layout = (6, 64, 128, 256, 512, 1024), Decoder channel layout = (1024, 512, 256, 128, 64, 3), Adam optimiser with betas = (0.5, 0.999) and an initial learning rate of 0.0002.
 
@@ -524,8 +528,13 @@ After performing a hyperparameter search, training each model for approximately 
 
 Using these parameters, after 200 epochs of training our model is able to achieve a mean L1 score of \( \sim 0.0740 \) across our validation dataset. This is significantly better than our autoencoder model. A diagram of the training curve for the final GAN model can be seen in figure \ref{fig:GANTraining}. 
 Figure \ref{fig:GANBestOutput} shows the outputs across the validation portion of our dataset with the lowest L1 Loss. The outputs presented in this figure are accurately labelled with the correct regions as memorable, but frankly are quite boring and do not necessarily show off the high quality outputs capable of our model, the low L1 loss across these is because the labels simply have lots of black data, therefore any model that just predicts fully black images with random green regions would likely have a low loss across these images. 
+%talk about specific boring images
+
 Instead I present figure \ref{fig:GANGoodOutput} which shows what I think are far more impressive results, despite the higher loss than the images presented in figure \ref{fig:GANBestOutput}. For these images the model is able to accurately predict large regions of the image that are memorable. This is why requirement 1.4 is important, qualitative analysis allows for a much more nuanced consideration of how the outputs look.  
+% Talk about specific images
+
 The worst results are shown in \ref{fig:GANWorstOutput}, it appears that, like our autoencoder model from experiment 1, this model finds it difficult to predict red regions, i.e. those that users hallucinate remembering.
+% talk about specific images
 
 \begin{figure}[ht]
     \centering
@@ -537,7 +546,7 @@ The worst results are shown in \ref{fig:GANWorstOutput}, it appears that, like o
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{Good GAN Outputs}
-    \caption{Favourite GAN Outputs}
+    \caption{Best GAN Outputs}
     \label{fig:GANGoodOutput}
 \end{figure}
 
@@ -551,16 +560,18 @@ I found that the best parameters for this network were: Group Normalisation, Enc
 Evaluating the L1 loss of the diffusion models across the entire validation distribution takes approximately 2 hours with the parameters above, because of this, during training I couldn't see if the L1 loss was going down, I could still test if it was overfitting by evaluating the ability to remove a random step of noise every epoch across the validation set. The graph in figure 
 \ref{fig:DiffusionTraining}
 shows the mean training and validation loss per epoch for my best model, the validation loss in this case is the loss for removing 1 step of noise from each image, not the full 2000. The green plot indicates validation performance, and red training. The plots stay very close together until epoch 350 at which point the model starts to become overfit. This is clearly visible in figure \ref{fig:DiffusionTrainingOverfit}, where I show the training curve from epoch 100 onwards. Because of this I have chosen to use early stopping and use the weights of my model at epoch 350.
-You can see a selection of the best model predictions in figure 
-\ref{fig:DiffusionBestOutputs}
-and a selection of the worst model predictions in figure 
-\ref{fig:DiffusionWorstOutput}
-. As you can see the network still produces images with random noise, unfortunately I could not solve this issue. In this experiment I was only able to explore a small range of possible hyperparameters and as such my results do not emulate the recent success found in diffusion based image generation \cite{ramesh2022hierarchical, saharia2022photorealistic}. However, with a greater number of computing resources, specifically parallel GPUs, it should be possible to explore a greater search space and achieve better results.
+You can see a selection of the best model predictions in figure \ref{fig:DiffusionBestOutputs}.
+% talk about specific images
+
+You can also see a selection of the worst model predictions in figure \ref{fig:DiffusionWorstOutput}
+% talk about specific images
+
+As you can see the network still produces images with random noise, unfortunately I could not solve this issue. In this experiment I was only able to explore a small range of possible hyperparameters and as such my results do not emulate the recent success found in diffusion based image generation \cite{ramesh2022hierarchical, saharia2022photorealistic}. However, with a greater number of computing resources, specifically parallel GPUs, it should be possible to explore a greater search space and achieve better results.
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{Diffusion Best Outputs}
-    \caption{Best Diffusion Outputs}
+    \caption{Lowest Loss Diffusion Outputs}
     \label{fig:DiffusionBestOutputs}
 \end{figure}
 
@@ -655,21 +666,21 @@ I would also be interested in exploring the application of memorability to video
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{Worst autoencoder Outputs}
-    \caption{Worst Autoencoder Outputs}
+    \caption{Highest Loss Autoencoder Outputs}
     \label{fig:autoencoderWorstOutput}
 \end{figure}
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{Best GAN Outputs}
-    \caption{Best GAN Outputs}
+    \caption{Lowest Loss GAN Outputs}
     \label{fig:GANBestOutput}
 \end{figure}
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{Worst GAN Outputs}
-    \caption{Worst GAN Outputs}
+    \caption{Highest Loss GAN Outputs}
     \label{fig:GANWorstOutput}
 \end{figure}
 
@@ -683,7 +694,7 @@ I would also be interested in exploring the application of memorability to video
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{Worst Diffusion Outputs}
-    \caption{Worst Diffusion Outputs}
+    \caption{Highest Loss Diffusion Outputs}
     \label{fig:DiffusionWorstOutput}
 \end{figure}
 
