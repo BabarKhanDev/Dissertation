@@ -487,7 +487,8 @@ In this experiment I created and trained a modified pix2pix GAN as described in 
 
 \textbf{Best Discriminator}: Batch normalisation, Channel layout = (6, 64, 128, 256, 512), Adam optimiser with betas = (0.5, 0.999) and a learning rate of 0.0002.
 
-Using these parameters, after 200 epochs of training our model is able to achieve a mean L1 score of \( \sim 0.0740 \) across our validation dataset. This is significantly better than our autoencoder model. A diagram of the training curve for the final GAN model can be seen in figure \ref{fig:GANTraining}. 
+I found that using SGD and Adagrad optimizers gave very similar losses after 100 epochs, each within 1\% of eachother.
+Using the best found parameters, after 200 epochs of training our model is able to achieve a mean L1 score of \( \sim 0.0740 \) across our validation dataset. This is significantly better than our autoencoder model. A diagram of the training curve for the final GAN model can be seen in figure \ref{fig:GANTraining}. 
 Figure \ref{fig:GANBestOutput} shows the outputs across the validation portion of our dataset with the lowest L1 Loss. The outputs presented in this figure are accurately labelled with the correct regions as memorable, but frankly do not necessarily show off the high quality outputs capable of our model, the low L1 loss across these is simply because the labels have lots of black data. 
 Looking at image 7 the model accurately predicts that the two wooden planks are the most memorable, in image 2 it accurately predicts that the chair is the most memorable. Interestingly there are some bad predictions here, in image 6 it is confident that the person is most memorable, when in reality most participants selected the hanging display. 
 Instead I present figure \ref{fig:GANGoodOutput} which shows what I think are far more impressive results, despite the higher loss than the images presented in figure \ref{fig:GANBestOutput}. With these images the model is able to accurately predict large regions of the image that are memorable. This is why requirement 1.4 is important, qualitative analysis allows for a much more nuanced consideration of how the outputs look.
@@ -514,7 +515,8 @@ Our best GAN model is incredibly successful and achieves all requirements outlin
 
 \section{Diffusion Model Training and Results}
 
-In this experiment I trained a modified conditional diffusion model as described in section \ref{DIFFUSION_METHODS}. I found that the best parameters for this network were: Group Normalisation, Encoder channel layout = (64, 128, 256, 512), Decoder channel layout = (512, 256, 128, 64), and a cosine beta scheduler with a start of 1e-6 and an end of 0.02.
+In this experiment I trained a modified conditional diffusion model as described in section \ref{DIFFUSION_METHODS}.
+I found that the best parameters for this network were: Group Normalisation, Encoder channel layout = (64, 128, 256, 512), Decoder channel layout = (512, 256, 128, 64), and a cosine beta scheduler with a start of 1e-6 and an end of 0.02. The biggest change to my loss, from \( \sim 0.48\) to \( \sim 0.31\), was created by changing the beta scheduler from linear to cosine.
 
 Evaluating the L1 loss of the diffusion models across the entire validation distribution takes approximately 2 hours with the parameters above, because of this, during training I couldn't see if the L1 loss was going down, I could still test if it was overfitting by evaluating the ability to remove a random step of noise every epoch across the validation set. The graph in figure 
 \ref{fig:DiffusionTraining}
