@@ -33,6 +33,9 @@
 \pagenumbering{roman}
 \maketitle
 
+\chapter{Abstract}
+Memorability is known to be an intrinsic property of images \cite{Isola2011,IsolaParikhTorralbaOliva2011}, and in this report I investigate the potential of three different image to image models to learn to predict memorable regions of images, these are autoencoders, GANs, and diffusion models. I do this by performing supervised training with the image to memorability maps present in the VISCHEMA Plus dataset \cite{VischemaPaper}. This is useful to a large number of industries, particularly marketing and education. Recent research has found that diffusion models are able to synthesise images with greater image sample quality than GANs \cite{dhariwal2021diffusion}, and recent diffusion models have seen immense commercial success where GANs never did \cite{ramesh2022hierarchical, saharia2022photorealistic}. I investigate if that same success can be found in this domain.
+ 
 \chapter{Executive Summary}
 
 
@@ -48,9 +51,9 @@
 %The purpose of the research (what's it about and why's that important)
 I investigate a range of deep conditional image to image generative models and evaluate their success when learning a mapping of images to memorable regions across three different experiments. 
 % motivate the work
-As shown in \cite{Isola2011,IsolaParikhTorralbaOliva2011,isola2014memorability}
+As shown in \cite{Isola2011,IsolaParikhTorralbaOliva2011}
 % DOUBLE CHECK THOSE SOURCES
-memorability is an intrinsic property of images, just like saliency, composition, or attractiveness, we hopefully can use these models to design images that are more memorable. This has far reaching uses, from marketing, education, entertainment, and more. The memorability of an image is intuitively affected by its surroundings, so being able to predict the memorability of a region within a image is extremely useful to the iterative design process within these professions.  
+memorability is an intrinsic property of images, just like saliency, composition, or attractiveness, we can hopefully use these models to design images that are more memorable. This has far reaching uses, from marketing, education, entertainment, and more. The memorability of an image is intuitively affected by its surroundings, so being able to predict the memorability of a region within a image is extremely useful to the iterative design process within these professions.  
 %The methodology (how you carried out the research)
 These models were trained through supervised learning of image to VMS pairs in the training portion of the VISCHEMA Plus dataset. I compare these models using a set of defined requirements, including the L1 loss of their predicted memorability maps across the validation portion of the dataset, the qualitative quality of the predictions, and the time to train and evaluate the models.
 %The key research findings (what answers you found)
@@ -63,7 +66,7 @@ Diffusion models took the longest to train, and while they have been shown capab
 % FILL IN FINAL DIFFUSION LOSS
 
 %The implications of these findings (what these answers mean)
-I show that using a GAN model we are able to predict memorable image regions with great accuracy. I believe this has many useful applications across many different industries, allowing creators to have a more informed opinion on which sections of their images are memorable, using this tool to iteratively improve their image memorability. Hopefully in future work good parameters can be found that allow diffusion models to work with lower noise steps and to produce higher accuracy results.
+I show that using a GAN model we are able to predict memorable image regions with great accuracy. I believe this has many useful applications across many different industries, it will allow creators a more informed opinion on which regions of their images are memorable, using this tool to iteratively improve their image memorability. Hopefully in future work good parameters can be found that allow diffusion models to work with lower noise steps and to produce higher accuracy results.
 
 % Ethical concerns
 \textbf{Ethical Concerns}
@@ -102,7 +105,7 @@ To create a model that does this is an incredibly difficult task, success has be
 
 \textbf{Report Structure}
 
-This report is organised as follows: Chapter 3 discusses existing literature in image memorability, Chapter 4 discusses the project methodology, I describe available deep learning datasets and existing image to image models, Chapter 5 details my experiments and results, and Chapter 6 my conclusion, where I discuss the implications of my findings and posibilities for future work.    
+This report is organised as follows: Chapter 4 discusses existing literature in image memorability, Chapter 5 discusses the project methodology, I describe available deep learning datasets and existing image to image models, Chapter 6 details my experiments and results, and Chapter 7 my conclusion, where I discuss the implications of my findings and posibilities for future work.    
 
 \chapter{Literature Review}
 
@@ -483,7 +486,7 @@ Instead I have explored a subset of this search space. For each experiment I est
 
 \textbf{UNet Autoencoder Training and Results}
 
-In this experiment I created and trained a UNet model as described in \cite{ronneberger2015unet} to directly predict the VMS maps of images, I trained the model using backpropagation of the L1 loss, described in equation \ref{eqn:UNet Loss}, of the model output given an image, and the corresponding label. The best parameters and hyperparameters that I found for my model were the following: Encoder Channels = (3,64,128,256,512,1024), Decoder Channels = (1024,512,256,128,64), Batch Normalisation, Adam Optimizer with a learning rate of 0.001 and betas = (0.9, 0.999). A diagram of the training curve for the autoencoder can be seen in figure \ref{fig:autoencoderTraining}. After 80 training epochs I was able to achieve an L1 loss across the validation dataset of ~0.132. A sample of the best output images can be seen in figure \ref{fig:autoencoderBestOutput}, and a sample of the lowest accuracy output images can be seen in figure \ref{fig:autoencoderWorstOutput}. As you can see the autoencoder tends to turn the blocky VMS shape into a rounded circle. It also fails to accurately predict the red regions, this is likely due to there being far more green data than red data. The VISCHEMA dataset is split into 12 distinct classes, in table \ref{tab:categories} I show the models accuracy across each different class.
+In this experiment I created and trained a UNet model as described in \cite{ronneberger2015unet} to directly predict the VMS maps of images, I trained the model using backpropagation of the L1 loss, described in equation \ref{eqn:UNet Loss}, of the model output given an image, and the corresponding label. The best parameters and hyperparameters that I found for my model were the following: Encoder Channels = (3,64,128,256,512,1024), Decoder Channels = (1024,512,256,128,64), Batch Normalisation, Adam Optimizer with a learning rate of 0.001 and betas = (0.9, 0.999). A diagram of the training curve for the autoencoder can be seen in figure \ref{fig:autoencoderTraining}. After 80 training epochs I was able to achieve an L1 loss across the validation dataset of ~0.132. A sample of the best output images can be seen in figure \ref{fig:autoencoderBestOutput}, and a sample of the lowest accuracy output images can be seen in figure \ref{fig:autoencoderWorstOutput}. As you can see the autoencoder tends to turn the blocky VMS shape into a rounded circle. It is less accurately able predict the red regions, this is likely due to there being far more green data than red data.
 
 \textbf{UNet Autoencoder Requirements Fit}
 As outlined in \ref{tab:RequirementCaptureTable} our best autoencoder model succeeded in the following requirements: 1.1 as it is possible to input an image, 1.2 as the model produces an image when given an input, 1.3 as the mean output loss is relatively low, and 2.1 as it is able to produce an image fast, in approximately 7 milliseconds.
@@ -515,14 +518,14 @@ After performing a hyperparameter search, training each model for approximately 
 \textbf{Best Discriminator}: Batch normalisation, Channel layout = (6, 64, 128, 256, 512), Adam optimiser with betas = (0.5, 0.999) and a learning rate of 0.0002.
 
 Using these parameters, after 200 epochs of training our model is able to achieve a mean L1 score of ~0.0740 across our validation dataset. This is significantly better than our autoencoder model. A diagram of the training curve for the final GAN model can be seen in figure \ref{fig:GANTraining}. 
-Figure \ref{fig:GANBestOutput} shows the outputs across the validation portion of our dataset with the lowest L1 Loss. They are accurately labelled with the correct regions as memorable but frankly are quite boring, and do not necessarily show off the high quality outputs capable of our model, the low L1 loss across these is because the labels simply have lots of black data, therefore any model that just predicts fully black images with random green regions would likely have a low loss across these images. 
+Figure \ref{fig:GANBestOutput} shows the outputs across the validation portion of our dataset with the lowest L1 Loss. The outputs presented in this figure are accurately labelled with the correct regions as memorable, but frankly are quite boring and do not necessarily show off the high quality outputs capable of our model, the low L1 loss across these is because the labels simply have lots of black data, therefore any model that just predicts fully black images with random green regions would likely have a low loss across these images. 
 Instead I present figure \ref{fig:GANGoodOutput} which shows what I think are far more impressive results, despite the higher loss than the images presented in figure \ref{fig:GANBestOutput}. For these images the model is able to accurately predict large regions of the image that are memorable. This is why requirement 1.4 is important, it qualitative analysis allows for a much more nuanced analysis of how the outputs look.  
 The worst results are shown in \ref{fig:GANWorstOutput}, it appears that, like our autoencoder model from experiment 1, this model finds it difficult to predict red regions, i.e. those that users hallucinate remembering.
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{GAN Training Curve}
-    \caption{GAN training graph. There are 4 losses plotted in this graph, in pale green the L1 loss across the training data and dark green a linear regression of that, in blue the loss when tricking the discriminator, in red and orange the discriminator loss when predicting fake and real images respectively.}
+    \caption{GAN training graph. There are 4 losses plotted in this graph, in pale green and dark green the L1 loss across and it's linear regression respectively, in blue the loss when tricking the discriminator, in red and orange the discriminator loss when predicting fake and real images respectively.}
     \label{fig:GANTraining}
 \end{figure}
 
@@ -538,16 +541,16 @@ Our best GAN model is incredibly successful and achieves all requirements outlin
 
 \textbf{Diffusion Model Training and Results}
 
-I found that the best parameters for this network were: Group Norm, Encoder channel layout = (64, 128, 256, 512), Decoder channel layout = (512, 256, 128, 64), Cosine beta scheduler with a start of 1e-6 and an end of 0.01.
+I found that the best parameters for this network were: Group Normalisation, Encoder channel layout = (64, 128, 256, 512), Decoder channel layout = (512, 256, 128, 64), and a cosine beta scheduler with a start of 1e-6 and an end of 0.02.
 
-Evaluating the L1 loss of the diffusion models across the entire validation distribution took approximately 2 hours, because of this, during training I couldn't see if the l1 loss was going down, I could still however test if it was overfitting by evaluating the ability to remove a random step of noise every epoch. After training I did a full test across the validation distribution. The graph in figure 
+Evaluating the L1 loss of the diffusion models across the entire validation distribution takes approximately 2 hours with the parameters above, because of this, during training I couldn't see if the l1 loss was going down, I could still test if it was overfitting by evaluating the ability to remove a random step of noise every epoch across the validation set. I trained my model for 800 epochs and after training I did a full evaluation across the validation distribution, generating label samples for each image. The graph in figure 
 \ref{fig:DiffusionTraining}
-shows the training and validation loss per epoch for my best model, the validation loss in this case is the loss for removing 1 step of noise from each image, not the full 2000. 
-You can see a selection of the best outputs in figure 
+shows the mean training and validation loss per epoch for my best model, the validation loss in this case is the loss for removing 1 step of noise from each image, not the full 2000. The green plot indicates validation performance, and red training. The plots stay very close together which indicates that the model does not become overfit.
+You can see a selection of the best model predictions in figure 
 \ref{fig:DiffusionBestOutputs}
-and a selection of the worst outputs in figure 
+and a selection of the worst model predictions in figure 
 \ref{fig:DiffusionWorstOutput}
-. As you can see the network still produces images with random noise, unfortunately I could not get the network to not do this. In this experiment I was only able to explore a small range of possible hyperparameters and as such my results do not emulate the recent success found in diffusion based image generation. \cite{ramesh2022hierarchical, saharia2022photorealistic} However, with a greater number of computing resources, specifically parallel GPUs, it should be possible to explore a greater search space and achieve better results.
+. As you can see the network still produces images with random noise, unfortunately I could not solve this issue. In this experiment I was only able to explore a small range of possible hyperparameters and as such my results do not emulate the recent success found in diffusion based image generation \cite{ramesh2022hierarchical, saharia2022photorealistic}. However, with a greater number of computing resources, specifically parallel GPUs, it should be possible to explore a greater search space and achieve better results.
 
 \begin{figure}[ht]
     \centering
@@ -566,15 +569,13 @@ and a selection of the worst outputs in figure
 \textbf{Diffusion Requirements Fit}
 %Some discussion about them.
 
-My best diffusion model is incredibly unsuccessful. It is only able to pass requirements 1.1 and 1.2; you can input an image and it outputs an image. The output images have a very large mean loss of \( \sim 0.31 \) and as such fail requirement 1.3, and when I qualitatively analyse the output images, they either look like accurate VMS maps for completely different images, look noisy, or both, and as such the model fails requirement 1.4. The model also takes on average 23 seconds to produce an image, compared to our autoencoder and GAN models this is far too long, taking thousands of times longer than either of those models, and as such it fails requirement 2.1. 
-
-\textbf{Results, Evaluation Metrics, and Analysis}
+My best diffusion model is unfortunately unsuccessful. It is only able to pass requirements 1.1 and 1.2; you can input an image and it outputs an image. The output images have a large mean loss of \( \sim 0.31 \) and as such fail requirement 1.3, and when I qualitatively analyse the output images, they either look like accurate VMS maps for completely different images or look noisy, and as such the model fails requirement 1.4. The model also takes on average 23 seconds to produce an image, this is far too long compared to our autoencoder and GAN models, and as such it fails requirement 2.1. 
 
 \textbf{Examination Across VISCHEMA Categories}
 
 The dataset that I trained on, VISCHEMA PLUS, is composed of two datasets: VISCHEMA and VISCHEMA 2. The VISCHEMA dataset is split into 12 distinct classes, the VISCHEMA 2 dataset is split into 8 distinct classes. The "kitchen" class is present in both datasets, but otherwise classes are exclusive to VISCHEMA or VISCHEMA 2. In figure \ref{tab:categories} the average L1 loss each model achieves across each different class in the validation distribution is displayed. The values are rounded to 2 significant figures but in calculations I used the un-rounded versions. 
 
-Looking at this data we can see that our GAN model is the most consistent, with a standard deviation in the mean L1 loss across the different classes of 0.022, the autoencoder model is the worst with a standard deviation 0f 0.052, and our diffusion model is in the middle with a standard deviation 0f 0.047. Across both our autoencoder and GAN models, the accuracy in measuring memorability maps for skyscrapers is the lowest, this is likely due to the large red regions in the VMS that our model has difficulty predicting, interestingly, this is one of the best classes that our diffusion model produces. Looking at the diffusion model outputs I can see that it has a tendency to predict red far more often than the other networks, this may be the reason that it produces much better results for skyscrapers than most of its other classes.  
+Looking at this data we can see that our GAN model is the most consistent, with a standard deviation of the mean L1 loss across the different classes \( \sim 0.022\), the autoencoder model is the least consistent with a standard deviation of \( \sim 0.052\), and our diffusion model is in the middle with a standard deviation of \( \sim 0.047\). Across both our autoencoder and GAN models, the accuracy in measuring memorability maps for skyscrapers is the lowest, this is likely due to the large red regions in the VMS that our model has difficulty predicting, interestingly, this is one of the best classes that our diffusion model produces results for. Looking at the diffusion model outputs I can see that it has a tendency to predict red far more often than the other networks, this may be the reason that it produces much better results for skyscrapers compared to other classes.
 
 % Populated
 % Big
@@ -601,8 +602,15 @@ Looking at this data we can see that our GAN model is the most consistent, with 
         Golf Course            & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.076}& 0.34                                    \\ \hline
         Mountain               & \multicolumn{1}{l|}{0.19}        & \multicolumn{1}{l|}{0.094}& 0.32                                    \\ \hline
         Badland                & \multicolumn{1}{l|}{0.20}        & \multicolumn{1}{l|}{0.096}& 0.23                                    \\ \hline
+        
+        Populated              & \multicolumn{1}{l|}{0.20}        & \multicolumn{1}{l|}{0.0077}& 0.34                                   \\ \hline
+        Big                    & \multicolumn{1}{l|}{0.20}        & \multicolumn{1}{l|}{0.014}& 0.29                                    \\ \hline
+        Public Ent.            & \multicolumn{1}{l|}{0.20}        & \multicolumn{1}{l|}{0.018}& 0.31                                    \\ \hline
+        Isolated               & \multicolumn{1}{l|}{0.20}        & \multicolumn{1}{l|}{0.029}& 0.28                                    \\ \hline
+        Small                  & \multicolumn{1}{l|}{0.20}        & \multicolumn{1}{l|}{0.016}& 0.34                                    \\ \hline
+        Work-Home              & \multicolumn{1}{l|}{0.20}        & \multicolumn{1}{l|}{0.027}& 0.24                                    \\ \hline
         \hline
-        Mean                   & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.078}& 0.31                                    \\ \hline
+        Mean                   & \multicolumn{1}{l|}{0.14}        & \multicolumn{1}{l|}{0.077}& 0.31                                    \\ \hline
         Median                 & \multicolumn{1}{l|}{0.13}        & \multicolumn{1}{l|}{0.075}& 0.31                                    \\ \hline
         Std                    & \multicolumn{1}{l|}{0.052}       & \multicolumn{1}{l|}{0.022}& 0.047                                   \\ \hline
     \end{tabular}
