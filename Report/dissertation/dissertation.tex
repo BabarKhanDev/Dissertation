@@ -30,14 +30,12 @@
 
 % Document
 \begin{document}
-\pagenumbering{roman}
 \maketitle
+\setcounter{page}{0}
 
-\chapter{Abstract}
-Memorability is known to be an intrinsic property of images \cite{Isola2011,IsolaParikhTorralbaOliva2011}, and in this report I investigate the potential of three different image to image models, autoencoders, GANs, and diffusion models, to learn to predict the memorable regions of images. I do this by performing supervised training with the image to memorability maps present in the VISCHEMA Plus dataset \cite{VischemaPaper}. This is useful to a large number of industries, particularly marketing where memorable advertisements are desired, and education where memorable learning resources are desired. Recent research has found that diffusion models are able to synthesise images with greater image sample quality than GANs \cite{dhariwal2021diffusion}, and recent diffusion models have seen immense commercial success where GANs never did \cite{ramesh2022hierarchical, saharia2022photorealistic}. I investigate if that same success can be found in this domain.
- 
 \chapter{Executive Summary}
-
+\pagenumbering{arabic}
+\setcounter{page}{1}
 
 % state the aim of the reported work,
 % motivate the work,
@@ -49,13 +47,14 @@ Memorability is known to be an intrinsic property of images \cite{Isola2011,Isol
 \textbf{Research Purpose, Motivation, and Methodology}
 
 %The purpose of the research (what's it about and why's that important)
-I investigate a range of deep conditional image to image generative models and evaluate their success when learning a mapping of images to memorable regions across three different experiments. 
+I investigate a range of deep conditional image to image generative models and evaluate their success when learning a mapping of images to memorable regions across three different experiments. These models are autoencoders, generative adversarial networks (GANs), and denoising diffusion models.
 % motivate the work
-As shown in \cite{Isola2011,IsolaParikhTorralbaOliva2011}
-% DOUBLE CHECK THOSE SOURCES
-memorability is an intrinsic property of images, just like saliency, composition, or attractiveness, we can hopefully use these models to design images that are more memorable. This has far reaching uses, from marketing, education, entertainment, and more. The memorability of an image is intuitively affected by its surroundings, so being able to predict the memorability of a region within a image is extremely useful to the iterative design process within these professions.  
+Image memorability has been shown to be an intrinsic property of images, just like saliency, composition, or attractiveness, hopefully we can use these models to design images that are more memorable. This has far reaching uses, from marketing, education, entertainment, and more. The goal of advertising is to grow familiarity with a brand, if somebody is more likely to remember your advert then they will likely become more familiar with the brand. In education if teachers can make diagrams and displays that are easier to remember then students will find learning easier. In entertainment if you can make your shows more memorable, then viewers are more likely to talk about them, giving a higher likelihood of success. Understanding the memorability of an image also has medical implications, we can test for memory deterioration by assessing if a patient is able to remember memorable images.
+
+The memorability of an image is intuitively affected by its surroundings, so being able to predict the memorability of a region within a image is extremely useful to the iterative design process within these professions.  
 %The methodology (how you carried out the research)
-These models were trained through supervised learning of image to VMS pairs in the training portion of the VISCHEMA Plus dataset. I compare these models using a set of defined requirements, including the L1 loss of their predicted memorability maps across the validation portion of the dataset, qualitative analysis of the predictions, and the time required to train and evaluate the models.
+
+The VISCHEMA Plus dataset is a publicly available set of image to memorability map pairs, these memorability maps were gathered through experiments carried out on members of the University of York where participants had to remember images, and if they could remember them, indicate what region helped them to remember it. I trained my models using supervised learning of image to VMS pairs in the training portion of the VISCHEMA Plus dataset. I compare these models using a set of defined requirements, including the L1 loss of their predicted memorability maps across the validation portion of the dataset, qualitative analysis of the predictions, and the time required to train and evaluate the models.
 %The key research findings (what answers you found)
 
 \textbf{Findings and Implications}
@@ -241,7 +240,7 @@ VISCHEMA Plus is a significantly smaller dataset, containing around 1600 image, 
 The use of either of these comes with drawbacks, LaMem is a much larger dataset, containing 60,000 images compared to the 1,600 images in VISCHEMA Plus, this significant increase should allow any deep learning models to generalise far more easily. Unfortunately I am not entirely convinced of their methodology for generating memorability maps, the memorability of an image may not be equal to that of an image within another image. That is to say, the environment in which we see an image, intuitively, may have some impact on the memorability of it.
 When gathering the VISCHEMA Plus dataset  Akagunduz et al. successfully measure the memorable regions of images, rather than a score per image which I believe to be more robust. Unfortunately, their dataset is very small, which means that more care would need to be taken to not cause our models to overfit. After evaluating both datasets I have chosen to use the VISCHEMA Plus dataset. 
 
-\textbf{Comparison of state of the art models}
+\textbf{Current state of the art models}
 
 I will create and evaluate a range of deep convolutional image to image models that learn a mapping of VISCHEMA Plus images to their corresponding VMS labels. Our models will all be evaluated against the requirements detailed in \ref{tab:RequirementCaptureTable}. State of the art models would include, autoencoders, GANs, and diffusion models, as the three of them produce images in different ways I see value in comparing their performance in the same task. I will run three experiments where I train a UNet autoencoder, a GAN, and a diffusion model to produce a VMS label given an image from the dataset. I hope to be able to find the strengths and weaknesses of each of these systems. For each model I will experiment with network parameters and training hyperparameters to fine tune models that produce the best output.
 
@@ -395,7 +394,7 @@ In \cite{arjovsky2017wasserstein} Arjovsky et al. introduce a GAN variant based 
 
 \textbf{Diffusion Models}
 
-Diffusion based generative models work by learning to iteratively remove Gaussian noise from a sample T times until it produces an image from the training domain. The model was first proposed by Sohl-Dickstein et al. \cite{sohldickstein2015deep}, and has been further developed by Ho et al. \cite{ho2020denoising},  Dhariwal and Nichol \cite{dhariwal2021diffusion}, and Saharia et al. \cite{saharia2022palette}. They are a class of machine learning models that work using a forward diffusion process systematically destroying the structure in a data distribution, and learn a backwards process to restore the structure. The method uses a Markov chain to convert $ x_t $ into $ x_{t-1} $. Starting with $ x_T $, a sample of Gaussian noise, a generative Markov chain converts this into $ x_0 $, which is a sample from the target data distribution. Because the model only estimates small perturbations of noise, $ x_t $ given $ x_{t-1} $ , rather than an entire transformation from $ x_T $ to $ x_0 $, it is tractable to train. 
+Diffusion based generative models work by learning to iteratively remove Gaussian noise from a sample T times until it produces an image from the training domain. The model was first proposed by Sohl-Dickstein et al. \cite{sohldickstein2015deep}, and has been further developed by Ho et al. \cite{ho2020denoising},  Dhariwal and Nichol \cite{dhariwal2021diffusion}, and Saharia et al. \cite{saharia2022palette}. They are a class of machine learning models that work using a forward diffusion process systematically destroying the structure in a data distribution, and learn a backwards process to restore the structure. The method uses a Markov chain to convert $ x_t $ into $ x_{t-1} $. Starting with $ x_T $, a sample of Gaussian noise, a generative Markov chain converts this into $ x_0 $, which is a sample from the target data distribution. Because the model only estimates small perturbations of noise, $ x_t $ given $ x_{t-1} $ , rather than an entire transformation from $ x_T $ to $ x_0 $, it is tractable to train. Recent research has found that diffusion models are able to synthesise images with greater image sample quality than GANs \cite{dhariwal2021diffusion}, and recent diffusion models have seen immense commercial success where GANs never did \cite{ramesh2022hierarchical, saharia2022photorealistic}. I want to investigate if that same success can be found in this domain.
 
 The DDPM is a diffusion model capable of producing high quality images and achieved state of the art FID scores across the CIFAR10 dataset \cite{ho2020denoising}. Dhariwal and Nichol \cite{dhariwal2021diffusion} show tweaks that allow for diffusion models to achieve state of the art FID scores across the ImageNet dataset and when used in combination with upsampling diffusion further improve FID scores. They do this by using improvements proposed in \cite{song2022denoising, nichol2021improved, song2021scorebased, brock2019large, karras2019stylebased}.
 
@@ -443,9 +442,9 @@ Using a conditional image, $I$ and a ground truth label, $L_{real}$ with this mo
 
 C++ and Python are both suitable for machine learning tasks, they both have a plethora of libraries such as TensorFlow, PyTorch, and Caffe that aid in development. In fact, quite a lot of libraries, including the former two, are available on both Python and C++. I have chosen to use Python for this project as, personally, it is the easier language of the two to work with. This project is meant as a proof of concept, and as such I prioritise the quicker development time with Python, over the faster execution speed of C++. I have also chosen to use the PyTorch library to do the majority of the machine learning code, this is because it has lots of prebuilt C++ functions which should speed up execution time significantly. The methods that I will apply should work in any language or framework, PyTorch is simply an abstraction that should shorten development time. I will implement my own UNet code but for the GAN and diffusion models I have chosen to adapt and use code available in the following repositories \cite{PytorchPix2Pix, JanspiryPalette} respectively. Both have licenses that allow their use in this project. 
 
-\textbf{Results Analysis/Testing}
-% Maybe theres more to put here?
-After training all three models I will compare them using the requirements defined in \ref{tab:RequirementCaptureTable}.
+\textbf{Methodology Conclusion}
+
+To summarise, I propose that using an image to image model to generate VMS images from the VISCHEMA Plus dataset should be possible, and that a successful model should meet all of the requirements defined in table \ref{tab:RequirementCaptureTable}.
 
 \chapter{Implementation and Experimental Results}
 
