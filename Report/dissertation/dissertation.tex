@@ -543,9 +543,9 @@ Our best GAN model is incredibly successful and achieves all requirements outlin
 
 I found that the best parameters for this network were: Group Normalisation, Encoder channel layout = (64, 128, 256, 512), Decoder channel layout = (512, 256, 128, 64), and a cosine beta scheduler with a start of 1e-6 and an end of 0.02.
 
-Evaluating the L1 loss of the diffusion models across the entire validation distribution takes approximately 2 hours with the parameters above, because of this, during training I couldn't see if the l1 loss was going down, I could still test if it was overfitting by evaluating the ability to remove a random step of noise every epoch across the validation set. I trained my model for 800 epochs and after training I did a full evaluation across the validation distribution, generating label samples for each image. The graph in figure 
+Evaluating the L1 loss of the diffusion models across the entire validation distribution takes approximately 2 hours with the parameters above, because of this, during training I couldn't see if the l1 loss was going down, I could still test if it was overfitting by evaluating the ability to remove a random step of noise every epoch across the validation set. The graph in figure 
 \ref{fig:DiffusionTraining}
-shows the mean training and validation loss per epoch for my best model, the validation loss in this case is the loss for removing 1 step of noise from each image, not the full 2000. The green plot indicates validation performance, and red training. The plots stay very close together which indicates that the model does not become overfit.
+shows the mean training and validation loss per epoch for my best model, the validation loss in this case is the loss for removing 1 step of noise from each image, not the full 2000. The green plot indicates validation performance, and red training. The plots stay very close together until epoch 350 at which point the model starts to become overfit. This is more obvious in figure \ref{fig:DiffusionTrainingOverfit}, where I show the training curve from epoch 100 onwards. Because of this I have chosen to use early stopping and use the weights of my model at epoch 350.
 You can see a selection of the best model predictions in figure 
 \ref{fig:DiffusionBestOutputs}
 and a selection of the worst model predictions in figure 
@@ -584,7 +584,7 @@ Looking at this data we can see that our GAN model is the most consistent, with 
 % small
 % work-home
 
-\begin{table}[]
+\begin{table}[ht]
     \centering
     \begin{tabular}{|l|lll|}
         \hline
@@ -623,8 +623,8 @@ Looking at this data we can see that our GAN model is the most consistent, with 
 Our models have a lot of trouble predicting the red channel of the VMS maps. The red channel indicates that users thought they remembered the image because of this region, when in reality they had not been shown this image before. If we measure the loss of our models across just the green channel, that is the regions subjects indicated triggered their memory in images that they correctly identified as seeing before, 
 then our average L1 loss across the validation dataset decreases from ~0.132 to \(\sim \)0.083 with our autoencoder model, 
 from ~0.0740 to \(\sim \) 0.046 in our GAN, 
-and increases from \(\sim 0.31 \) to \(\sim 0.54 \) in our diffusion model, this reinforces my belief that the model has a tendancy to predict red more often than it appears.
-Because this loss is the mean across each pixel, we can compare the them regardless of the change in channel depth. Clearly our autoencoder and GAN models are better at predicting green regions rather than red ones. I suspect that this is due to the much larger amount of green data than red in the dataset. I'm not sure why the diffusion model has learned to predict red more prominantly than green.
+and increases from \(\sim 0.31 \) to \(\sim 0.54 \) in our diffusion model.
+Because this loss is the mean across each pixel, we can compare the them regardless of the change in channel depth. Clearly our autoencoder and GAN models are better at predicting green regions rather than red ones. I suspect that this is due to the much larger amount of green data than red in the dataset. I'm not sure why the diffusion model has learned to predict red more prominantly than green. The diffusion loss increasing reinforces my belief that it has a tendancy to predict red more often than it appears.
 
 \chapter{Conclusion}
 
@@ -681,6 +681,13 @@ I would also be interested in exploring the application of memorability to video
     \includegraphics[width=\linewidth]{Worst GAN Outputs}
     \caption{Worst GAN Outputs}
     \label{fig:GANWorstOutput}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{Diffusion training curve overfit}
+    \caption{Diffusion Training Curve from epoch 100 onwards.}
+    \label{fig:DiffusionTrainingOverfit}
 \end{figure}
 
 \begin{figure}[ht]

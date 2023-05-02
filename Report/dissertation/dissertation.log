@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Arch Linux) (preloaded format=pdflatex 2023.4.11)  2 MAY 2023 12:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Arch Linux) (preloaded format=pdflatex 2023.4.11)  2 MAY 2023 12:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -963,13 +963,13 @@ Overfull \hbox (4.51384pt too wide) detected at line 7
  []
 
 
-Overfull \hbox (7.68307pt too wide) detected at line 8
- \T1/phv/b/n/12 xxxii
+Overfull \hbox (4.514pt too wide) detected at line 8
+ \T1/phv/b/n/12 xxxi
  []
 
 
-Overfull \hbox (10.85231pt too wide) detected at line 9
- \T1/phv/b/n/12 xxxiv
+Overfull \hbox (10.85214pt too wide) detected at line 9
+ \T1/phv/b/n/12 xxxiii
  []
 
 )
@@ -1123,16 +1123,16 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6.4}) h
                                                   \__shipout_drop_firstpage_...
 l.554 
        <../images//Good GAN Outputs.png>]
-<../images//Diffusion Best Outputs.png, id=348, 1076.1003pt x 604.1772pt>
+<../images//Diffusion Best Outputs.png, id=350, 1076.1003pt x 604.1772pt>
 File: ../images//Diffusion Best Outputs.png Graphic file (type png)
 <use ../images//Diffusion Best Outputs.png>
 Package pdftex.def Info: ../images//Diffusion Best Outputs.png  used on input line 557.
 (pdftex.def)             Requested size: 369.8859pt x 207.66696pt.
-<../images//GAN training curve.png, id=349, 894.7026pt x 323.7696pt>
-File: ../images//GAN training curve.png Graphic file (type png)
-<use ../images//GAN training curve.png>
-Package pdftex.def Info: ../images//GAN training curve.png  used on input line 564.
-(pdftex.def)             Requested size: 369.8859pt x 133.85303pt.
+<../images//Diffusion training curve.png, id=351, 891.0891pt x 323.7696pt>
+File: ../images//Diffusion training curve.png Graphic file (type png)
+<use ../images//Diffusion training curve.png>
+Package pdftex.def Info: ../images//Diffusion training curve.png  used on input line 564.
+(pdftex.def)             Requested size: 369.8859pt x 134.39645pt.
  [28
 pdfTeX warning (ext4): destination with the same identifier (name{figure.6.5}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
@@ -1143,69 +1143,79 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6.6}) h
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.573 
-       <../images//Diffusion Best Outputs.png> <../images//GAN training curve.png>] [29] [30
+       <../images//Diffusion Best Outputs.png> <../images/Diffusion Training Curve.png>] [29] [30
 pdfTeX warning (ext4): destination with the same identifier (name{table.6.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.628 
-      ] [31]
+l.629 \chapter
+              {Conclusion}]
 chapter 7.
-[32
+[31
 
-] [33]
+] [32]
 chapter 8.
-<../images//Worst autoencoder Outputs.png, id=387, 1076.1003pt x 604.1772pt>
+<../images//Worst autoencoder Outputs.png, id=385, 1076.1003pt x 604.1772pt>
 File: ../images//Worst autoencoder Outputs.png Graphic file (type png)
 <use ../images//Worst autoencoder Outputs.png>
 Package pdftex.def Info: ../images//Worst autoencoder Outputs.png  used on input line 667.
 (pdftex.def)             Requested size: 369.8859pt x 207.66696pt.
-<../images//Best GAN Outputs.png, id=388, 1076.1003pt x 604.1772pt>
+<../images//Best GAN Outputs.png, id=386, 1076.1003pt x 604.1772pt>
 File: ../images//Best GAN Outputs.png Graphic file (type png)
 <use ../images//Best GAN Outputs.png>
 Package pdftex.def Info: ../images//Best GAN Outputs.png  used on input line 674.
 (pdftex.def)             Requested size: 369.8859pt x 207.66696pt.
-<../images//Worst GAN Outputs.png, id=389, 1076.1003pt x 604.1772pt>
+<../images//Worst GAN Outputs.png, id=387, 1076.1003pt x 604.1772pt>
 File: ../images//Worst GAN Outputs.png Graphic file (type png)
 <use ../images//Worst GAN Outputs.png>
 Package pdftex.def Info: ../images//Worst GAN Outputs.png  used on input line 681.
 (pdftex.def)             Requested size: 369.8859pt x 207.66696pt.
-<../images//Worst Diffusion Outputs.png, id=390, 1076.1003pt x 604.1772pt>
+<../images//Diffusion training curve overfit.png, id=388, 904.0977pt x 323.7696pt>
+File: ../images//Diffusion training curve overfit.png Graphic file (type png)
+<use ../images//Diffusion training curve overfit.png>
+Package pdftex.def Info: ../images//Diffusion training curve overfit.png  used on input line 688.
+(pdftex.def)             Requested size: 369.8859pt x 132.45985pt.
+<../images//Worst Diffusion Outputs.png, id=389, 1076.1003pt x 604.1772pt>
 File: ../images//Worst Diffusion Outputs.png Graphic file (type png)
 <use ../images//Worst Diffusion Outputs.png>
-Package pdftex.def Info: ../images//Worst Diffusion Outputs.png  used on input line 688.
+Package pdftex.def Info: ../images//Worst Diffusion Outputs.png  used on input line 695.
 (pdftex.def)             Requested size: 369.8859pt x 207.66696pt.
-[34
+[33
 
 
 pdfTeX warning (ext4): destination with the same identifier (name{figure.8.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.694 
-       <../images//Worst autoencoder Outputs.png>] [35
+l.701 
+       <../images//Worst autoencoder Outputs.png>] [34
 pdfTeX warning (ext4): destination with the same identifier (name{figure.8.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.694 
+l.701 
       
 pdfTeX warning (ext4): destination with the same identifier (name{figure.8.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.694 
-       <../images//Best GAN Outputs.png> <../images//Worst GAN Outputs.png>] [36
+l.701 
+       <../images//Best GAN Outputs.png> <../images//Worst GAN Outputs.png>] [35
 pdfTeX warning (ext4): destination with the same identifier (name{figure.8.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.694 
-       <../images//Worst Diffusion Outputs.png>]
+l.701 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{figure.8.5}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.701 
+       <../images/Diffusion Training Curve Overfit.png> <../images//Worst Diffusion Outputs.png>]
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <12> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 693.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 700.
 LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 11.39996pt on input line 693.
+(Font)              scaled to size 11.39996pt on input line 700.
 LaTeX Font Info:    Font shape `T1/phv/m/sc' will be
-(Font)              scaled to size 11.39996pt on input line 693.
- [37
+(Font)              scaled to size 11.39996pt on input line 700.
+ [36
 
-] [38] [39] [40] (./dissertation.aux)
+] [37] [38] [39] (./dissertation.aux)
 Package logreq Info: Writing requests to 'dissertation.run.xml'.
 \openout1 = `dissertation.run.xml'.
 
@@ -1215,18 +1225,18 @@ Package logreq Info: Writing requests to 'dissertation.run.xml'.
 ### simple group (level 1) entered at line 49 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 26106 strings out of 476025
- 482124 string characters out of 5796532
- 1867388 words of memory out of 5000000
- 45802 multiletter control sequences out of 15000+600000
+ 26119 strings out of 476025
+ 482788 string characters out of 5796532
+ 1868388 words of memory out of 5000000
+ 45814 multiletter control sequences out of 15000+600000
  576430 words of font info for 274 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  122i,15n,120p,10708b,20803s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/share/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on dissertation.pdf (40 pages, 12354765 bytes).
+Output written on dissertation.pdf (39 pages, 12411022 bytes).
 PDF statistics:
  591 PDF objects out of 1000 (max. 8388607)
- 490 compressed objects within 5 object streams
+ 489 compressed objects within 5 object streams
  118 named destinations out of 1000 (max. 500000)
- 45708 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 45713 words of extra memory for PDF output out of 51595 (max. 10000000)
 
