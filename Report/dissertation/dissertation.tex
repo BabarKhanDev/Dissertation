@@ -12,6 +12,19 @@
 \usepackage[normalem]{ulem}
 \useunder{\uline}{\ul}{}
 
+% Sections
+\usepackage{titlesec}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{15}\bfseries}{\thesection}{1em}{}
+
+\titlespacing*{\section}{0pt}{0pt}{0pt}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{12}{15}\bfseries}{\thesubsection}{1em}{}
+
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
+
 % referencing
 \usepackage[backend=biber]{biblatex}
 \addbibresource{references.bib}
@@ -30,8 +43,9 @@
 
 % Document
 \begin{document}
+\addtocontents{toc}{\protect\thispagestyle{empty}}
 \maketitle
-\setcounter{page}{0}
+\thispagestyle{empty}
 
 \chapter{Executive Summary}
 \pagenumbering{arabic}
@@ -44,20 +58,18 @@
 % highlight any legal, social, ethical, professional, and commercial issues as appropriate to the topic of study (if none, then this should be explicitly stated).
 
 
-\textbf{Research Purpose, Motivation, and Methodology}
+\section{Research Purpose, Motivation, and Methodology}
 
 %The purpose of the research (what's it about and why's that important)
 I investigate a range of deep conditional image to image generative models and evaluate their success when learning a mapping of images to memorable regions across three different experiments. These models are autoencoders, generative adversarial networks (GANs), and denoising diffusion models.
 % motivate the work
-Image memorability has been shown to be an intrinsic property of images, just like saliency, composition, or attractiveness, hopefully we can use these models to design images that are more memorable. This has far reaching uses, from marketing, education, entertainment, and more. The goal of advertising is to grow familiarity with a brand, if somebody is more likely to remember your advert then they will likely become more familiar with the brand. In education if teachers can make diagrams and displays that are easier to remember then students will find learning easier. In entertainment if you can make your shows more memorable, then viewers are more likely to talk about them, giving a higher likelihood of success. Understanding the memorability of an image also has medical implications, we can test for memory deterioration by assessing if a patient is able to remember memorable images.
-
-The memorability of an image is intuitively affected by its surroundings, so being able to predict the memorability of a region within a image is extremely useful to the iterative design process within these professions.  
+Image memorability has been shown to be an intrinsic property of images, just like saliency, composition, or attractiveness, hopefully we can use these models to design images that are more memorable. This has far reaching uses, from marketing, education, entertainment, and more. The memorability of an image is intuitively affected by its surroundings, so being able to predict the memorability of a region within a image is extremely useful to the iterative design process within these professions.  
 %The methodology (how you carried out the research)
 
 The VISCHEMA Plus dataset is a publicly available set of image to memorability map pairs, these memorability maps were gathered through experiments carried out on members of the University of York where participants had to remember images, and if they could remember them, indicate what region helped them to remember it. I trained my models using supervised learning of image to VMS pairs in the training portion of the VISCHEMA Plus dataset. I compare these models using a set of defined requirements, including the L1 loss of their predicted memorability maps across the validation portion of the dataset, qualitative analysis of the predictions, and the time required to train and evaluate the models.
 %The key research findings (what answers you found)
 
-\textbf{Findings and Implications}
+\section{Findings and Implications}
 
 Using a basic UNet Autoencoder I was able to generate semi accurate VMS map predictions that had low L1 losses of \(\sim 0.132\), but failed when examined qualitatively due to their tendency to smooth out the blocky VMS shape into circles.
 Using a modified pix2pix GAN model \cite{isola2018imagetoimage} I was able to generate very accurate VMS map predictions, maintaining the blocky shape of the regions, and achieving a mean L1 loss of \(\sim 0.0740\). Generally, these models took longer to train than my autoencoder models.
@@ -68,7 +80,7 @@ Diffusion models took the longest to train, and while they have been shown capab
 I show that using a GAN model we are able to predict memorable image regions with great accuracy. I believe this has many useful applications across many different industries, it will allow creators a more informed opinion on which regions of their images are memorable, using this tool to iteratively improve their image memorability. Hopefully in future work good parameters can be found that allow diffusion models to work with fewer noise steps and to produce higher accuracy results.
 
 % Ethical concerns
-\textbf{Ethical Concerns}
+\section{Ethical Concerns}
 
 I see no ethical concerns with the work presented in this report. I use the VISCHEMA Plus dataset, gathered by allowing human participants to indicate which image regions are memorable to them. I do not believe that any harm will come to said participants by carrying out this project as all data used is anonymised; the only data that Akagunduz et al. published about their subjects was that they attended the University of York, this is not enough information to identify them. As discussed by Dastin \cite{dastin_2018} and Najibi \cite{najibi_2020} it is important to train on a dataset without bias, as this bias can manifest within your learned models. It is impossible for us to know if the participating students represented a diverse subset of the population. As such, if we assume the worst case, that all of them are biased towards the same output, this would manifest itself within the data as the same regions being memorable. If our models were to train on this data then it would predict the same biased regions, and I see no way in which this could cause harm, it would simply predict unmemorable regions.
 
@@ -76,7 +88,7 @@ There are no legal, social, or professional concerns with the work conducted in 
 
 \chapter{Introduction}
 
-\textbf{Background}
+\section{Background}
 
 We are constantly surrounded by imagery, we see it on the way to work, on the internet, on TV, in stores, and every time we use our eyes. Some images stick out more than others, we see hundreds, if not thousands, of images a day, and yet culturally and individually we all remember similar ones. Due to cultural significance an image can become memorable. The 2015 dress \cite{BBCDress2015}, a country's flag, or the 1932 image “lunch atop a skyscraper” \cite{gambino_2012}, come to mind. I argue that the memorability of such images is tied to the culture surrounding them, not necessarily due to intrinsic properties within. The focus of this research is on the intrinsic properties within an image that make it memorable to an individual, akin to seeing an advert on a bus and then later recognising the same advert online.
 %How do we measure the memorability of an image
@@ -85,29 +97,28 @@ We are constantly surrounded by imagery, we see it on the way to work, on the in
 % Vischema dataset experiments
 There has been lots of research into assigning memorability scores to images using some variation of a memorability game \cite{Isola2011, IsolaParikhTorralbaOliva2011, ICCV15_Khosla, isola2014memorability}, this is taken further by Akagunduz et al. \cite{VischemaPaper} where, in a similar experiment, they measure which regions of images are memorable and find that these regions are consistent among participants.
 
-\textbf{Motivation}
+\section{Motivation}
 
 % Why do we want to do this
 %Why do we want to create a memorable image
 %How does this research help to create a memorable image
 
-Creating memorable images is the goal of many industries, in education you want to create learning resources remembered by students, in marketing, adverts remembered by customers, and in movies or TV, scenes remembered by audiences. Its been shown that with great accuracy we can train a deep neural network to predict the memorability score of an image \cite{Isola2011, IsolaParikhTorralbaOliva2011, ICCV15_Khosla, isola2014memorability},
-% Double check sources
-that is, assign a float in the range of [0,1] to an image, with a higher score indicating higher memorability. But I propose that the memorability of an object within an image may be independent from the memorability of that object on its own. For example, an advert's memorability may not be equal to the memorability when seen in an environment such as on the side of a bus or building, in these cases the advert competes with everything else the viewer observes. This gives great importance to the examination of image region memorability, hypothetically a person wanting to create a memorable image could render their image on the side of a bus or building digitally, and test the memorable regions of that rendered image. They could then iteratively modify and examine their image until their desired region is the most memorable within the image.
+Creating memorable images is beneficial to many industries. In advertising the goal is to grow brand familiarity, if somebody is more likely to remember your advert then they will likely become more familiar with the brand. In education if teachers can make diagrams and displays that are easier to remember then students will find learning easier. In entertainment if you can make your shows more memorable, then viewers are more likely to talk about them, giving a higher likelihood of success. Understanding the memorability of an image also has medical implications, we can test for memory deterioration by assessing if a patient is able to remember memorable images. Its been shown that with great accuracy we can train a deep neural network to predict the memorability score of an image \cite{Isola2011, IsolaParikhTorralbaOliva2011, ICCV15_Khosla, isola2014memorability},
+that is, assign a value to an image indicating memorability. But I propose that the memorability of an object within an image may be independent from the memorability of that object on its own. For example, an advert's memorability may not be equal to the memorability when seen in an environment such as on the side of a bus or building, in these cases the advert competes with everything else the viewer observes. This gives great importance to the examination of image region memorability, hypothetically a person wanting to create a memorable image could render their image on the side of a bus or building digitally, and test the memorable regions of that rendered image. They could then iteratively modify and examine their image until their desired region is the most memorable within the image.
 
 %What are my goals
 
-To create a model that does this is an incredibly difficult task, success has been found in semantic image segmentation \cite{wang2023internimage} and I believe that this task is a continuous variation of it. My motivation with this work is to both gain a deeper understanding of image memorability, and to gain experience using image to image deep convolutional networks. I want to create an accurate mapping from image to memorability maps. As I am using the VISCHEMA dataset in a supervised learning environment, I can measure the accuracy of my models as the mean absolute difference between my network output and the ground truth label present in the dataset.
+To create a model that predicts image region memorabilty is a difficult task, success has been found in semantic image segmentation \cite{wang2023internimage} and I believe that this task is a continuous variation of it. My motivation with this work is to both gain a deeper understanding of image memorability, and to gain experience using image to image deep convolutional networks. I want to create an accurate mapping from image to memorability maps. As I am using the VISCHEMA dataset in a supervised learning environment, I can measure the accuracy of my models as the difference between my network output and the ground truth label present in the dataset.
 
-\textbf{Report Structure}
+\section{Report Structure}
 
-This report is organised as follows: Chapter 4 discusses existing literature in image memorability, Chapter 5 discusses the project methodology, I describe available deep learning datasets and existing image to image models, Chapter 6 details my experiments and results, and Chapter 7 my conclusion, where I discuss the implications of my findings and possibilities for future work.    
+This report is organised as follows: Chapter 3 discusses existing literature in image memorability, Chapter 4 discusses the project methodology, I describe available deep learning datasets and existing image to image models, Chapter 5 details my experiments and results, and Chapter 6 my conclusion, where I discuss the implications of my findings and possibilities for future work.    
 
 \chapter{Literature Review}
 
 % This should be 6-8 pages long
 
-\textbf{Memorability}
+\section{Memorability}
 
 % Roy Brener An experimental investigation of memory span
 % Subjects were presented with units of varying length and were asked to recall them
@@ -173,7 +184,7 @@ Khosla et al. \cite{NIPS12_Khosla} built on the work in \cite{Isola2011, IsolaPa
 
 Further work by Khosla et al. in \cite{ICCV15_Khosla} showed how you can use deep learning to learn to predict the memorability of an image using supervised learning of image and memorability pairs. They conduct a large scale memorability game experiment across 60,000 images, using a similar protocol to \cite{isola2014memorability}, and build a convolutional neural network, MemNet, capable of predicting memorability with a rank correlation of 0.64.  
 
-\textbf{Literature Conclusion}
+\section{Literature Conclusion}
 
 There has been lots of work on human memorability but it wasn't until recently that work on determining image memorability automatically had been done. The work by Isola et al. \cite{Isola2011,IsolaParikhTorralbaOliva2011} and Khosla et al. \cite{ICCV15_Khosla} represents the current state of the art in image memorability, using deep learning to automatically determine the memorability of images.
 
@@ -193,20 +204,20 @@ During this project I followed a Waterfall method, a sequential development proc
     \label{fig:waterfall method}
 \end{figure}
 
-\textbf{How to measure memorable regions of images}
+\section{How to measure memorable regions of images}
 
 There are two approaches to measuring the memorable regions of an image. Both approaches have subjects try to remember previously seen images using a memorability game, the approaches differ slightly. Firstly, like in LaMem \cite{ICCV15_Khosla}, you split an image into many regions, and use a model designed to predict the memorability of an image to predict the memorability of that region. Then compose these memorability, region pairs into a memorability map. 
 Alternatively, like in VISCHEMA \cite{VischemaPaper}, when a user indicates that they remember an image, allow them to mark the region of the image that caused them to remember it. 
 In either case the result is the same, a distribution of image, memorability map pairs in which supervised learning can occur.
 
-\textbf{Predicting memorable regions and evaluating prediction quality}
+\section{Predicting memorable regions and evaluating prediction quality}
 
 Assuming that we have a dataset of image, memorability map pairs as described above, then we can use an image to image deep convolutional model to learn a mapping from an image to its corresponding memorability map. 
 There are many image to image models that exist, but fundamentally we can abstract the model as a function of an image, $I$, because of this we can evaluate each model across the same requirements. 
 Given an image the model needs to predict what the corresponding memorability map looks like.
 We can evaluate the quality of these solutions in a number of ways. The L1 and L2 loss can describe the absolute and mean square error between two equally sized images. We can also compare the outputs of our models quantitatively, do the predicted outputs look similar to the inputs. Its possible that our models could learn to predict something simple, like a single shade of green, entirely black images, or just noise, in this case the outputted labels would be worthless. We can evaluate this behaviour though qualitative analysis of the output images. Execution time is also important, I propose that this system can be used by creatives to iteratively improve their images, if it takes too long to evaluate a single image on modern hardware then it is less useful than a similar performing model that performs much faster.
 
-\textbf{Model Requirements}
+\section{Model Requirements}
 
 In table \ref{tab:RequirementCaptureTable} I describe the requirements that each probabilistic model will be compared against. A model will be considered unsuccessful if it does not meet every requirement in the "must" section, and will be considered somewhat successful if it meets all of those in the "must" section but not all of those in the "should" section.
 
@@ -230,7 +241,7 @@ In table \ref{tab:RequirementCaptureTable} I describe the requirements that each
     \label{tab:RequirementCaptureTable}
 \end{table}
 
-\textbf{Comparison of available datasets}
+\section{Comparison of available datasets}
 
 The two dataset options I have considered are LaMem \cite{ICCV15_Khosla} and VISCHEMA \cite{VischemaPaper}.
 
@@ -240,7 +251,7 @@ VISCHEMA Plus is a significantly smaller dataset, containing around 1600 image, 
 The use of either of these comes with drawbacks, LaMem is a much larger dataset, containing 60,000 images compared to the 1,600 images in VISCHEMA Plus, this significant increase should allow any deep learning models to generalise far more easily. Unfortunately I am not entirely convinced of their methodology for generating memorability maps, the memorability of an image may not be equal to that of an image within another image. That is to say, the environment in which we see an image, intuitively, may have some impact on the memorability of it.
 When gathering the VISCHEMA Plus dataset  Akagunduz et al. successfully measure the memorable regions of images, rather than a score per image which I believe to be more robust. Unfortunately, their dataset is very small, which means that more care would need to be taken to not cause our models to overfit. After evaluating both datasets I have chosen to use the VISCHEMA Plus dataset. 
 
-\textbf{Current state of the art models}
+\section{Current state of the art models}
 
 I will create and evaluate a range of deep convolutional image to image models that learn a mapping of VISCHEMA Plus images to their corresponding VMS labels. Our models will all be evaluated against the requirements detailed in \ref{tab:RequirementCaptureTable}. State of the art models would include, autoencoders, GANs, and diffusion models, as the three of them produce images in different ways I see value in comparing their performance in the same task. I will run three experiments where I train a UNet autoencoder, a GAN, and a diffusion model to produce a VMS label given an image from the dataset. I hope to be able to find the strengths and weaknesses of each of these systems. For each model I will experiment with network parameters and training hyperparameters to fine tune models that produce the best output.
 
@@ -249,7 +260,7 @@ In each experiment I will automate a system that: tests the effectiveness of dif
 Due to the long training and evaluation time of diffusion models I plan on performing a smaller parameter/hyperparameter search for those, I hope to still achieve good results, but due to computational and time restrictions I will not be able to experiment as much as I want with them.
 % TALK ABOUT DIFFUSION MODELS TAKING A LONG TIME TO TRAIN AND THUS GETTING LESS TESTING HERE
 
-\textbf{UNet Autoencoders}
+\subsection{UNet Autoencoders}
 
 The autoencoder model is composed of 3 parts, an encoder, a bottleneck, and a decoder, these are typically used for compression. The U-Net \cite{ronneberger2015unet} is a variation of an autoencoder which has found great success in semantic image segmentation within the medical field. This architecture is the backbone of many image to image models \cite{isola2018imagetoimage,saharia2022palette,dhariwal2021diffusion}, and has seen many extensions \cite{zhou2020unet, Qin_2020}. A Diagram of the model can be seen in figure \ref{fig:autoencoderDiagram}, the model is composed of two blocks, an encoder and a decoder. 
 The encoder, composed of convolutional filters, takes the full sized image and compresses it into a latent space vector.
@@ -291,7 +302,7 @@ This loss describes the average absolute difference between each corresponding p
 \end{algorithmic}
 \end{algorithm}
 
-\textbf{Generative Adversarial Networks}
+\subsection{Generative Adversarial Networks}
 
 % presented by ian goodfellow and is composed of a generaor and a discriminator
 
@@ -392,7 +403,7 @@ In \cite{arjovsky2017wasserstein} Arjovsky et al. introduce a GAN variant based 
 
 
 
-\textbf{Diffusion Models}
+\subsection{Diffusion Models}
 
 Diffusion based generative models work by learning to iteratively remove Gaussian noise from a sample T times until it produces an image from the training domain. The model was first proposed by Sohl-Dickstein et al. \cite{sohldickstein2015deep}, and has been further developed by Ho et al. \cite{ho2020denoising},  Dhariwal and Nichol \cite{dhariwal2021diffusion}, and Saharia et al. \cite{saharia2022palette}. They are a class of machine learning models that work using a forward diffusion process systematically destroying the structure in a data distribution, and learn a backwards process to restore the structure. The method uses a Markov chain to convert $ x_t $ into $ x_{t-1} $. Starting with $ x_T $, a sample of Gaussian noise, a generative Markov chain converts this into $ x_0 $, which is a sample from the target data distribution. Because the model only estimates small perturbations of noise, $ x_t $ given $ x_{t-1} $ , rather than an entire transformation from $ x_T $ to $ x_0 $, it is tractable to train. Recent research has found that diffusion models are able to synthesise images with greater image sample quality than GANs \cite{dhariwal2021diffusion}, and recent diffusion models have seen immense commercial success where GANs never did \cite{ramesh2022hierarchical, saharia2022photorealistic}. I want to investigate if that same success can be found in this domain.
 
@@ -438,11 +449,11 @@ Using a conditional image, $I$ and a ground truth label, $L_{real}$ with this mo
 \end{algorithmic}
 \end{algorithm}
 
-\textbf{Implementation considerations}
+\section{Implementation considerations}
 
 C++ and Python are both suitable for machine learning tasks, they both have a plethora of libraries such as TensorFlow, PyTorch, and Caffe that aid in development. In fact, quite a lot of libraries, including the former two, are available on both Python and C++. I have chosen to use Python for this project as, personally, it is the easier language of the two to work with. This project is meant as a proof of concept, and as such I prioritise the quicker development time with Python, over the faster execution speed of C++. I have also chosen to use the PyTorch library to do the majority of the machine learning code, this is because it has lots of prebuilt C++ functions which should speed up execution time significantly. The methods that I will apply should work in any language or framework, PyTorch is simply an abstraction that should shorten development time. I will implement my own UNet code but for the GAN and diffusion models I have chosen to adapt and use code available in the following repositories \cite{PytorchPix2Pix, JanspiryPalette} respectively. Both have licenses that allow their use in this project. 
 
-\textbf{Methodology Conclusion}
+\section{Methodology Conclusion}
 
 To summarise, I propose that using an image to image model to generate VMS images from the VISCHEMA Plus dataset should be possible, and that a successful model should meet all of the requirements defined in table \ref{tab:RequirementCaptureTable}.
 
@@ -461,14 +472,14 @@ In this chapter I describe the implementation, tuning, and results of my models,
 %    solved with gan
 %    in experiments?
 
-\textbf{Experimental Environment}
+\section{Experimental Environment}
 
 This model was trained on a computer using an RTX 3070 with 8GB of VRAM and an AMD Ryzen 3600 with 32GB of system RAM, due to the relatively low video RAM a lot of effort was made to keep memory usage down in each model. During training I resized each image to 128px x 128px and after each training epoch explicitly deleted the image, label, and output from memory.
 Testing the hyperparameter options for the UNet Autoencoder model took approximately 2 days and I trained the final model over the course of 40 minutes.
 Testing the hyperparameter options for GAN model took approximately 3 days and I trained my final model over the course of 2 hours.  
 Testing the hyperparameter options for Diffusion model took approximately 2 weeks and I trained the final model over the course of 10 hours.
 
-\textbf{Hyperparameter tuning}
+\section{Hyperparameter tuning}
 
 When tuning the UNet autoencoder and GAN models I automated the process of exploring the parameter and hyperparameter search space. In my search I varied the following parameters: The normalisation layer used, the channel layouts used, the optimiser used, the learning rates for the optimiser, and, if the Adam optimiser was used, the beta values. In experiment 2 I allowed for the generator and discriminator models to use different normalisation functions, optimisers, and learning rates. 
 
@@ -478,11 +489,11 @@ Because of this I limited my search across diffusion models to manually vary the
 Exploring these search spaces exhaustively is unfortunately not feasible, for the Autoencoder and GAN models there are over 5000 different possible combinations, and if I tested each combination once for 100 epochs then it would take hundreds of days to test.
 Instead I have explored a subset of this search space. For each experiment I estimated default parameter and hyperparameter values, by varying these values I lowered the scope of the search space to approximately 100 permutations. This took \(\sim\)2/3 days per experiment to test. Unfortunately this does mean that not every combination has been tested, however we should achieve a good approximation of the best parameters and hyperparameters.
 
-\textbf{UNet Autoencoder Training and Results}
+\section{UNet Autoencoder Training and Results}
 
 In this experiment I created and trained a UNet model as described in \cite{ronneberger2015unet} to directly predict the VMS maps of images, I trained the model using backpropagation of the L1 loss, described in equation \ref{eqn:UNet Loss}, of the model output given an image, and the corresponding label. The best parameters and hyperparameters that I found for my model were the following: Encoder Channels = (3,64,128,256,512,1024), Decoder Channels = (1024,512,256,128,64), Batch Normalisation, Adam Optimizer with a learning rate of 0.001 and betas = (0.9, 0.999). A diagram of the training curve for the autoencoder can be seen in figure \ref{fig:autoencoderTraining}. After 80 training epochs I was able to achieve an L1 loss across the validation dataset of \( \sim 0.132 \). A sample of the best output images can be seen in figure \ref{fig:autoencoderBestOutput}, and a sample of the lowest accuracy output images can be seen in figure \ref{fig:autoencoderWorstOutput}. As you can see the autoencoder tends to turn the blocky VMS shape into a rounded circle. It is less accurately able predict the red regions, this is likely due to there being far more green data than red data.
 
-\textbf{UNet Autoencoder Requirements Fit}
+\subsection{UNet Autoencoder Requirements Fit}
 As outlined in \ref{tab:RequirementCaptureTable} our best autoencoder model succeeded in the following requirements: 1.1 as it is possible to input an image, 1.2 as the model produces an image when given an input, 1.3 as the mean output loss is relatively low, and 2.1 as it is able to produce an image fast, in approximately 7 milliseconds.
 Unfortunately when I qualitatively analyse the images the model does not succeed in achieving requirement 1.4, it learns a somewhat accurate mapping but typically smooth out the blocky VMS components into circular shapes. There are also clear small visual blotches present in all of the predictions, these do not seem to line up with anything in particular in the input image or label.   
 
@@ -500,7 +511,7 @@ Unfortunately when I qualitatively analyse the images the model does not succeed
     \label{fig:autoencoderBestOutput}
 \end{figure}
 
-\textbf{GAN Training and Results}
+\section{GAN Training and Results}
 
 % https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/issues/1081
 This experiment was performed with differentiable augmentation as described in \cite{zhao2020differentiable}. I performed translation and cutout, each with a 90\% chance.
@@ -530,10 +541,10 @@ The worst results are shown in \ref{fig:GANWorstOutput}, it appears that, like o
     \label{fig:GANGoodOutput}
 \end{figure}
 
-\textbf{GAN Requirements Fit}
+\subsection{GAN Requirements Fit}
 Our best GAN model is incredibly successful and achieves all requirements outlined in \ref{tab:RequirementCaptureTable}: 1.1 as it is possible to input an image, 1.2 as the model produces an image when given an input, 1.3 as the mean output loss is very low, 1.4, it learns a very accurate model of the mapping and is able to create convincing memorability maps and 2.1 as it is able to produce an image in \( \sim 3.0 \) ms. My only concern would be that it often fails to predict the red component of the VMS images, however I believe this is significantly less important than predicting the green component, and as such I would still consider this model successful.
 
-\textbf{Diffusion Model Training and Results}
+\section{Diffusion Model Training and Results}
 
 I found that the best parameters for this network were: Group Normalisation, Encoder channel layout = (64, 128, 256, 512), Decoder channel layout = (512, 256, 128, 64), and a cosine beta scheduler with a start of 1e-6 and an end of 0.02.
 
@@ -560,12 +571,12 @@ and a selection of the worst model predictions in figure
     \label{fig:DiffusionTraining}
 \end{figure}
 
-\textbf{Diffusion Requirements Fit}
+\subsection{Diffusion Requirements Fit}
 %Some discussion about them.
 
 My best diffusion model is unfortunately unsuccessful. It is only able to pass requirements 1.1 and 1.2; you can input an image and it outputs an image. The output images have a large mean loss of \( \sim 0.31 \) and as such fail requirement 1.3, and when I qualitatively analyse the output images, they either look like accurate VMS maps for completely different images or look noisy, and as such the model fails requirement 1.4. The model also takes on average 23 seconds to produce an image, this is far too long compared to our autoencoder and GAN models, and as such it fails requirement 2.1. 
 
-\textbf{Examination Across VISCHEMA Categories}
+\section{Examination Across VISCHEMA Categories}
 
 The dataset that I trained on, VISCHEMA Plus, is composed of two datasets: VISCHEMA and VISCHEMA 2, split into 12 and 8 classes respectively. The "kitchen" class is present in both datasets, but otherwise classes are exclusive to VISCHEMA or VISCHEMA 2. In figure \ref{tab:categories} the average L1 loss each model achieves across each different class in the validation distribution is displayed. The values are rounded to 2 significant figures but in calculations I used the un-rounded versions. 
 
@@ -612,7 +623,7 @@ Looking at this data we can see that our GAN model is the most consistent, with 
     \caption{The average L1 loss that each model achieves over the different categories present in the VISCHEMA validation distribution.}
 \end{table}
 
-\textbf{Measuring loss across just the Green channel}
+\section{Measuring loss across just the Green channel}
 
 Our models have a lot of trouble predicting the red channel of the VMS maps. The red channel indicates that users thought they remembered the image because of this region, when in reality they had not been shown this image before. If we measure the loss of our models across just the green channel, that is the regions subjects indicated triggered their memory in images that they correctly identified as seeing before, 
 then our average L1 loss across the validation dataset decreases from \( \sim 0.132 \) to \(\sim 0.083\) with our autoencoder model, 
@@ -639,7 +650,7 @@ In future work I would love to spend more time working on diffusion models, I fi
 
 I would also be interested in exploring the application of memorability to videos, there are far more factors involved including audio, movement, fps, that would greatly increase the complexity of the problem. Research has been done in \cite{HASSON2004, HASSONNeurocinematics, HASSON2008, fMRIPredictions} using fMRI scans to estimate the memorability of video streams using an extension of the memorability game. I would love to expand upon this work.
 
-\chapter{Appendix}
+\chapter{Appendices}
 
 \begin{figure}[ht]
     \centering
@@ -675,6 +686,7 @@ I would also be interested in exploring the application of memorability to video
     \caption{Worst Diffusion Outputs}
     \label{fig:DiffusionWorstOutput}
 \end{figure}
+
 
 \printbibliography
 
