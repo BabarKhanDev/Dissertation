@@ -108,7 +108,7 @@ that is, assign a value to an image indicating memorability. But I propose that 
 
 %What are my goals
 
-To create a model that predicts image region memorabilty is a difficult task, success has been found in semantic image segmentation \cite{wang2023internimage} and I believe that this task is a continuous variation of it. My motivation with this work is to both gain a deeper understanding of image memorability, and to gain experience using image to image deep convolutional networks. I want to create an accurate mapping from image to memorability maps. As I am using the VISCHEMA dataset in a supervised learning environment, I can measure the accuracy of my models as the difference between my network output and the ground truth label present in the dataset.
+To create a model that predicts image region memorability is a difficult task, success has been found in semantic image segmentation \cite{wang2023internimage} and I believe that this task is a continuous variation of it. My motivation with this work is to both gain a deeper understanding of image memorability, and to gain experience using image to image deep convolutional networks. I want to create an accurate mapping from image to memorability maps. As I am using the VISCHEMA dataset in a supervised learning environment, I can measure the accuracy of my models as the difference between my network output and the ground truth label present in the dataset.
 
 \section{Report Structure}
 
@@ -487,13 +487,13 @@ In this experiment I created and trained a modified pix2pix GAN as described in 
 
 \textbf{Best Discriminator}: Batch normalisation, Channel layout = (6, 64, 128, 256, 512), Adam optimiser with betas = (0.5, 0.999) and a learning rate of 0.0002.
 
-I found that using SGD and Adagrad optimizers gave very similar losses after 100 epochs, each within 1\% of eachother.
+I found that using SGD and Adagrad optimizers gave very similar losses after 100 epochs, each within 1\% of each other.
 Using the best found parameters, after 200 epochs of training our model is able to achieve a mean L1 score of \( \sim 0.0740 \) across our validation dataset. This is significantly better than our autoencoder model. A diagram of the training curve for the final GAN model can be seen in figure \ref{fig:GANTraining}. 
 Figure \ref{fig:GANBestOutput} shows the outputs across the validation portion of our dataset with the lowest L1 Loss. The outputs presented in this figure are accurately labelled with the correct regions as memorable, but frankly do not necessarily show off the high quality outputs capable of our model, the low L1 loss across these is simply because the labels have lots of black data. 
 Looking at image 7 the model accurately predicts that the two wooden planks are the most memorable, in image 2 it accurately predicts that the chair is the most memorable. Interestingly there are some bad predictions here, in image 6 it is confident that the person is most memorable, when in reality most participants selected the hanging display. 
 Instead I present figure \ref{fig:GANGoodOutput} which shows what I think are far more impressive results, despite the higher loss than the images presented in figure \ref{fig:GANBestOutput}. With these images the model is able to accurately predict large regions of the image that are memorable. This is why requirement 1.4 is important, qualitative analysis allows for a much more nuanced consideration of how the outputs look.
-In each image the model accurately predicts the right object as memorable. For example, in image 1 the correct building is identified as memorable, along with the door in the bottom, and in image 2 all of the machines are selected as memorable. Most notably, in image 4 not only does it predict the building as memorable, but it also predicts a falsly remembered region in the left building. Our autoencoder model was completely incapable of this. 
-The worst results are shown in \ref{fig:GANWorstOutput}, it appears that, like our autoencoder but to a lesser extend, this model finds difficulty predicting red regions, i.e. those that users hallucinate remembering. Sometimes it will select the right object but colour it wrong, for example in images 8 and 9 the model highlights the right area, just green instead of red. However, in images 1-5 and 7 the model selects completely wrong areas that dont seem to resemble the true label.
+In each image the model accurately predicts the right object as memorable. For example, in image 1 the correct building is identified as memorable, along with the door in the bottom, and in image 2 all of the machines are selected as memorable. Most notably, in image 4 not only does it predict the building as memorable, but it also predicts a falsely remembered region in the left building. Our autoencoder model was completely incapable of this. 
+The worst results are shown in \ref{fig:GANWorstOutput}, it appears that, like our autoencoder but to a lesser extend, this model finds difficulty predicting red regions, i.e. those that users hallucinate remembering. Sometimes it will select the right object but colour it wrong, for example in images 8 and 9 the model highlights the right area, just green instead of red. However, in images 1-5 and 7 the model selects completely wrong areas that do not seem to resemble the true label.
 
 
 \begin{figure}[ht]
@@ -602,7 +602,7 @@ Because this loss is the mean across each pixel, we can compare the them regardl
 
 \section{Comparing the models across the same images}
 
-I have created figure \ref{fig:AllModelsCompared}, where all three models are compared against the same nine images. Images 1-3, 4-6, and 7-9 are a subset of the images that the diffusion model, GAN, and UNet model function their best on respectively. I chose these images so that the comparison between the models was more fair, that being said the GAN model still arguably performs best in all of these; across all 9 images the GAN has the lowest loss and qualitatively it looks the best. Interestingly all models seem to perform well on image 5, they all maintain the green column for the main building, agruably the GAN model performs best in this one as it is able to also generate the red area.
+I have created figure \ref{fig:AllModelsCompared}, where all three models are compared against the same nine images. Images 1-3, 4-6, and 7-9 are a subset of the images that the diffusion model, GAN, and UNet model function their best on respectively. I chose these images so that the comparison between the models was more fair, that being said the GAN model still arguably performs best in all of these; across all 9 images the GAN has the lowest loss and qualitatively it looks the best. Interestingly all models seem to perform well on image 5, they all maintain the green column for the main building, arguably the GAN model performs best in this one as it is able to also generate the red area.
 
 \chapter{Conclusion}
 
